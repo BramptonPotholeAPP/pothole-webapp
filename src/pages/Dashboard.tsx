@@ -34,6 +34,7 @@ import { LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tool
 import { usePotholeStore } from '../store/potholeStore';
 import { potholeService } from '../services/api';
 import { StatsCards } from '../components/StatsCards';
+import { useNotification } from '../components/NotificationProvider';
 import { formatDate, formatCurrency, getSeverityColor, getStatusColor, exportToCSV, calculateTrendData } from '../utils/helpers';
 
 export const Dashboard = () => {
@@ -50,6 +51,8 @@ export const Dashboard = () => {
     setFilters,
     clearFilters,
   } = usePotholeStore();
+
+  const { showNotification } = useNotification();
 
   const [searchQuery, setSearchQuery] = useState('');
   const [page, setPage] = useState(0);
@@ -68,15 +71,17 @@ export const Dashboard = () => {
         setPotholes(potholesData);
         setStats(statsData);
         setError(null);
+        showNotification('Data loaded successfully', 'success');
       } catch (err) {
         setError('Failed to load data');
+        showNotification('Failed to load data', 'error');
       } finally {
         setLoading(false);
       }
     };
 
     fetchData();
-  }, [setPotholes, setStats, setLoading, setError]);
+  }, [setPotholes, setStats, setLoading, setError, showNotification]);
 
   const trendData = calculateTrendData(filteredPotholes);
 
@@ -201,13 +206,13 @@ export const Dashboard = () => {
             onChange={(e) => setFilters({ ...filters, minSeverity: parseFloat(e.target.value) })}
             sx={{ minWidth: 140 }}
           />
-          <Button variant="outlined" onClick={() => { clearFilters(); setSearchQuery(''); }}>
+          <Button variant="outlined" onClick={() => { clearFilters(); setSearchQuery(''); showNotification('Filters cleared', 'info'); }}>
             Clear Filters
           </Button>
           <Button
             variant="contained"
             startIcon={<DownloadIcon />}
-            onClick={() => exportToCSV(filteredPotholes)}
+            onClick={() => { exportToCSV(filteredPotholes); showNotification('CSV exported successfully', 'success'); }}
           >
             Export CSV
           </Button>
