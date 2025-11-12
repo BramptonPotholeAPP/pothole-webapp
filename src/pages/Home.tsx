@@ -167,15 +167,12 @@ export const Home = () => {
       <Container maxWidth="lg" sx={{ mb: 8 }}>
         <Box sx={{ textAlign: 'center', mb: 6 }}>
           <Typography variant="h3" fontWeight={800} gutterBottom>
-            Demonstration Features
-          </Typography>
-          <Typography variant="body1" color="text.secondary" fontSize="1.1rem">
-            Core capabilities showcased in this prototype application
+            Features
           </Typography>
         </Box>
         <Grid container spacing={4}>
           {features.map((feature, index) => (
-            <Grid size={{ xs: 12, sm: 6, md: 4 }} key={index}>
+            <Grid size={{ xs: 12, sm: 6, md: 6 }} key={index}>
               <Card
                 elevation={0}
                 sx={{
@@ -226,10 +223,10 @@ export const Home = () => {
       >
         <Container maxWidth="md">
           <Typography variant="h4" fontWeight={800} gutterBottom>
-            Ready to Get Started?
+            Explore the Demo
           </Typography>
           <Typography variant="body1" color="text.secondary" sx={{ mb: 4, fontSize: '1.1rem' }}>
-            Explore the dashboard to see real-time pothole detections, analyze trends, and manage repair operations.
+            View sample pothole data on the dashboard or see their locations on the map.
           </Typography>
           <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
             <Button
@@ -240,7 +237,7 @@ export const Home = () => {
               startIcon={<DashboardIcon />}
               sx={{ px: 4 }}
             >
-              Operations Dashboard
+              Dashboard
             </Button>
             <Button
               component={RouterLink}
@@ -250,7 +247,7 @@ export const Home = () => {
               startIcon={<MapIcon />}
               sx={{ px: 4 }}
             >
-              View Map
+              Map
             </Button>
           </Box>
         </Container>
