@@ -1,162 +1,308 @@
-# 🚧 Brampton Pothole Detection Web Application# React + TypeScript + Vite
+# 🚧 Brampton Pothole Detection Web Application# 🚧 Brampton Pothole Detection Web Application
 
 
 
-A modern, dynamic React-based web application for AI-powered pothole monitoring and management for the City of Brampton.This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, dynamic React-based web application for AI-powered pothole monitoring and management for the City of Brampton.A modern, dynamic React-based web application for AI-powered pothole monitoring and management for the City of Brampton.
 
 
 
-## 🌐 Live DemoCurrently, two official plugins are available:
+## 🌐 Live Demo## 🌐 Live Demo
 
 
 
-**URL:** https://bramptonpotholeapp.github.io/pothole-webapp/- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
+**URL:** https://bramptonpotholeapp.github.io/**URL:** https://bramptonpotholeapp.github.io/
 
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## ✨ Features
 
-## React Compiler
+## ✨ Features## ✨ Features
+
+
+
+### 🏠 Home Page### 📊 Operations Dashboard
+
+- Engaging hero section with mission statement
+
+- Feature showcase with 6 key capabilities- Real-time statistics cards with total detections, costs, and status summariesThe React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+
+- Quick stats overview (detections, accuracy, coverage)
+
+- Call-to-action buttons for easy navigation- Advanced filtering by date range, status, severity, ward, and priority
+
+
+
+### 📖 About Page- Interactive charts showing detection trends and status distribution## Expanding the ESLint configuration
+
+- Detailed mission statement
+
+- 4-step "How It Works" process explanation- Comprehensive data table with all pothole details
+
+- Key benefits breakdown
+
+- Complete feature list- One-click CSV export for offline analysisIf you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+
+- Technology stack documentation
+
+
 
 ### 📊 Operations Dashboard
 
-- Real-time statistics cards with total detections, costs, and status summariesThe React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Real-time statistics cards with total detections, costs, and status summaries### 🗺️ Interactive Map View
 
 - Advanced filtering by date range, status, severity, ward, and priority
 
-- Interactive charts showing detection trends and status distribution## Expanding the ESLint configuration
+- Interactive charts showing detection trends and status distribution- Custom severity-coded markers on Leaflet map
 
-- Comprehensive data table with all pothole details
+- Comprehensive data table with search, sort, and pagination- Real-time filtering by status and priority
 
-- One-click CSV export for offline analysisIf you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- One-click CSV export for offline analysis- Detailed popups with complete pothole information
+
+- Toast notifications for user actions- Sidebar with all detections for easy navigation
+
+- Fully responsive design for all devices### 📈 Analytics & Insights
+
+### 🗺️ Interactive Map View
+
+- Custom severity-coded markers on Leaflet map- Detection and cost trend analysis over time
+
+- Real-time filtering by status and priority- Ward distribution breakdown
+
+- Detailed popups with complete pothole information- Cost analysis by status
+
+- Sidebar with all detections for easy navigation- Severity distribution visualization
+
+- Fully responsive design for all devices- Interactive, exportable charts## 🏗️ Technology Stack
 
 
 
-### 🗺️ Interactive Map View```js
+### 📈 Analytics & Insights- React 18 + TypeScript + Vite
 
-- Custom severity-coded markers on Leaflet mapexport default defineConfig([
+- Detection and cost trend analysis over time- Material-UI (MUI) v7
 
-- Real-time filtering by status and priority  globalIgnores(['dist']),
+- Ward distribution breakdown- Zustand (State Management)
 
-- Detailed popups with complete pothole information  {
+- Cost analysis by status- React Router v6
 
-- Sidebar with all detections for easy navigation    files: ['**/*.{ts,tsx}'],
+- Severity distribution visualization- Recharts (Data Visualization)
 
-- Fully responsive design for all devices    extends: [
+- Interactive, exportable charts- Leaflet + React-Leaflet (Maps)
 
-      // Other configs...
-
-### 📈 Analytics & Insights
-
-- Detection and cost trend analysis over time      // Remove tseslint.configs.recommended and replace with this
-
-- Ward distribution breakdown      tseslint.configs.recommendedTypeChecked,
-
-- Cost analysis by status      // Alternatively, use this for stricter rules
-
-- Severity distribution visualization      tseslint.configs.strictTypeChecked,
-
-- Interactive, exportable charts      // Optionally, add this for stylistic rules
-
-      tseslint.configs.stylisticTypeChecked,
+- Axios + date-fns
 
 ## 🏗️ Technology Stack
 
-      // Other configs...
+## 🚀 Quick Start
 
-- React 18 + TypeScript + Vite    ],
+### Frontend
 
-- Material-UI (MUI) v6    languageOptions: {
+- React 18 + TypeScript```bash
 
-- Zustand (State Management)      parserOptions: {
+- Material-UI (MUI) v7npm install
 
-- React Router v6        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+- Vite (Build Tool)npm run dev      # Development server
 
-- Recharts (Data Visualization)        tsconfigRootDir: import.meta.dirname,
+- React Router v6npm run build    # Production build
 
-- Leaflet + React-Leaflet (Maps)      },
+```
 
-- Axios + date-fns      // other options...
+### State Management & Data
 
-    },
+- Zustand (State Management)Visit `http://localhost:5173` to view the app.## 📦 Project Structure
 
-## 🚀 Quick Start  },
+- Axios (HTTP Client)
 
-])
+- date-fns (Date Utilities)export default defineConfig([
 
-```bash```
 
-npm install
 
-npm run dev      # Development serverYou can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Visualization```  globalIgnores(['dist']),
 
-npm run build    # Production build
+- Recharts (Charts & Analytics)
 
-``````js
+- Leaflet + React-Leaflet (Interactive Maps)src/  {
 
-// eslint.config.js
 
-Visit `http://localhost:5173` to view the app.import reactX from 'eslint-plugin-react-x'
 
-import reactDom from 'eslint-plugin-react-dom'
+### Deployment├── components/     # Reusable UI components    files: ['**/*.{ts,tsx}'],
 
-## 📦 Project Structure
+- GitHub Pages
 
-export default defineConfig([
+- GitHub Actions (CI/CD)├── pages/         # Main application pages    extends: [
 
-```  globalIgnores(['dist']),
 
-src/  {
 
-├── components/     # Reusable UI components    files: ['**/*.{ts,tsx}'],
+## 🚀 Quick Start├── services/      # API client and data services      // Other configs...
 
-├── pages/         # Main application pages    extends: [
 
-├── services/      # API client and data services      // Other configs...
 
-├── store/         # Zustand state management      // Enable lint rules for React
+### Prerequisites├── store/         # Zustand state management      // Enable lint rules for React
 
-├── types/         # TypeScript type definitions      reactX.configs['recommended-typescript'],
+- Node.js 20+ 
 
-└── utils/         # Helper functions and utilities      // Enable lint rules for React DOM
+- npm or yarn├── types/         # TypeScript type definitions      reactX.configs['recommended-typescript'],
 
-```      reactDom.configs.recommended,
 
-    ],
 
-## 🔧 Configuration    languageOptions: {
+### Installation└── utils/         # Helper functions and utilities      // Enable lint rules for React DOM
+
+
+
+```bash```      reactDom.configs.recommended,
+
+# Clone the repository
+
+git clone https://github.com/BramptonPotholeAPP/BramptonPotholeAPP.github.io.git    ],
+
+
+
+# Navigate to project directory## 🔧 Configuration    languageOptions: {
+
+cd BramptonPotholeAPP.github.io
 
       parserOptions: {
 
-Create `.env` file:        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+# Install dependencies
 
-```env        tsconfigRootDir: import.meta.dirname,
+npm installCreate `.env` file:        project: ['./tsconfig.node.json', './tsconfig.app.json'],
 
-VITE_API_BASE_URL=https://your-api-endpoint.com      },
 
-```      // other options...
 
-    },
+# Start development server```env        tsconfigRootDir: import.meta.dirname,
 
-Without an API URL, the app uses built-in demo data with 5 sample potholes.  },
+npm run dev
 
-])
+```VITE_API_BASE_URL=https://your-api-endpoint.com      },
 
-## 🎯 Key Features```
 
+
+Visit `http://localhost:5173` to view the app.```      // other options...
+
+
+
+### Build for Production    },
+
+
+
+```bashWithout an API URL, the app uses built-in demo data with 5 sample potholes.  },
+
+npm run build
+
+```])
+
+
+
+The production-ready files will be in the `dist` directory.## 🎯 Key Features```
+
+
+
+## 📦 Project Structure
+
+- **Dynamic Filtering**: Multi-criteria filtering with instant results
+
+```- **Data Visualization**: Line, bar, and pie charts for insights
+
+src/- **Export**: CSV export with all data fields
+
+├── components/         # Reusable UI components- **Responsive**: Mobile-first, adaptive layouts
+
+│   ├── Layout.tsx     # Main layout with navigation- **Type-Safe**: Full TypeScript implementation
+
+│   ├── StatsCards.tsx # Statistics cards component- **Performance**: Code-splitting and optimized bundles
+
+│   └── NotificationProvider.tsx  # Toast notifications
+
+├── pages/             # Main application pages## 🚀 Deployment
+
+│   ├── Home.tsx       # Landing page
+
+│   ├── About.tsx      # About pageAutomatically deploys to GitHub Pages on push to `main` branch via GitHub Actions.
+
+│   ├── Dashboard.tsx  # Operations dashboard
+
+│   ├── MapView.tsx    # Interactive map---
+
+│   └── Analytics.tsx  # Analytics & insights
+
+├── services/          # API client and data services**Built for the City of Brampton**  
+
+│   └── api.ts         # API client with demo data© 2025 - AI-Powered Road Infrastructure Monitoring
+
+├── store/             # Zustand state management
+│   └── potholeStore.ts  # Global state store
+├── types/             # TypeScript type definitions
+│   └── pothole.ts     # Data models
+└── utils/             # Helper functions
+    └── helpers.ts     # Utility functions
+```
+
+## 🔧 Configuration
+
+### Environment Variables
+
+Create `.env` file in the root directory:
+
+```env
+VITE_API_BASE_URL=https://your-api-endpoint.com
+```
+
+**Note:** Without an API URL, the app uses built-in demo data with 5 sample potholes across Brampton.
+
+### Vite Configuration
+
+The app is configured to deploy to the root of GitHub Pages:
+
+```typescript
+// vite.config.ts
+export default defineConfig({
+  plugins: [react()],
+  base: '/',  // Root deployment for organization GitHub Pages
+})
+```
+
+## 🎯 Key Features
 
 - **Dynamic Filtering**: Multi-criteria filtering with instant results
 - **Data Visualization**: Line, bar, and pie charts for insights
-- **Export**: CSV export with all data fields
-- **Responsive**: Mobile-first, adaptive layouts
+- **Export Functionality**: CSV export with all data fields
+- **Responsive Design**: Mobile-first, adaptive layouts
 - **Type-Safe**: Full TypeScript implementation
-- **Performance**: Code-splitting and optimized bundles
+- **Performance Optimized**: Code-splitting and optimized bundles
+- **User Feedback**: Toast notifications for all user actions
+- **Search & Sort**: Advanced table features with pagination
 
 ## 🚀 Deployment
 
-Automatically deploys to GitHub Pages on push to `main` branch via GitHub Actions.
+The application automatically deploys to GitHub Pages when changes are pushed to the `main` branch.
+
+### GitHub Actions Workflow
+
+The deployment workflow:
+1. Triggers on push to `main` branch
+2. Installs dependencies
+3. Builds the production bundle
+4. Deploys to GitHub Pages
+
+**Live URL:** https://bramptonpotholeapp.github.io/
+
+## 📝 API Integration
+
+The app is designed to work with an optional backend API. The demo mode includes:
+
+- 5 sample pothole detections
+- Realistic Brampton locations
+- Various severity levels and statuses
+- Cost estimates and ward assignments
+
+To connect to a real API, set the `VITE_API_BASE_URL` environment variable.
+
+## 🤝 Contributing
+
+This project is maintained by the City of Brampton for internal infrastructure management.
+
+## 📄 License
+
+© 2025 City of Brampton - AI-Powered Road Infrastructure Monitoring
 
 ---
 
 **Built for the City of Brampton**  
-© 2025 - AI-Powered Road Infrastructure Monitoring
+Transforming road maintenance through artificial intelligence and data-driven decision making.
