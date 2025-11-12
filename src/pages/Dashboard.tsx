@@ -81,7 +81,8 @@ export const Dashboard = () => {
     };
 
     fetchData();
-  }, [setPotholes, setStats, setLoading, setError, showNotification]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const trendData = calculateTrendData(filteredPotholes);
 

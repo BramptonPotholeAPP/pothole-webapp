@@ -27,7 +27,8 @@ export const Analytics = () => {
     };
 
     fetchData();
-  }, [setPotholes, setStats, setLoading]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (loading && filteredPotholes.length === 0) {
     return (

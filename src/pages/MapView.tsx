@@ -66,7 +66,8 @@ export const MapView = () => {
     };
 
     fetchData();
-  }, [setPotholes, setStats, setLoading]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handlePotholeClick = (pothole: Pothole) => {
     setMapCenter([pothole.lat, pothole.lng]);
