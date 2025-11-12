@@ -1,7 +1,8 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ThemeProvider, createTheme, CssBaseline } from '@mui/material';
 import { Layout } from './components/Layout';
 import { NotificationProvider } from './components/NotificationProvider';
+import { Home } from './pages/Home';
 import { Dashboard } from './pages/Dashboard';
 import { MapView } from './pages/MapView';
 import { Analytics } from './pages/Analytics';
@@ -169,7 +170,7 @@ function App() {
         <NotificationProvider>
           <Layout>
             <Routes>
-              <Route path="/" element={<Navigate to="/dashboard" replace />} />
+              <Route path="/" element={<Home />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/map" element={<MapView />} />
               <Route path="/analytics" element={<Analytics />} />

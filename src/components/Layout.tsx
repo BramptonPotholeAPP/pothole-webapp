@@ -1,6 +1,7 @@
 import { AppBar, Box, Toolbar, Typography, Button, Container, IconButton, Drawer, List, ListItem, ListItemIcon, ListItemText, useTheme, useMediaQuery, alpha, Badge } from '@mui/material';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
+import HomeIcon from '@mui/icons-material/Home';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import MapIcon from '@mui/icons-material/Map';
 import AnalyticsIcon from '@mui/icons-material/Analytics';
@@ -14,7 +15,8 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const navItems = [
-    { path: '/', label: 'Dashboard', icon: <DashboardIcon /> },
+    { path: '/', label: 'Home', icon: <HomeIcon /> },
+    { path: '/dashboard', label: 'Dashboard', icon: <DashboardIcon /> },
     { path: '/map', label: 'Map View', icon: <MapIcon /> },
     { path: '/analytics', label: 'Analytics', icon: <AnalyticsIcon /> },
   ];
