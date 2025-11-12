@@ -151,7 +151,16 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
         </Box>
       </Drawer>
 
-      <Container maxWidth={false} sx={{ flex: 1, py: 4, px: { xs: 2, sm: 3, md: 4 } }}>
+      <Container 
+        maxWidth={false} 
+        sx={{ 
+          flex: 1, 
+          py: 4, 
+          px: { xs: 2, sm: 3, md: 4 },
+          width: '100%',
+          backgroundColor: 'background.default',
+        }}
+      >
         {children}
       </Container>
 
