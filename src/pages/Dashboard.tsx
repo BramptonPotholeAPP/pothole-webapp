@@ -22,7 +22,7 @@ import {
   Alert,
 } from '@mui/material';
 import DownloadIcon from '@mui/icons-material/Download';
-import { BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { usePotholeStore } from '../store/potholeStore';
 import { potholeService } from '../services/api';
 import { StatsCards } from '../components/StatsCards';
@@ -71,13 +71,6 @@ export const Dashboard = () => {
     { name: 'In Progress', value: filteredPotholes.filter(p => p.status === 'in_progress').length, color: '#f57c00' },
     { name: 'Scheduled', value: filteredPotholes.filter(p => p.status === 'scheduled').length, color: '#9c27b0' },
     { name: 'Completed', value: filteredPotholes.filter(p => p.status === 'completed').length, color: '#2e7d32' },
-  ];
-
-  const severityData = [
-    { name: '0.0-0.4', value: filteredPotholes.filter(p => p.severity < 0.4).length, color: '#689f38' },
-    { name: '0.4-0.6', value: filteredPotholes.filter(p => p.severity >= 0.4 && p.severity < 0.6).length, color: '#fbc02d' },
-    { name: '0.6-0.8', value: filteredPotholes.filter(p => p.severity >= 0.6 && p.severity < 0.8).length, color: '#f57c00' },
-    { name: '0.8-1.0', value: filteredPotholes.filter(p => p.severity >= 0.8).length, color: '#d32f2f' },
   ];
 
   if (loading && filteredPotholes.length === 0) {

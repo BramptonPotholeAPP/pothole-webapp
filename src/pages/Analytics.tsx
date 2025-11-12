@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
-import { Box, Typography, Card, CardContent, Grid, Paper, CircularProgress } from '@mui/material';
+import { Box, Typography, Card, CardContent, Grid, CircularProgress } from '@mui/material';
 import { BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { usePotholeStore } from '../store/potholeStore';
 import { potholeService } from '../services/api';
 import { StatsCards } from '../components/StatsCards';
-import { calculateTrendData, getSeverityColor } from '../utils/helpers';
+import { calculateTrendData } from '../utils/helpers';
 
 export const Analytics = () => {
   const { filteredPotholes, stats, setPotholes, setStats, setLoading, loading } = usePotholeStore();
