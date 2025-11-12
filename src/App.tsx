@@ -3,6 +3,7 @@ import { ThemeProvider, createTheme, CssBaseline } from '@mui/material';
 import { Layout } from './components/Layout';
 import { NotificationProvider } from './components/NotificationProvider';
 import { Home } from './pages/Home';
+import { About } from './pages/About';
 import { Dashboard } from './pages/Dashboard';
 import { MapView } from './pages/MapView';
 import { Analytics } from './pages/Analytics';
@@ -171,6 +172,7 @@ function App() {
           <Layout>
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/about" element={<About />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/map" element={<MapView />} />
               <Route path="/analytics" element={<Analytics />} />
