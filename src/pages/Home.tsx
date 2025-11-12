@@ -147,82 +147,20 @@ export const Home = () => {
         </Container>
       </Box>
 
-      {/* Stats Section */}
+      {/* About Section */}
       <Container maxWidth="lg" sx={{ mb: 8 }}>
-        <Grid container spacing={4}>
-          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-            <Card
-              elevation={0}
-              sx={{
-                textAlign: 'center',
-                py: 3,
-                background: `linear-gradient(135deg, ${alpha(theme.palette.primary.main, 0.1)} 0%, ${alpha(theme.palette.primary.light, 0.05)} 100%)`,
-                border: `1px solid ${alpha(theme.palette.primary.main, 0.2)}`,
-              }}
-            >
-              <Typography variant="h3" fontWeight={800} color="primary.main">
-                5
-              </Typography>
-              <Typography variant="body2" color="text.secondary" fontWeight={600}>
-                Demo Potholes
-              </Typography>
-            </Card>
-          </Grid>
-          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-            <Card
-              elevation={0}
-              sx={{
-                textAlign: 'center',
-                py: 3,
-                background: `linear-gradient(135deg, ${alpha(theme.palette.success.main, 0.1)} 0%, ${alpha(theme.palette.success.light, 0.05)} 100%)`,
-                border: `1px solid ${alpha(theme.palette.success.main, 0.2)}`,
-              }}
-            >
-              <Typography variant="h3" fontWeight={800} color="success.main">
-                PoC
-              </Typography>
-              <Typography variant="body2" color="text.secondary" fontWeight={600}>
-                Proof of Concept
-              </Typography>
-            </Card>
-          </Grid>
-          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-            <Card
-              elevation={0}
-              sx={{
-                textAlign: 'center',
-                py: 3,
-                background: `linear-gradient(135deg, ${alpha(theme.palette.warning.main, 0.1)} 0%, ${alpha(theme.palette.warning.light, 0.05)} 100%)`,
-                border: `1px solid ${alpha(theme.palette.warning.main, 0.2)}`,
-              }}
-            >
-              <Typography variant="h3" fontWeight={800} color="warning.main">
-                Demo
-              </Typography>
-              <Typography variant="body2" color="text.secondary" fontWeight={600}>
-                Sample Data
-              </Typography>
-            </Card>
-          </Grid>
-          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-            <Card
-              elevation={0}
-              sx={{
-                textAlign: 'center',
-                py: 3,
-                background: `linear-gradient(135deg, ${alpha(theme.palette.info.main, 0.1)} 0%, ${alpha(theme.palette.info.light, 0.05)} 100%)`,
-                border: `1px solid ${alpha(theme.palette.info.main, 0.2)}`,
-              }}
-            >
-              <Typography variant="h3" fontWeight={800} color="info.main">
-                4
-              </Typography>
-              <Typography variant="body2" color="text.secondary" fontWeight={600}>
-                Sample Wards
-              </Typography>
-            </Card>
-          </Grid>
-        </Grid>
+        <Box sx={{ textAlign: 'center', mb: 6 }}>
+          <Typography variant="h3" fontWeight={800} gutterBottom>
+            What is This?
+          </Typography>
+          <Typography variant="body1" color="text.secondary" fontSize="1.1rem" sx={{ maxWidth: '800px', mx: 'auto', mb: 4 }}>
+            This web application demonstrates a system for detecting and managing potholes on roads. 
+            It uses sample data to show how cities could track road damage, see locations on a map, 
+            and view statistics about repairs. The dashboard lets you filter and search through pothole 
+            records, while the map shows where each one is located in Brampton. This is a prototype 
+            to show what such a system could look like.
+          </Typography>
+        </Box>
       </Container>
 
       {/* Features Section */}
