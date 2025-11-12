@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Box,
   Card,
@@ -28,7 +29,7 @@ import {
 } from '@mui/material';
 import DownloadIcon from '@mui/icons-material/Download';
 import SearchIcon from '@mui/icons-material/Search';
-import VisibilityIcon from '@mui/icons-material/Visibility';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 import type { Pothole } from '../types/pothole';
 import { LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { usePotholeStore } from '../store/potholeStore';
@@ -38,6 +39,7 @@ import { useNotification } from '../components/NotificationProvider';
 import { formatDate, formatCurrency, getSeverityColor, getStatusColor, exportToCSV, calculateTrendData } from '../utils/helpers';
 
 export const Dashboard = () => {
+  const navigate = useNavigate();
   const {
     filteredPotholes,
     stats,
@@ -107,6 +109,27 @@ export const Dashboard = () => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+
+  // Handle chart click - filter by status
+  const handlePieChartClick = (data: any) => {
+    const statusMap: Record<string, string> = {
+      'New': 'new',
+      'In Progress': 'in_progress',
+      'Scheduled': 'scheduled',
+      'Completed': 'completed',
+    };
+    const status = statusMap[data.name];
+    if (status) {
+      setFilters({ ...filters, status });
+      showNotification(`Filtered by status: ${data.name}`, 'info');
+    }
+  };
+
+  // Navigate to map with specific pothole
+  const handleViewOnMap = (pothole: Pothole) => {
+    navigate('/map', { state: { selectedPothole: pothole } });
+  };
+
 
   // Filter by search query
   const searchFilteredPotholes = filteredPotholes.filter((pothole) => {
@@ -258,6 +281,9 @@ export const Dashboard = () => {
             <Typography variant="h6" gutterBottom>
               Status Distribution
             </Typography>
+            <Typography variant="caption" color="text.secondary" display="block" mb={1}>
+              Click on a segment to filter by status
+            </Typography>
             <ResponsiveContainer width="100%" height={300}>
               <PieChart>
                 <Pie
@@ -269,6 +295,8 @@ export const Dashboard = () => {
                   outerRadius={100}
                   fill="#8884d8"
                   dataKey="value"
+                  onClick={handlePieChartClick}
+                  style={{ cursor: 'pointer' }}
                 >
                   {statusData.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={entry.color} />
@@ -398,9 +426,13 @@ export const Dashboard = () => {
                     </TableCell>
                     <TableCell>{pothole.ward || '-'}</TableCell>
                     <TableCell align="center">
-                      <MuiTooltip title="View Details">
-                        <IconButton size="small" color="primary">
-                          <VisibilityIcon fontSize="small" />
+                      <MuiTooltip title="View on Map">
+                        <IconButton 
+                          size="small" 
+                          color="primary"
+                          onClick={() => handleViewOnMap(pothole)}
+                        >
+                          <LocationOnIcon fontSize="small" />
                         </IconButton>
                       </MuiTooltip>
                     </TableCell>

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import { Box, Paper, Typography, Chip, Card, CardContent, FormControl, InputLabel, Select, MenuItem, CircularProgress } from '@mui/material';
 import L from 'leaflet';
@@ -42,6 +43,7 @@ function MapUpdater({ center }: { center: [number, number] }) {
 }
 
 export const MapView = () => {
+  const location = useLocation();
   const { filteredPotholes, filters, setPotholes, setStats, setLoading, setFilters } = usePotholeStore();
   const [mapCenter, setMapCenter] = useState<[number, number]>([43.7314, -79.7624]);
   const [loading, setLocalLoading] = useState(true);
@@ -68,6 +70,16 @@ export const MapView = () => {
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // Handle pothole selection from dashboard
+  useEffect(() => {
+    if (location.state?.selectedPothole) {
+      const pothole = location.state.selectedPothole as Pothole;
+      setMapCenter([pothole.lat, pothole.lng]);
+      // Clear the state after using it
+      window.history.replaceState({}, document.title);
+    }
+  }, [location]);
 
   const handlePotholeClick = (pothole: Pothole) => {
     setMapCenter([pothole.lat, pothole.lng]);
