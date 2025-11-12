@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, useCallback } from 'react';
 import type { ReactNode } from 'react';
 import { Snackbar, Alert, Slide } from '@mui/material';
 import type { AlertColor, SlideProps } from '@mui/material';
@@ -22,10 +22,10 @@ export const NotificationProvider = ({ children }: { children: ReactNode }) => {
   const [notification, setNotification] = useState<Notification | null>(null);
   const [open, setOpen] = useState(false);
 
-  const showNotification = (message: string, severity: AlertColor = 'info') => {
+  const showNotification = useCallback((message: string, severity: AlertColor = 'info') => {
     setNotification({ message, severity });
     setOpen(true);
-  };
+  }, []);
 
   const handleClose = () => {
     setOpen(false);
