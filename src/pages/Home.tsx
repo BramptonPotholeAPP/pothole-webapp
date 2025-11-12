@@ -3,10 +3,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import MapIcon from '@mui/icons-material/Map';
 import AnalyticsIcon from '@mui/icons-material/Analytics';
-import SpeedIcon from '@mui/icons-material/Speed';
-import SecurityIcon from '@mui/icons-material/Security';
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
-import CloudIcon from '@mui/icons-material/Cloud';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 export const Home = () => {
@@ -15,39 +12,27 @@ export const Home = () => {
   const features = [
     {
       icon: <AutoAwesomeIcon sx={{ fontSize: 48 }} />,
-      title: 'AI-Powered Detection',
-      description: 'Advanced machine learning algorithms automatically detect and classify potholes from road imagery with high accuracy.',
+      title: 'AI-Based Detection',
+      description: 'Demonstrates computer vision capabilities for identifying and classifying road surface defects from imagery.',
       color: theme.palette.primary.main,
     },
     {
       icon: <MapIcon sx={{ fontSize: 48 }} />,
       title: 'Interactive Mapping',
-      description: 'Real-time geospatial visualization of all detected potholes across Brampton with severity indicators and status tracking.',
+      description: 'Geospatial visualization using Leaflet maps to display detected potholes with location and severity data.',
       color: theme.palette.secondary.main,
     },
     {
       icon: <AnalyticsIcon sx={{ fontSize: 48 }} />,
-      title: 'Advanced Analytics',
-      description: 'Comprehensive insights, trend analysis, and predictive maintenance planning to optimize road repair operations.',
+      title: 'Data Analytics',
+      description: 'Dashboard with charts and statistics for visualizing detection trends and status distribution.',
       color: theme.palette.info.main,
     },
     {
-      icon: <SpeedIcon sx={{ fontSize: 48 }} />,
-      title: 'Real-Time Monitoring',
-      description: 'Live updates and notifications enable quick response times and efficient resource allocation for road maintenance.',
+      icon: <DashboardIcon sx={{ fontSize: 48 }} />,
+      title: 'Management Interface',
+      description: 'Operational dashboard with filtering, search, and sorting capabilities for managing detection records.',
       color: theme.palette.success.main,
-    },
-    {
-      icon: <SecurityIcon sx={{ fontSize: 48 }} />,
-      title: 'Secure & Reliable',
-      description: 'Enterprise-grade security with data encryption and reliable cloud infrastructure for continuous operation.',
-      color: theme.palette.error.main,
-    },
-    {
-      icon: <CloudIcon sx={{ fontSize: 48 }} />,
-      title: 'Cloud-Based Platform',
-      description: 'Accessible from anywhere with automatic backups, scalable infrastructure, and seamless integration capabilities.',
-      color: theme.palette.warning.main,
     },
   ];
 
@@ -100,7 +85,7 @@ export const Home = () => {
                 mx: 'auto',
               }}
             >
-              AI-Powered Road Infrastructure Monitoring for the City of Brampton
+              Demonstration Prototype for Road Infrastructure Monitoring
             </Typography>
             <Typography
               variant="body1"
@@ -112,8 +97,7 @@ export const Home = () => {
                 mx: 'auto',
               }}
             >
-              Leveraging cutting-edge computer vision and machine learning to automatically detect, 
-              track, and manage road potholes across Brampton's infrastructure network.
+              A proof-of-concept application demonstrating AI-based pothole detection and management capabilities for municipal road infrastructure.
             </Typography>
             <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
               <Button
@@ -180,7 +164,7 @@ export const Home = () => {
                 5
               </Typography>
               <Typography variant="body2" color="text.secondary" fontWeight={600}>
-                Active Detections
+                Demo Potholes
               </Typography>
             </Card>
           </Grid>
@@ -195,10 +179,10 @@ export const Home = () => {
               }}
             >
               <Typography variant="h3" fontWeight={800} color="success.main">
-                98%
+                PoC
               </Typography>
               <Typography variant="body2" color="text.secondary" fontWeight={600}>
-                Detection Accuracy
+                Proof of Concept
               </Typography>
             </Card>
           </Grid>
@@ -213,10 +197,10 @@ export const Home = () => {
               }}
             >
               <Typography variant="h3" fontWeight={800} color="warning.main">
-                24/7
+                Demo
               </Typography>
               <Typography variant="body2" color="text.secondary" fontWeight={600}>
-                Real-Time Monitoring
+                Sample Data
               </Typography>
             </Card>
           </Grid>
@@ -231,10 +215,10 @@ export const Home = () => {
               }}
             >
               <Typography variant="h3" fontWeight={800} color="info.main">
-                10
+                4
               </Typography>
               <Typography variant="body2" color="text.secondary" fontWeight={600}>
-                Wards Covered
+                Sample Wards
               </Typography>
             </Card>
           </Grid>
@@ -245,10 +229,10 @@ export const Home = () => {
       <Container maxWidth="lg" sx={{ mb: 8 }}>
         <Box sx={{ textAlign: 'center', mb: 6 }}>
           <Typography variant="h3" fontWeight={800} gutterBottom>
-            Powerful Features
+            Demonstration Features
           </Typography>
           <Typography variant="body1" color="text.secondary" fontSize="1.1rem">
-            Everything you need to manage and monitor road infrastructure efficiently
+            Core capabilities showcased in this prototype application
           </Typography>
         </Box>
         <Grid container spacing={4}>

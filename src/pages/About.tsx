@@ -47,26 +47,26 @@ export const About = () => {
   const benefits = [
     {
       icon: <SpeedIcon sx={{ fontSize: 48 }} />,
-      title: 'Faster Response Times',
-      description: 'Automated detection reduces manual inspection time by 80%, enabling quicker repair response.',
+      title: 'Efficient Detection',
+      description: 'Automated detection could reduce manual inspection requirements and enable faster identification of road defects.',
       color: theme.palette.primary.main,
     },
     {
       icon: <PsychologyIcon sx={{ fontSize: 48 }} />,
-      title: 'Data-Driven Decisions',
-      description: 'Advanced analytics provide actionable insights for budget allocation and maintenance planning.',
+      title: 'Data-Driven Planning',
+      description: 'Analytics tools provide insights that could support maintenance planning and resource allocation decisions.',
       color: theme.palette.secondary.main,
     },
     {
       icon: <SecurityIcon sx={{ fontSize: 48 }} />,
-      title: 'Improved Safety',
-      description: 'Proactive monitoring helps prevent accidents and enhances road safety for citizens.',
+      title: 'Proactive Monitoring',
+      description: 'Systematic monitoring approach helps identify issues before they become significant safety concerns.',
       color: theme.palette.success.main,
     },
     {
       icon: <EngineeringIcon sx={{ fontSize: 48 }} />,
-      title: 'Resource Optimization',
-      description: 'Priority-based workflow ensures efficient allocation of repair crews and equipment.',
+      title: 'Workflow Organization',
+      description: 'Centralized system for tracking and managing road maintenance tasks with priority classification.',
       color: theme.palette.info.main,
     },
   ];
@@ -87,10 +87,10 @@ export const About = () => {
       >
         <Container maxWidth="lg">
           <Typography variant="h2" fontWeight={800} gutterBottom>
-            About Our System
+            About This Prototype
           </Typography>
           <Typography variant="h6" sx={{ opacity: 0.95, maxWidth: '800px', mx: 'auto' }}>
-            Advanced AI-Powered Road Infrastructure Monitoring Solution
+            Demonstration Application for Road Infrastructure Monitoring
           </Typography>
         </Container>
       </Box>
@@ -108,18 +108,18 @@ export const About = () => {
           <Box sx={{ display: 'flex', alignItems: 'center', mb: 3, gap: 2 }}>
             <RocketLaunchIcon sx={{ fontSize: 48, color: 'primary.main' }} />
             <Typography variant="h4" fontWeight={700}>
-              Our Mission
+              Project Overview
             </Typography>
           </Box>
           <Typography variant="body1" paragraph sx={{ fontSize: '1.1rem', lineHeight: 1.8 }}>
-            The Brampton Pothole Detection System leverages cutting-edge artificial intelligence and computer vision 
-            technology to transform how the City of Brampton manages road infrastructure. Our mission is to create 
-            safer, smoother roads for all residents through intelligent automation and data-driven decision-making.
+            This is a proof-of-concept web application demonstrating the potential of AI-based road infrastructure 
+            monitoring. The prototype showcases how computer vision and data management tools can be integrated 
+            to support municipal road maintenance operations.
           </Typography>
           <Typography variant="body1" sx={{ fontSize: '1.1rem', lineHeight: 1.8 }}>
-            By automatically detecting, classifying, and tracking potholes across Brampton's road network, we enable 
-            municipal staff to respond faster, allocate resources more efficiently, and maintain higher standards 
-            of road quality throughout the city.
+            The application uses sample data to demonstrate key features including detection visualization, 
+            geospatial mapping, analytics dashboards, and administrative management interfaces. This prototype 
+            serves as a foundation for evaluating the feasibility of such a system for the City of Brampton.
           </Typography>
         </Card>
       </Container>
@@ -127,7 +127,7 @@ export const About = () => {
       {/* How It Works */}
       <Container maxWidth="lg" sx={{ mb: 8 }}>
         <Typography variant="h3" fontWeight={800} gutterBottom textAlign="center" mb={4}>
-          How It Works
+          System Workflow
         </Typography>
         <Grid container spacing={4}>
           <Grid size={{ xs: 12, md: 3 }}>
@@ -159,10 +159,10 @@ export const About = () => {
                 1
               </Box>
               <Typography variant="h6" fontWeight={700} gutterBottom>
-                Image Capture
+                Data Collection
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                Road cameras or dashcams capture street imagery as vehicles travel through the city
+                Road imagery captured from cameras or mobile devices for analysis
               </Typography>
             </Card>
           </Grid>
@@ -195,10 +195,10 @@ export const About = () => {
                 2
               </Box>
               <Typography variant="h6" fontWeight={700} gutterBottom>
-                AI Detection
+                AI Processing
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                Machine learning models analyze images and identify potholes with 98% accuracy
+                Computer vision algorithms detect and classify potential road defects
               </Typography>
             </Card>
           </Grid>
@@ -231,10 +231,10 @@ export const About = () => {
                 3
               </Box>
               <Typography variant="h6" fontWeight={700} gutterBottom>
-                Classification
+                Data Management
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                System classifies severity, estimates repair costs, and assigns priority levels
+                Detection records stored with location, severity, and status tracking
               </Typography>
             </Card>
           </Grid>
@@ -267,10 +267,10 @@ export const About = () => {
                 4
               </Box>
               <Typography variant="h6" fontWeight={700} gutterBottom>
-                Action & Tracking
+                Visualization
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                Alerts sent to maintenance teams, status tracked until completion
+                Dashboard interfaces for viewing and analyzing detection data
               </Typography>
             </Card>
           </Grid>
@@ -280,7 +280,7 @@ export const About = () => {
       {/* Benefits Section */}
       <Container maxWidth="lg" sx={{ mb: 8 }}>
         <Typography variant="h3" fontWeight={800} gutterBottom textAlign="center" mb={4}>
-          Key Benefits
+          Potential Benefits
         </Typography>
         <Grid container spacing={4}>
           {benefits.map((benefit, index) => (
