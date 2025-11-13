@@ -1,13 +1,27 @@
-import { useEffect } from 'react';
-import { Box, Typography, Card, CardContent, Grid, CircularProgress } from '@mui/material';
+import { useEffect, useState, useMemo } from 'react';
+import { Box, Typography, Card, CardContent, Grid, CircularProgress, Paper, Button, TextField, FormControl, InputLabel, Select, MenuItem, Chip, Divider } from '@mui/material';
 import { BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
+import TableViewIcon from '@mui/icons-material/TableView';
+import DescriptionIcon from '@mui/icons-material/Description';
+import TrendingUpIcon from '@mui/icons-material/TrendingUp';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import AssessmentIcon from '@mui/icons-material/Assessment';
 import { usePotholeStore } from '../store/potholeStore';
 import { potholeService } from '../services/api';
 import { StatsCards } from '../components/StatsCards';
 import { calculateTrendData } from '../utils/helpers';
+import { generatePDFReport, generateExcelReport, generateCSVReport } from '../utils/reportGenerator';
 
 export const Analytics = () => {
   const { filteredPotholes, stats, setPotholes, setStats, setLoading, loading } = usePotholeStore();
+  
+  const [reportType, setReportType] = useState('executive');
+  const [timeRange, setTimeRange] = useState('monthly');
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const [selectedWard, setSelectedWard] = useState('all');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,6 +43,60 @@ export const Analytics = () => {
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // Filter potholes for reporting
+  const reportFilteredPotholes = useMemo(() => {
+    return filteredPotholes.filter((pothole) => {
+      const potholeDate = new Date(pothole.detected_at);
+      const matchesDateRange =
+        (!startDate || potholeDate >= new Date(startDate)) &&
+        (!endDate || potholeDate <= new Date(endDate));
+      const matchesWard = selectedWard === 'all' || pothole.ward === selectedWard;
+      return matchesDateRange && matchesWard;
+    });
+  }, [filteredPotholes, startDate, endDate, selectedWard]);
+
+  // Calculate stats for reporting
+  const reportStats = useMemo(() => {
+    const total = reportFilteredPotholes.length;
+    const byStatus = {
+      new: reportFilteredPotholes.filter((p) => p.status === 'new').length,
+      in_progress: reportFilteredPotholes.filter((p) => p.status === 'in_progress').length,
+      scheduled: reportFilteredPotholes.filter((p) => p.status === 'scheduled').length,
+      completed: reportFilteredPotholes.filter((p) => p.status === 'completed').length,
+    };
+    const totalCost = reportFilteredPotholes.reduce((sum, p) => sum + p.estimated_repair_cost_cad, 0);
+    const avgSeverity = reportFilteredPotholes.reduce((sum, p) => sum + p.severity, 0) / (total || 1);
+    const completionRate = total > 0 ? (byStatus.completed / total) * 100 : 0;
+
+    return {
+      total,
+      byStatus,
+      totalCost,
+      avgSeverity,
+      completionRate,
+    };
+  }, [reportFilteredPotholes]);
+
+  const handleGeneratePDF = () => {
+    generatePDFReport(reportFilteredPotholes, reportStats, reportType, {
+      startDate,
+      endDate,
+      ward: selectedWard,
+    });
+  };
+
+  const handleGenerateExcel = () => {
+    generateExcelReport(reportFilteredPotholes, reportStats, reportType, {
+      startDate,
+      endDate,
+      ward: selectedWard,
+    });
+  };
+
+  const handleGenerateCSV = () => {
+    generateCSVReport(reportFilteredPotholes);
+  };
 
   if (loading && filteredPotholes.length === 0) {
     return (
@@ -85,10 +153,218 @@ export const Analytics = () => {
   return (
     <Box>
       <Typography variant="h4" gutterBottom fontWeight="bold">
-        Analytics & Insights
+        Analytics & Reports
+      </Typography>
+      <Typography variant="body1" color="text.secondary" gutterBottom>
+        Comprehensive insights and exportable reports for city council and stakeholders
       </Typography>
 
       <StatsCards stats={stats} loading={loading} />
+
+      {/* Report Configuration & Export Section */}
+      <Paper sx={{ p: 3, mt: 3, mb: 3 }}>
+        <Typography variant="h6" gutterBottom>
+          Report Configuration & Export
+        </Typography>
+        <Grid container spacing={2} sx={{ mt: 1 }}>
+          <Grid size={{ xs: 12, md: 3 }}>
+            <FormControl fullWidth>
+              <InputLabel>Report Type</InputLabel>
+              <Select
+                value={reportType}
+                label="Report Type"
+                onChange={(e) => setReportType(e.target.value)}
+              >
+                <MenuItem value="executive">Executive Summary</MenuItem>
+                <MenuItem value="detailed">Detailed Analysis</MenuItem>
+                <MenuItem value="ward">Ward Breakdown</MenuItem>
+                <MenuItem value="cost">Cost Analysis</MenuItem>
+                <MenuItem value="completion">Completion Rate</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
+          <Grid size={{ xs: 12, md: 3 }}>
+            <FormControl fullWidth>
+              <InputLabel>Time Range</InputLabel>
+              <Select
+                value={timeRange}
+                label="Time Range"
+                onChange={(e) => setTimeRange(e.target.value)}
+              >
+                <MenuItem value="weekly">Weekly</MenuItem>
+                <MenuItem value="monthly">Monthly</MenuItem>
+                <MenuItem value="quarterly">Quarterly</MenuItem>
+                <MenuItem value="annual">Annual</MenuItem>
+                <MenuItem value="custom">Custom Range</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
+          <Grid size={{ xs: 12, md: 2 }}>
+            <TextField
+              fullWidth
+              label="Start Date"
+              type="date"
+              InputLabelProps={{ shrink: true }}
+              value={startDate}
+              onChange={(e) => setStartDate(e.target.value)}
+            />
+          </Grid>
+          <Grid size={{ xs: 12, md: 2 }}>
+            <TextField
+              fullWidth
+              label="End Date"
+              type="date"
+              InputLabelProps={{ shrink: true }}
+              value={endDate}
+              onChange={(e) => setEndDate(e.target.value)}
+            />
+          </Grid>
+          <Grid size={{ xs: 12, md: 2 }}>
+            <FormControl fullWidth>
+              <InputLabel>Ward</InputLabel>
+              <Select
+                value={selectedWard}
+                label="Ward"
+                onChange={(e) => setSelectedWard(e.target.value)}
+              >
+                <MenuItem value="all">All Wards</MenuItem>
+                {[...Array(10)].map((_, i) => (
+                  <MenuItem key={i + 1} value={`Ward ${i + 1}`}>
+                    Ward {i + 1}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
+        </Grid>
+
+        <Divider sx={{ my: 3 }} />
+
+        {/* Report Stats Preview */}
+        <Typography variant="subtitle1" gutterBottom fontWeight="600">
+          Report Preview
+        </Typography>
+        <Grid container spacing={2} sx={{ mb: 3 }}>
+          <Grid size={{ xs: 6, md: 3 }}>
+            <Card variant="outlined">
+              <CardContent sx={{ py: 2 }}>
+                <Box display="flex" alignItems="center" gap={1} mb={0.5}>
+                  <AssessmentIcon color="primary" fontSize="small" />
+                  <Typography variant="caption" color="text.secondary">
+                    Detections
+                  </Typography>
+                </Box>
+                <Typography variant="h5" fontWeight="bold">
+                  {reportStats.total}
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid size={{ xs: 6, md: 3 }}>
+            <Card variant="outlined">
+              <CardContent sx={{ py: 2 }}>
+                <Box display="flex" alignItems="center" gap={1} mb={0.5}>
+                  <CheckCircleIcon color="success" fontSize="small" />
+                  <Typography variant="caption" color="text.secondary">
+                    Completion
+                  </Typography>
+                </Box>
+                <Typography variant="h5" fontWeight="bold" color="success.main">
+                  {reportStats.completionRate.toFixed(1)}%
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid size={{ xs: 6, md: 3 }}>
+            <Card variant="outlined">
+              <CardContent sx={{ py: 2 }}>
+                <Box display="flex" alignItems="center" gap={1} mb={0.5}>
+                  <AttachMoneyIcon color="warning" fontSize="small" />
+                  <Typography variant="caption" color="text.secondary">
+                    Total Cost
+                  </Typography>
+                </Box>
+                <Typography variant="h5" fontWeight="bold">
+                  ${reportStats.totalCost.toLocaleString()}
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid size={{ xs: 6, md: 3 }}>
+            <Card variant="outlined">
+              <CardContent sx={{ py: 2 }}>
+                <Box display="flex" alignItems="center" gap={1} mb={0.5}>
+                  <TrendingUpIcon color="info" fontSize="small" />
+                  <Typography variant="caption" color="text.secondary">
+                    Avg Severity
+                  </Typography>
+                </Box>
+                <Typography variant="h5" fontWeight="bold">
+                  {reportStats.avgSeverity.toFixed(2)}
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+        </Grid>
+
+        {/* Status Chips */}
+        <Box display="flex" gap={1} flexWrap="wrap" mb={3}>
+          <Chip
+            label={`New: ${reportStats.byStatus.new}`}
+            size="small"
+            color="default"
+            variant="outlined"
+          />
+          <Chip
+            label={`In Progress: ${reportStats.byStatus.in_progress}`}
+            size="small"
+            color="info"
+            variant="outlined"
+          />
+          <Chip
+            label={`Scheduled: ${reportStats.byStatus.scheduled}`}
+            size="small"
+            color="warning"
+            variant="outlined"
+          />
+          <Chip
+            label={`Completed: ${reportStats.byStatus.completed}`}
+            size="small"
+            color="success"
+            variant="outlined"
+          />
+        </Box>
+
+        {/* Export Buttons */}
+        <Box display="flex" gap={2} flexWrap="wrap">
+          <Button
+            variant="contained"
+            startIcon={<PictureAsPdfIcon />}
+            onClick={handleGeneratePDF}
+          >
+            Export PDF
+          </Button>
+          <Button
+            variant="contained"
+            color="success"
+            startIcon={<TableViewIcon />}
+            onClick={handleGenerateExcel}
+          >
+            Export Excel
+          </Button>
+          <Button
+            variant="outlined"
+            startIcon={<DescriptionIcon />}
+            onClick={handleGenerateCSV}
+          >
+            Export CSV
+          </Button>
+        </Box>
+      </Paper>
+
+      <Typography variant="h5" gutterBottom fontWeight="bold" sx={{ mt: 4, mb: 2 }}>
+        Visual Analytics
+      </Typography>
 
       <Grid container spacing={3}>
         {/* Detection Trend */}

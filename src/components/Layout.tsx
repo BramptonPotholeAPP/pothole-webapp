@@ -5,7 +5,6 @@ import HomeIcon from '@mui/icons-material/Home';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import MapIcon from '@mui/icons-material/Map';
 import AnalyticsIcon from '@mui/icons-material/Analytics';
-import AssessmentIcon from '@mui/icons-material/Assessment';
 import GroupIcon from '@mui/icons-material/Group';
 import InfoIcon from '@mui/icons-material/Info';
 import NotificationsIcon from '@mui/icons-material/Notifications';
@@ -21,8 +20,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
     { path: '/', label: 'Home', icon: <HomeIcon /> },
     { path: '/dashboard', label: 'Dashboard', icon: <DashboardIcon /> },
     { path: '/map', label: 'Map View', icon: <MapIcon /> },
-    { path: '/analytics', label: 'Analytics', icon: <AnalyticsIcon /> },
-    { path: '/reports', label: 'Reports', icon: <AssessmentIcon /> },
+    { path: '/analytics', label: 'Analytics & Reports', icon: <AnalyticsIcon /> },
     { path: '/citizen-portal', label: 'Citizen Portal', icon: <GroupIcon /> },
     { path: '/about', label: 'About', icon: <InfoIcon /> },
   ];
