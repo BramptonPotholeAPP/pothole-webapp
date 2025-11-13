@@ -98,7 +98,18 @@ export const exportToCSV = (potholes: Pothole[], filename: string = 'potholes.cs
 };
 
 export const calculateTrendData = (potholes: Pothole[]) => {
-  const sortedByDate = [...potholes].sort(
+  // Get current month and year
+  const now = new Date();
+  const currentMonth = now.getMonth();
+  const currentYear = now.getFullYear();
+
+  // Filter potholes from current month
+  const currentMonthPotholes = potholes.filter((p) => {
+    const date = new Date(p.detected_at);
+    return date.getMonth() === currentMonth && date.getFullYear() === currentYear;
+  });
+
+  const sortedByDate = [...currentMonthPotholes].sort(
     (a, b) => new Date(a.detected_at).getTime() - new Date(b.detected_at).getTime()
   );
 
