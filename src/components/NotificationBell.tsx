@@ -20,7 +20,7 @@ import type { Notification } from '../types/notification';
 
 export const NotificationBell = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const { notifications, unreadCount, markAsRead, markAllAsRead, removeNotification } =
+  const { notifications, unreadCount, markAsRead, markAllAsRead } =
     useNotificationStore();
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
