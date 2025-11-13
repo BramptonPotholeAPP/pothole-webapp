@@ -1,243 +1,327 @@
-import { Box, Container, Typography, Button, Grid, Card, CardContent, alpha, useTheme } from '@mui/material';
+import { Box, Container, Typography, Button, useTheme, Paper } from '@mui/material';
+import Grid from '@mui/material/Grid';
 import { Link as RouterLink } from 'react-router-dom';
-import DashboardIcon from '@mui/icons-material/Dashboard';
+import ReportProblemIcon from '@mui/icons-material/ReportProblem';
 import MapIcon from '@mui/icons-material/Map';
-import AnalyticsIcon from '@mui/icons-material/Analytics';
-import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import SpeedIcon from '@mui/icons-material/Speed';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import TrendingUpIcon from '@mui/icons-material/TrendingUp';
+import GroupsIcon from '@mui/icons-material/Groups';
+import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
+import { keyframes } from '@mui/system';
 
 export const Home = () => {
   const theme = useTheme();
 
-  const features = [
+  // Animations
+  const pulse = keyframes`
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+  `;
+
+  const float = keyframes`
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+  `;
+
+  const fadeInUp = keyframes`
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  `;
+
+  const stats = [
+    { label: 'Response Time', value: '<24hrs', icon: <SpeedIcon /> },
+    { label: 'Success Rate', value: '95%', icon: <CheckCircleIcon /> },
+    { label: 'Active Reports', value: '1,247', icon: <TrendingUpIcon /> },
+  ];
+
+  const benefits = [
     {
-      icon: <AutoAwesomeIcon sx={{ fontSize: 48 }} />,
-      title: 'AI-Based Detection',
-      description: 'Demonstrates computer vision capabilities for identifying and classifying road surface defects from imagery.',
-      color: theme.palette.primary.main,
-    },
-    {
-      icon: <MapIcon sx={{ fontSize: 48 }} />,
-      title: 'Interactive Mapping',
-      description: 'Geospatial visualization using Leaflet maps to display detected potholes with location and severity data.',
-      color: theme.palette.secondary.main,
-    },
-    {
-      icon: <AnalyticsIcon sx={{ fontSize: 48 }} />,
-      title: 'Data Analytics',
-      description: 'Dashboard with charts and statistics for visualizing detection trends and status distribution.',
+      icon: <NotificationsActiveIcon sx={{ fontSize: 40 }} />,
+      title: 'Get Instant Updates',
+      description: 'Receive notifications about your report status and estimated repair time.',
       color: theme.palette.info.main,
     },
     {
-      icon: <DashboardIcon sx={{ fontSize: 48 }} />,
-      title: 'Management Interface',
-      description: 'Operational dashboard with filtering, search, and sorting capabilities for managing detection records.',
+      icon: <GroupsIcon sx={{ fontSize: 40 }} />,
+      title: 'Community Impact',
+      description: 'Help make Brampton safer for everyone by reporting road hazards.',
       color: theme.palette.success.main,
+    },
+    {
+      icon: <MapIcon sx={{ fontSize: 40 }} />,
+      title: 'Track on Map',
+      description: 'View your report and all others on an interactive map of Brampton.',
+      color: theme.palette.warning.main,
     },
   ];
 
   return (
-    <Box>
+    <Box sx={{ minHeight: '100vh' }}>
       {/* Hero Section */}
       <Box
         sx={{
           background: `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.primary.dark} 100%)`,
           color: 'white',
-          py: 12,
-          px: 3,
-          borderRadius: 4,
-          mb: 8,
+          py: { xs: 8, md: 12 },
           position: 'relative',
           overflow: 'hidden',
-          '&::before': {
-            content: '""',
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            background: 'radial-gradient(circle at top right, rgba(255,255,255,0.1) 0%, transparent 60%)',
-            pointerEvents: 'none',
-          },
         }}
       >
         <Container maxWidth="lg">
-          <Box sx={{ position: 'relative', zIndex: 1, textAlign: 'center' }}>
-            <Typography
-              variant="h2"
-              component="h1"
-              gutterBottom
-              sx={{
-                fontWeight: 800,
-                fontSize: { xs: '2.5rem', md: '3.5rem' },
-                textShadow: '0px 4px 12px rgba(0,0,0,0.2)',
-              }}
-            >
-              🚧 Brampton Pothole Detection System
-            </Typography>
-            <Typography
-              variant="h5"
-              sx={{
-                mb: 4,
-                opacity: 0.95,
-                fontWeight: 400,
-                maxWidth: '800px',
-                mx: 'auto',
-              }}
-            >
-              Demonstration Prototype for Road Infrastructure Monitoring
-            </Typography>
-            <Typography
-              variant="body1"
-              sx={{
-                mb: 5,
-                opacity: 0.9,
-                fontSize: '1.1rem',
-                maxWidth: '700px',
-                mx: 'auto',
-              }}
-            >
-              A proof-of-concept application demonstrating AI-based pothole detection and management capabilities for municipal road infrastructure.
-            </Typography>
-            <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
-              <Button
-                component={RouterLink}
-                to="/dashboard"
-                variant="contained"
-                size="large"
-                endIcon={<ArrowForwardIcon />}
+          <Grid container spacing={4} alignItems="center">
+            <Grid size={{ xs: 12, md: 7 }}>
+              <Box
                 sx={{
-                  backgroundColor: 'white',
-                  color: theme.palette.primary.main,
-                  px: 4,
-                  py: 1.5,
-                  fontSize: '1.1rem',
-                  fontWeight: 600,
-                  '&:hover': {
-                    backgroundColor: alpha(theme.palette.common.white, 0.9),
-                    transform: 'translateY(-2px)',
-                  },
-                  transition: 'all 0.3s',
+                  animation: `${fadeInUp} 0.8s ease-out`,
                 }}
               >
-                View Dashboard
-              </Button>
-              <Button
-                component={RouterLink}
-                to="/about"
-                variant="outlined"
-                size="large"
-                sx={{
-                  borderColor: 'white',
-                  color: 'white',
-                  px: 4,
-                  py: 1.5,
-                  fontSize: '1.1rem',
-                  fontWeight: 600,
-                  '&:hover': {
-                    borderColor: 'white',
-                    backgroundColor: alpha(theme.palette.common.white, 0.1),
-                  },
-                }}
-              >
-                Learn More
-              </Button>
-            </Box>
-          </Box>
+                <Typography
+                  variant="h2"
+                  component="h1"
+                  gutterBottom
+                  sx={{
+                    fontWeight: 700,
+                    fontSize: { xs: '2.5rem', md: '3.5rem' },
+                  }}
+                >
+                  Report Road Hazards in Brampton
+                </Typography>
+                <Typography
+                  variant="h5"
+                  sx={{
+                    mb: 4,
+                    opacity: 0.95,
+                    fontWeight: 400,
+                  }}
+                >
+                  Help make our roads safer. Report potholes and get real-time updates on repairs.
+                </Typography>
+
+                {/* Animated Submit Button */}
+                <Button
+                  component={RouterLink}
+                  to="/submit"
+                  variant="contained"
+                  size="large"
+                  startIcon={<ReportProblemIcon />}
+                  sx={{
+                    py: 2,
+                    px: 4,
+                    fontSize: '1.2rem',
+                    fontWeight: 600,
+                    bgcolor: 'white',
+                    color: theme.palette.primary.main,
+                    animation: `${pulse} 2s ease-in-out infinite`,
+                    boxShadow: '0 8px 24px rgba(0,0,0,0.15)',
+                    '&:hover': {
+                      bgcolor: 'white',
+                      transform: 'scale(1.05)',
+                      boxShadow: '0 12px 32px rgba(0,0,0,0.2)',
+                    },
+                    transition: 'all 0.3s ease',
+                  }}
+                >
+                  Report a Pothole Now
+                </Button>
+              </Box>
+            </Grid>
+
+            {/* Stats Cards */}
+            <Grid size={{ xs: 12, md: 5 }}>
+              <Grid container spacing={2}>
+                {stats.map((stat, index) => (
+                  <Grid size={{ xs: 12 }} key={index}>
+                    <Paper
+                      elevation={0}
+                      sx={{
+                        p: 3,
+                        bgcolor: 'rgba(255,255,255,0.15)',
+                        backdropFilter: 'blur(10px)',
+                        border: '1px solid rgba(255,255,255,0.2)',
+                        animation: `${fadeInUp} 0.8s ease-out ${index * 0.2}s both`,
+                      }}
+                    >
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                        <Box
+                          sx={{
+                            color: 'white',
+                            display: 'flex',
+                            alignItems: 'center',
+                          }}
+                        >
+                          {stat.icon}
+                        </Box>
+                        <Box>
+                          <Typography variant="h4" sx={{ fontWeight: 700, color: 'white' }}>
+                            {stat.value}
+                          </Typography>
+                          <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.9)' }}>
+                            {stat.label}
+                          </Typography>
+                        </Box>
+                      </Box>
+                    </Paper>
+                  </Grid>
+                ))}
+              </Grid>
+            </Grid>
+          </Grid>
         </Container>
       </Box>
 
-      {/* About Section */}
-      <Container maxWidth="lg" sx={{ mb: 8 }}>
-        <Box sx={{ textAlign: 'center', mb: 6 }}>
-          <Typography variant="h3" fontWeight={800} gutterBottom>
-            What is This?
-          </Typography>
-          <Typography variant="body1" color="text.secondary" fontSize="1.1rem" sx={{ maxWidth: '800px', mx: 'auto', mb: 4 }}>
-            This web application demonstrates a system for detecting and managing potholes on roads. 
-            It uses sample data to show how cities could track road damage, see locations on a map, 
-            and view statistics about repairs. The dashboard lets you filter and search through pothole 
-            records, while the map shows where each one is located in Brampton. This is a prototype 
-            to show what such a system could look like.
-          </Typography>
-        </Box>
-      </Container>
+      {/* How It Works Section */}
+      <Container maxWidth="lg" sx={{ py: 8 }}>
+        <Typography
+          variant="h3"
+          align="center"
+          gutterBottom
+          sx={{ fontWeight: 700, mb: 6 }}
+        >
+          How It Works
+        </Typography>
 
-      {/* Features Section */}
-      <Container maxWidth="lg" sx={{ mb: 8 }}>
-        <Box sx={{ textAlign: 'center', mb: 6 }}>
-          <Typography variant="h3" fontWeight={800} gutterBottom>
-            Features
-          </Typography>
-        </Box>
         <Grid container spacing={4}>
-          {features.map((feature, index) => (
-            <Grid size={{ xs: 12, sm: 6, md: 6 }} key={index}>
-              <Card
-                elevation={0}
+          {[
+            { step: '1', title: 'Report', desc: 'Take a photo and submit the location' },
+            { step: '2', title: 'Track', desc: 'Get updates on repair status' },
+            { step: '3', title: 'Fixed', desc: 'See the impact on your community' },
+          ].map((item, index) => (
+            <Grid size={{ xs: 12, md: 4 }} key={index}>
+              <Box
                 sx={{
-                  height: '100%',
-                  transition: 'all 0.3s',
-                  border: `1px solid ${alpha(feature.color, 0.2)}`,
-                  '&:hover': {
-                    transform: 'translateY(-8px)',
-                    boxShadow: `0px 12px 40px ${alpha(feature.color, 0.15)}`,
-                  },
+                  textAlign: 'center',
+                  p: 3,
+                  animation: `${fadeInUp} 0.8s ease-out ${index * 0.2}s both`,
                 }}
               >
-                <CardContent sx={{ p: 4 }}>
-                  <Box
-                    sx={{
-                      display: 'inline-flex',
-                      p: 2,
-                      borderRadius: 3,
-                      backgroundColor: alpha(feature.color, 0.1),
-                      color: feature.color,
-                      mb: 2,
-                    }}
-                  >
-                    {feature.icon}
-                  </Box>
-                  <Typography variant="h6" fontWeight={700} gutterBottom>
-                    {feature.title}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary" lineHeight={1.7}>
-                    {feature.description}
-                  </Typography>
-                </CardContent>
-              </Card>
+                <Box
+                  sx={{
+                    width: 80,
+                    height: 80,
+                    borderRadius: '50%',
+                    bgcolor: theme.palette.primary.main,
+                    color: 'white',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: '2rem',
+                    fontWeight: 700,
+                    margin: '0 auto',
+                    mb: 3,
+                    animation: `${float} 3s ease-in-out ${index * 0.5}s infinite`,
+                  }}
+                >
+                  {item.step}
+                </Box>
+                <Typography variant="h5" gutterBottom sx={{ fontWeight: 600 }}>
+                  {item.title}
+                </Typography>
+                <Typography variant="body1" color="text.secondary">
+                  {item.desc}
+                </Typography>
+              </Box>
             </Grid>
           ))}
         </Grid>
       </Container>
 
-      {/* CTA Section */}
+      {/* Benefits Section */}
+      <Box sx={{ bgcolor: 'grey.50', py: 8 }}>
+        <Container maxWidth="lg">
+          <Typography
+            variant="h3"
+            align="center"
+            gutterBottom
+            sx={{ fontWeight: 700, mb: 6 }}
+          >
+            Why Report with Us?
+          </Typography>
+
+          <Grid container spacing={4}>
+            {benefits.map((benefit, index) => (
+              <Grid size={{ xs: 12, md: 4 }} key={index}>
+                <Paper
+                  elevation={0}
+                  sx={{
+                    p: 4,
+                    height: '100%',
+                    textAlign: 'center',
+                    transition: 'all 0.3s ease',
+                    border: '2px solid transparent',
+                    '&:hover': {
+                      transform: 'translateY(-8px)',
+                      boxShadow: theme.shadows[8],
+                      borderColor: benefit.color,
+                    },
+                  }}
+                >
+                  <Box
+                    sx={{
+                      color: benefit.color,
+                      mb: 2,
+                      display: 'flex',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    {benefit.icon}
+                  </Box>
+                  <Typography variant="h5" gutterBottom sx={{ fontWeight: 600 }}>
+                    {benefit.title}
+                  </Typography>
+                  <Typography variant="body1" color="text.secondary">
+                    {benefit.description}
+                  </Typography>
+                </Paper>
+              </Grid>
+            ))}
+          </Grid>
+        </Container>
+      </Box>
+
+      {/* Call to Action Section */}
       <Box
         sx={{
-          background: `linear-gradient(135deg, ${alpha(theme.palette.primary.main, 0.08)} 0%, ${alpha(theme.palette.secondary.main, 0.08)} 100%)`,
+          background: `linear-gradient(135deg, ${theme.palette.primary.dark} 0%, ${theme.palette.secondary.dark} 100%)`,
+          color: 'white',
           py: 8,
-          px: 3,
-          borderRadius: 4,
           textAlign: 'center',
         }}
       >
         <Container maxWidth="md">
-          <Typography variant="h4" fontWeight={800} gutterBottom>
-            Explore the Demo
+          <Typography variant="h3" gutterBottom sx={{ fontWeight: 700 }}>
+            Ready to Make a Difference?
           </Typography>
-          <Typography variant="body1" color="text.secondary" sx={{ mb: 4, fontSize: '1.1rem' }}>
-            View sample pothole data on the dashboard or see their locations on the map.
+          <Typography variant="h6" sx={{ mb: 4, opacity: 0.95 }}>
+            Join thousands of citizens helping improve Brampton's roads
           </Typography>
           <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
             <Button
               component={RouterLink}
-              to="/dashboard"
+              to="/submit"
               variant="contained"
               size="large"
-              startIcon={<DashboardIcon />}
-              sx={{ px: 4 }}
+              startIcon={<ReportProblemIcon />}
+              sx={{
+                py: 2,
+                px: 4,
+                fontSize: '1.1rem',
+                bgcolor: 'white',
+                color: theme.palette.primary.main,
+                '&:hover': {
+                  bgcolor: 'white',
+                  transform: 'scale(1.05)',
+                },
+              }}
             >
-              Dashboard
+              Submit Report
             </Button>
             <Button
               component={RouterLink}
@@ -245,9 +329,20 @@ export const Home = () => {
               variant="outlined"
               size="large"
               startIcon={<MapIcon />}
-              sx={{ px: 4 }}
+              sx={{
+                py: 2,
+                px: 4,
+                fontSize: '1.1rem',
+                borderColor: 'white',
+                color: 'white',
+                '&:hover': {
+                  borderColor: 'white',
+                  bgcolor: 'rgba(255,255,255,0.1)',
+                  transform: 'scale(1.05)',
+                },
+              }}
             >
-              Map
+              View Map
             </Button>
           </Box>
         </Container>
