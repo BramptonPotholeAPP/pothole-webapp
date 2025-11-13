@@ -16,6 +16,9 @@ import SendIcon from '@mui/icons-material/Send';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
+import { notificationService } from '../services/notificationService';
+import { useNotificationStore } from '../store/notificationStore';
+import type { Pothole } from '../types/pothole';
 
 interface PotholeReport {
   location: string;
@@ -34,6 +37,7 @@ export const SubmitPothole = () => {
   const [reportId, setReportId] = useState('');
   const [trackingId, setTrackingId] = useState('');
   const [trackingResult, setTrackingResult] = useState<any>(null);
+  const { addNotification } = useNotificationStore();
   
   const [formData, setFormData] = useState<PotholeReport>({
     location: '',
@@ -63,6 +67,35 @@ export const SubmitPothole = () => {
     const newReportId = `PH-${new Date().getFullYear()}-${Math.random().toString(36).substr(2, 6).toUpperCase()}`;
     setReportId(newReportId);
     setSubmitted(true);
+    
+    // Create mock pothole object
+    const newPothole: Pothole = {
+      id: newReportId,
+      lat: 43.7315,
+      lng: -79.7624,
+      detected_at: new Date().toISOString(),
+      severity: formData.severity === 'critical' ? 0.9 : formData.severity === 'high' ? 0.7 : formData.severity === 'medium' ? 0.5 : 0.3,
+      estimated_repair_cost_cad: 500,
+      status: 'new',
+      source: 'citizen_report',
+      road_name: formData.roadName,
+      ward: formData.ward,
+      description: formData.description,
+      priority: formData.severity as 'low' | 'medium' | 'high' | 'critical',
+    };
+
+    // Send email notification
+    notificationService.sendSubmissionEmail(newPothole, formData.contactEmail);
+
+    // Create dashboard notification
+    const notification = notificationService.createSubmissionNotification(newPothole);
+    addNotification(notification);
+
+    // If high priority or critical, create alert
+    if (formData.severity === 'high' || formData.severity === 'critical') {
+      const priorityAlert = notificationService.createHighPriorityAlert(newPothole);
+      addNotification(priorityAlert);
+    }
     
     // In a real app, this would send data to backend
     console.log('Pothole Report Submitted:', formData, newReportId);
