@@ -31,7 +31,6 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import type { Pothole } from '../types/pothole';
 import { usePotholeStore } from '../store/potholeStore';
 import { potholeService } from '../services/api';
-import { StatsCards } from '../components/StatsCards';
 import { useNotification } from '../components/NotificationProvider';
 import { formatDate, formatCurrency, getSeverityColor, getStatusColor, exportToCSV } from '../utils/helpers';
 
@@ -39,7 +38,6 @@ export const Dashboard = () => {
   const navigate = useNavigate();
   const {
     filteredPotholes,
-    stats,
     loading,
     error,
     filters,
@@ -155,8 +153,6 @@ export const Dashboard = () => {
       </Typography>
 
       {error && <Alert severity="error" sx={{ mb: 3 }}>{error}</Alert>}
-
-      <StatsCards stats={stats} loading={loading} />
 
       {/* Filters */}
       <Paper sx={{ p: 3, mb: 4 }}>
