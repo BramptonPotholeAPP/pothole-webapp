@@ -108,7 +108,7 @@ export const Home = () => {
                 {/* Animated Submit Button */}
                 <Button
                   component={RouterLink}
-                  to="/submit"
+                  to="/submit-pothole"
                   variant="contained"
                   size="large"
                   startIcon={<ReportProblemIcon />}
@@ -321,7 +321,7 @@ export const Home = () => {
                 },
               }}
             >
-              Submit Report
+              Submit Pothole
             </Button>
             <Button
               component={RouterLink}
