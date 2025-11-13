@@ -22,39 +22,23 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
         palette: {
           mode: isDark ? 'dark' : 'light',
           primary: {
-            main: contrastMode === 'high' ? (isDark ? '#90caf9' : '#0d47a1') : '#1976d2',
+            main: isDark ? '#60a5fa' : '#2563eb',
+            light: isDark ? '#93c5fd' : '#60a5fa',
+            dark: isDark ? '#3b82f6' : '#1e40af',
           },
           secondary: {
-            main: contrastMode === 'high' ? (isDark ? '#f48fb1' : '#c2185b') : '#dc004e',
+            main: isDark ? '#fbbf24' : '#f59e0b',
+            light: isDark ? '#fcd34d' : '#fbbf24',
+            dark: isDark ? '#f59e0b' : '#d97706',
           },
           background: {
-            default: contrastMode === 'high'
-              ? isDark
-                ? '#000000'
-                : '#ffffff'
-              : isDark
-              ? '#121212'
-              : '#f5f5f5',
-            paper: contrastMode === 'high'
-              ? isDark
-                ? '#0a0a0a'
-                : '#ffffff'
-              : isDark
-              ? '#1e1e1e'
-              : '#ffffff',
+            default: isDark ? '#0f172a' : '#f8fafc',
+            paper: isDark ? '#1e293b' : '#ffffff',
           },
           text: {
-            primary: contrastMode === 'high'
-              ? isDark
-                ? '#ffffff'
-                : '#000000'
-              : isDark
-              ? 'rgba(255, 255, 255, 0.87)'
-              : 'rgba(0, 0, 0, 0.87)',
+            primary: isDark ? '#f1f5f9' : '#1e293b',
+            secondary: isDark ? '#94a3b8' : '#64748b',
           },
-          ...(contrastMode === 'high' && {
-            divider: isDark ? '#ffffff' : '#000000',
-          }),
         },
         typography: {
           fontSize: 14 * fontSizeMultiplier,
