@@ -3,9 +3,6 @@ import Grid from '@mui/material/Grid';
 import { Link as RouterLink } from 'react-router-dom';
 import ReportProblemIcon from '@mui/icons-material/ReportProblem';
 import MapIcon from '@mui/icons-material/Map';
-import SpeedIcon from '@mui/icons-material/Speed';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import GroupsIcon from '@mui/icons-material/Groups';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import { keyframes } from '@mui/system';
@@ -37,12 +34,6 @@ export const Home = () => {
       transform: translateY(0);
     }
   `;
-
-  const stats = [
-    { label: 'Response Time', value: '<24hrs', icon: <SpeedIcon /> },
-    { label: 'Success Rate', value: '95%', icon: <CheckCircleIcon /> },
-    { label: 'Active Reports', value: '1,247', icon: <TrendingUpIcon /> },
-  ];
 
   const benefits = [
     {
@@ -78,11 +69,12 @@ export const Home = () => {
         }}
       >
         <Container maxWidth="lg">
-          <Grid container spacing={4} alignItems="center">
-            <Grid size={{ xs: 12, md: 7 }}>
+          <Grid container spacing={4} alignItems="center" justifyContent="center">
+            <Grid size={{ xs: 12, md: 8 }}>
               <Box
                 sx={{
                   animation: `${fadeInUp} 0.8s ease-out`,
+                  textAlign: 'center',
                 }}
               >
                 <Typography
@@ -134,46 +126,6 @@ export const Home = () => {
                   {t('home.reportButton')}
                 </Button>
               </Box>
-            </Grid>
-
-            {/* Stats Cards */}
-            <Grid size={{ xs: 12, md: 5 }}>
-              <Grid container spacing={2}>
-                {stats.map((stat, index) => (
-                  <Grid size={{ xs: 12 }} key={index}>
-                    <Paper
-                      elevation={0}
-                      sx={{
-                        p: 3,
-                        bgcolor: 'rgba(255,255,255,0.15)',
-                        backdropFilter: 'blur(10px)',
-                        border: '1px solid rgba(255,255,255,0.2)',
-                        animation: `${fadeInUp} 0.8s ease-out ${index * 0.2}s both`,
-                      }}
-                    >
-                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                        <Box
-                          sx={{
-                            color: 'white',
-                            display: 'flex',
-                            alignItems: 'center',
-                          }}
-                        >
-                          {stat.icon}
-                        </Box>
-                        <Box>
-                          <Typography variant="h4" sx={{ fontWeight: 700, color: 'white' }}>
-                            {stat.value}
-                          </Typography>
-                          <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.9)' }}>
-                            {stat.label}
-                          </Typography>
-                        </Box>
-                      </Box>
-                    </Paper>
-                  </Grid>
-                ))}
-              </Grid>
             </Grid>
           </Grid>
         </Container>
