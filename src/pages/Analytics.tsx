@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo } from 'react';
-import { Box, Typography, Card, CardContent, Grid, CircularProgress, Paper, Button, TextField, FormControl, InputLabel, Select, MenuItem, Chip, Divider } from '@mui/material';
+import { Box, Typography, Card, CardContent, Grid, CircularProgress, Paper, Button, TextField, FormControl, InputLabel, Select, MenuItem, Divider } from '@mui/material';
 import { BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import TableViewIcon from '@mui/icons-material/TableView';
@@ -235,49 +235,6 @@ export const Analytics = () => {
         </Grid>
 
         <Divider sx={{ my: 3 }} />
-
-        {/* Status Chips */}
-        <Typography variant="subtitle1" gutterBottom fontWeight="600">
-          Filtered Data Summary
-        </Typography>
-        <Box display="flex" gap={1} flexWrap="wrap" mb={3}>
-          <Chip
-            label={`Total: ${reportStats.total}`}
-            size="small"
-            color="primary"
-            variant="outlined"
-          />
-          <Chip
-            label={`New: ${reportStats.byStatus.new}`}
-            size="small"
-            color="default"
-            variant="outlined"
-          />
-          <Chip
-            label={`In Progress: ${reportStats.byStatus.in_progress}`}
-            size="small"
-            color="info"
-            variant="outlined"
-          />
-          <Chip
-            label={`Scheduled: ${reportStats.byStatus.scheduled}`}
-            size="small"
-            color="warning"
-            variant="outlined"
-          />
-          <Chip
-            label={`Completed: ${reportStats.byStatus.completed}`}
-            size="small"
-            color="success"
-            variant="outlined"
-          />
-          <Chip
-            label={`Cost: $${reportStats.totalCost.toLocaleString()}`}
-            size="small"
-            color="error"
-            variant="outlined"
-          />
-        </Box>
 
         {/* Export Buttons */}
         <Box display="flex" gap={2} flexWrap="wrap">

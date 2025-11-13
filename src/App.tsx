@@ -7,7 +7,6 @@ import { Dashboard } from './pages/Dashboard';
 import { MapView } from './pages/MapView';
 import { Analytics } from './pages/Analytics';
 import { CitizenPortal } from './pages/CitizenPortal';
-import { About } from './pages/About';
 
 const theme = createTheme({
   palette: {
@@ -177,7 +176,6 @@ function App() {
               <Route path="/map" element={<MapView />} />
               <Route path="/analytics" element={<Analytics />} />
               <Route path="/citizen-portal" element={<CitizenPortal />} />
-              <Route path="/about" element={<About />} />
             </Routes>
           </Layout>
         </NotificationProvider>

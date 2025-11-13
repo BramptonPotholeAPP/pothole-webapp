@@ -6,7 +6,6 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import MapIcon from '@mui/icons-material/Map';
 import AnalyticsIcon from '@mui/icons-material/Analytics';
 import GroupIcon from '@mui/icons-material/Group';
-import InfoIcon from '@mui/icons-material/Info';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { useState } from 'react';
 
@@ -22,7 +21,6 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
     { path: '/map', label: 'Map View', icon: <MapIcon /> },
     { path: '/analytics', label: 'Analytics & Reports', icon: <AnalyticsIcon /> },
     { path: '/citizen-portal', label: 'Submit a Pothole', icon: <GroupIcon /> },
-    { path: '/about', label: 'About', icon: <InfoIcon /> },
   ];
 
   const drawer = (
