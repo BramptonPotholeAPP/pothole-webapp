@@ -120,7 +120,7 @@ export const CitizenPortal = () => {
     return (
       <Box>
         <Typography variant="h4" gutterBottom fontWeight="bold">
-          Citizen Portal
+          Submit a Pothole
         </Typography>
         
         <Paper sx={{ p: 4, textAlign: 'center', maxWidth: 600, mx: 'auto', mt: 4 }}>
@@ -185,7 +185,7 @@ export const CitizenPortal = () => {
   return (
     <Box>
       <Typography variant="h4" gutterBottom fontWeight="bold">
-        Citizen Portal
+        Submit a Pothole
       </Typography>
       <Typography variant="body1" color="text.secondary" gutterBottom>
         Report a pothole in your community and help us maintain safer roads

@@ -21,7 +21,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
     { path: '/dashboard', label: 'Dashboard', icon: <DashboardIcon /> },
     { path: '/map', label: 'Map View', icon: <MapIcon /> },
     { path: '/analytics', label: 'Analytics & Reports', icon: <AnalyticsIcon /> },
-    { path: '/citizen-portal', label: 'Citizen Portal', icon: <GroupIcon /> },
+    { path: '/citizen-portal', label: 'Submit a Pothole', icon: <GroupIcon /> },
     { path: '/about', label: 'About', icon: <InfoIcon /> },
   ];
 

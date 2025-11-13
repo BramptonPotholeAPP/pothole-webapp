@@ -240,75 +240,17 @@ export const Analytics = () => {
 
         <Divider sx={{ my: 3 }} />
 
-        {/* Report Stats Preview */}
-        <Typography variant="subtitle1" gutterBottom fontWeight="600">
-          Report Preview
-        </Typography>
-        <Grid container spacing={2} sx={{ mb: 3 }}>
-          <Grid size={{ xs: 6, md: 3 }}>
-            <Card variant="outlined">
-              <CardContent sx={{ py: 2 }}>
-                <Box display="flex" alignItems="center" gap={1} mb={0.5}>
-                  <AssessmentIcon color="primary" fontSize="small" />
-                  <Typography variant="caption" color="text.secondary">
-                    Detections
-                  </Typography>
-                </Box>
-                <Typography variant="h5" fontWeight="bold">
-                  {reportStats.total}
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid size={{ xs: 6, md: 3 }}>
-            <Card variant="outlined">
-              <CardContent sx={{ py: 2 }}>
-                <Box display="flex" alignItems="center" gap={1} mb={0.5}>
-                  <CheckCircleIcon color="success" fontSize="small" />
-                  <Typography variant="caption" color="text.secondary">
-                    Completion
-                  </Typography>
-                </Box>
-                <Typography variant="h5" fontWeight="bold" color="success.main">
-                  {reportStats.completionRate.toFixed(1)}%
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid size={{ xs: 6, md: 3 }}>
-            <Card variant="outlined">
-              <CardContent sx={{ py: 2 }}>
-                <Box display="flex" alignItems="center" gap={1} mb={0.5}>
-                  <AttachMoneyIcon color="warning" fontSize="small" />
-                  <Typography variant="caption" color="text.secondary">
-                    Total Cost
-                  </Typography>
-                </Box>
-                <Typography variant="h5" fontWeight="bold">
-                  ${reportStats.totalCost.toLocaleString()}
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid size={{ xs: 6, md: 3 }}>
-            <Card variant="outlined">
-              <CardContent sx={{ py: 2 }}>
-                <Box display="flex" alignItems="center" gap={1} mb={0.5}>
-                  <TrendingUpIcon color="info" fontSize="small" />
-                  <Typography variant="caption" color="text.secondary">
-                    Avg Severity
-                  </Typography>
-                </Box>
-                <Typography variant="h5" fontWeight="bold">
-                  {reportStats.avgSeverity.toFixed(2)}
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-        </Grid>
-
         {/* Status Chips */}
+        <Typography variant="subtitle1" gutterBottom fontWeight="600">
+          Filtered Data Summary
+        </Typography>
         <Box display="flex" gap={1} flexWrap="wrap" mb={3}>
+          <Chip
+            label={`Total: ${reportStats.total}`}
+            size="small"
+            color="primary"
+            variant="outlined"
+          />
           <Chip
             label={`New: ${reportStats.byStatus.new}`}
             size="small"
@@ -331,6 +273,12 @@ export const Analytics = () => {
             label={`Completed: ${reportStats.byStatus.completed}`}
             size="small"
             color="success"
+            variant="outlined"
+          />
+          <Chip
+            label={`Cost: $${reportStats.totalCost.toLocaleString()}`}
+            size="small"
+            color="error"
             variant="outlined"
           />
         </Box>
