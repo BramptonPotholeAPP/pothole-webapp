@@ -8,6 +8,9 @@ import { Dashboard } from './pages/Dashboard';
 import { MapView } from './pages/MapView';
 import { Analytics } from './pages/Analytics';
 import { SubmitPothole } from './pages/SubmitPothole';
+import { WorkOrders } from './pages/WorkOrders';
+import { CrewManagement } from './pages/CrewManagement';
+import { Scheduling } from './pages/Scheduling';
 
 const theme = createTheme({
   palette: {
@@ -178,6 +181,9 @@ function App() {
               <Route path="/map" element={<MapView />} />
               <Route path="/analytics" element={<Analytics />} />
               <Route path="/submit-pothole" element={<SubmitPothole />} />
+              <Route path="/work-orders" element={<WorkOrders />} />
+              <Route path="/crews" element={<CrewManagement />} />
+              <Route path="/scheduling" element={<Scheduling />} />
             </Routes>
           </Layout>
         </NotificationProvider>
