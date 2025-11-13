@@ -20,7 +20,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
     { path: '/dashboard', label: 'Dashboard', icon: <DashboardIcon /> },
     { path: '/map', label: 'Map View', icon: <MapIcon /> },
     { path: '/analytics', label: 'Analytics & Reports', icon: <AnalyticsIcon /> },
-    { path: '/citizen-portal', label: 'Submit a Pothole', icon: <GroupIcon /> },
+    { path: '/submit-pothole', label: 'Submit a Pothole', icon: <GroupIcon /> },
   ];
 
   const drawer = (

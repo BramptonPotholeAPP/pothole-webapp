@@ -6,7 +6,7 @@ import { Home } from './pages/Home';
 import { Dashboard } from './pages/Dashboard';
 import { MapView } from './pages/MapView';
 import { Analytics } from './pages/Analytics';
-import { CitizenPortal } from './pages/CitizenPortal';
+import { SubmitPothole } from './pages/SubmitPothole';
 
 const theme = createTheme({
   palette: {
@@ -175,7 +175,7 @@ function App() {
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/map" element={<MapView />} />
               <Route path="/analytics" element={<Analytics />} />
-              <Route path="/citizen-portal" element={<CitizenPortal />} />
+              <Route path="/submit-pothole" element={<SubmitPothole />} />
             </Routes>
           </Layout>
         </NotificationProvider>

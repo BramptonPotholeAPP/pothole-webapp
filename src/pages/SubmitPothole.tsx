@@ -31,7 +31,7 @@ interface PotholeReport {
   photo?: File | null;
 }
 
-export const CitizenPortal = () => {
+export const SubmitPothole = () => {
   const [submitted, setSubmitted] = useState(false);
   const [reportId, setReportId] = useState('');
   const [trackingId, setTrackingId] = useState('');
