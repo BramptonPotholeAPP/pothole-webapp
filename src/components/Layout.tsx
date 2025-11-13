@@ -7,8 +7,6 @@ import MapIcon from '@mui/icons-material/Map';
 import AnalyticsIcon from '@mui/icons-material/Analytics';
 import GroupIcon from '@mui/icons-material/Group';
 import AssignmentIcon from '@mui/icons-material/Assignment';
-import PeopleIcon from '@mui/icons-material/People';
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import { useState } from 'react';
 import { NotificationBell } from './NotificationBell';
 
@@ -22,11 +20,9 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
     { path: '/', label: 'Home', icon: <HomeIcon /> },
     { path: '/dashboard', label: 'Dashboard', icon: <DashboardIcon /> },
     { path: '/map', label: 'Map View', icon: <MapIcon /> },
-    { path: '/analytics', label: 'Analytics & Reports', icon: <AnalyticsIcon /> },
-    { path: '/work-orders', label: 'Work Orders', icon: <AssignmentIcon /> },
-    { path: '/crews', label: 'Crew Management', icon: <PeopleIcon /> },
-    { path: '/scheduling', label: 'Scheduling', icon: <CalendarMonthIcon /> },
-    { path: '/submit-pothole', label: 'Submit a Pothole', icon: <GroupIcon /> },
+    { path: '/analytics', label: 'Analytics', icon: <AnalyticsIcon /> },
+    { path: '/work-orders', label: 'Operations', icon: <AssignmentIcon /> },
+    { path: '/submit-pothole', label: 'Submit Report', icon: <GroupIcon /> },
   ];
 
   const drawer = (
