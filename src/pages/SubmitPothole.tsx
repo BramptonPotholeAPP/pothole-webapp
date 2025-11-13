@@ -75,7 +75,7 @@ export const SubmitPothole = () => {
       lng: -79.7624,
       detected_at: new Date().toISOString(),
       severity: formData.severity === 'critical' ? 0.9 : formData.severity === 'high' ? 0.7 : formData.severity === 'medium' ? 0.5 : 0.3,
-      estimated_repair_cost_cad: 500,
+      estimated_repair_cost_cad: 325,
       status: 'new',
       source: 'citizen_report',
       road_name: formData.roadName,
