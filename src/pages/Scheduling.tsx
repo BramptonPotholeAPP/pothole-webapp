@@ -140,13 +140,11 @@ export const Scheduling = () => {
   return (
     <Box>
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
-        <Typography variant="h4" fontWeight="bold">
-          Repair Scheduling
-        </Typography>
         <Button
           variant="contained"
           startIcon={<AddIcon />}
           onClick={() => handleOpenDialog()}
+          sx={{ ml: 'auto' }}
         >
           Schedule Repair
         </Button>

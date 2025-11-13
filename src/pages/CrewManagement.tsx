@@ -103,13 +103,11 @@ export const CrewManagement = () => {
   return (
     <Box>
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
-        <Typography variant="h4" fontWeight="bold">
-          Crew Management
-        </Typography>
         <Button
           variant="contained"
           startIcon={<AddIcon />}
           onClick={() => handleOpenDialog()}
+          sx={{ ml: 'auto' }}
         >
           Add Crew
         </Button>

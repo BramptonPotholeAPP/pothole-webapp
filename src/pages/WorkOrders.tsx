@@ -132,13 +132,11 @@ export const WorkOrders = () => {
   return (
     <Box>
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
-        <Typography variant="h4" fontWeight="bold">
-          Work Orders
-        </Typography>
         <Button
           variant="contained"
           startIcon={<AddIcon />}
           onClick={() => handleOpenDialog()}
+          sx={{ ml: 'auto' }}
         >
           Create Work Order
         </Button>
