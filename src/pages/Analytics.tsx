@@ -4,10 +4,6 @@ import { BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, Cart
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import TableViewIcon from '@mui/icons-material/TableView';
 import DescriptionIcon from '@mui/icons-material/Description';
-import TrendingUpIcon from '@mui/icons-material/TrendingUp';
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import AssessmentIcon from '@mui/icons-material/Assessment';
 import { usePotholeStore } from '../store/potholeStore';
 import { potholeService } from '../services/api';
 import { StatsCards } from '../components/StatsCards';
