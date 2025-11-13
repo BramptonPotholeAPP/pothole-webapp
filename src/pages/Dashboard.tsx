@@ -469,7 +469,7 @@ export const Dashboard = () => {
                       }
                     }}
                   >
-                    <TableCell>{pothole.id}</TableCell>
+                    <TableCell sx={{ color: 'text.primary', fontWeight: 500 }}>{pothole.id}</TableCell>
                     <TableCell>{formatDate(pothole.detected_at)}</TableCell>
                     <TableCell>
                       {pothole.lat.toFixed(5)}, {pothole.lng.toFixed(5)}
