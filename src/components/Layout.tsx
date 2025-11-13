@@ -198,11 +198,25 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
           textAlign: 'center',
         }}
       >
-        <Typography variant="body2" color="text.secondary" fontWeight={500}>
-          © 2025 City of Brampton - AI-Powered Road Infrastructure Monitoring
-        </Typography>
-        <Typography variant="caption" color="text.secondary" display="block" mt={0.5}>
-          Built with React + TypeScript + Material-UI
+        <Typography 
+          variant="body2" 
+          color="text.secondary" 
+          fontWeight={500}
+          component="a"
+          href="https://eyadgad.github.io/"
+          target="_blank"
+          rel="noopener noreferrer"
+          sx={{
+            textDecoration: 'none',
+            color: 'text.secondary',
+            '&:hover': {
+              color: 'primary.main',
+              textDecoration: 'underline',
+            },
+            cursor: 'pointer',
+          }}
+        >
+          © 2025 Eyad Gad
         </Typography>
       </Box>
     </Box>
