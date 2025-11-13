@@ -7,22 +7,26 @@ import MapIcon from '@mui/icons-material/Map';
 import AnalyticsIcon from '@mui/icons-material/Analytics';
 import GroupIcon from '@mui/icons-material/Group';
 import AssignmentIcon from '@mui/icons-material/Assignment';
+import SettingsIcon from '@mui/icons-material/Settings';
 import { useState } from 'react';
 import { NotificationBell } from './NotificationBell';
+import { useTranslation } from '../i18n/useTranslation';
 
 export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const location = useLocation();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const { t } = useTranslation();
 
   const navItems = [
-    { path: '/', label: 'Home', icon: <HomeIcon /> },
-    { path: '/dashboard', label: 'Dashboard', icon: <DashboardIcon /> },
-    { path: '/map', label: 'Map View', icon: <MapIcon /> },
-    { path: '/analytics', label: 'Analytics', icon: <AnalyticsIcon /> },
-    { path: '/work-orders', label: 'Operations', icon: <AssignmentIcon /> },
-    { path: '/submit-pothole', label: 'Submit Pothole', icon: <GroupIcon /> },
+    { path: '/', label: t('nav.home'), icon: <HomeIcon /> },
+    { path: '/dashboard', label: t('nav.dashboard'), icon: <DashboardIcon /> },
+    { path: '/map', label: t('nav.map'), icon: <MapIcon /> },
+    { path: '/analytics', label: t('nav.analytics'), icon: <AnalyticsIcon /> },
+    { path: '/work-orders', label: t('nav.operations'), icon: <AssignmentIcon /> },
+    { path: '/submit-pothole', label: t('nav.submit'), icon: <GroupIcon /> },
+    { path: '/settings', label: t('nav.settings'), icon: <SettingsIcon /> },
   ];
 
   const drawer = (

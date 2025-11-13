@@ -9,9 +9,11 @@ import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import GroupsIcon from '@mui/icons-material/Groups';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import { keyframes } from '@mui/system';
+import { useTranslation } from '../i18n/useTranslation';
 
 export const Home = () => {
   const theme = useTheme();
+  const { t } = useTranslation();
 
   // Animations
   const pulse = keyframes`
@@ -92,7 +94,7 @@ export const Home = () => {
                     fontSize: { xs: '2.5rem', md: '3.5rem' },
                   }}
                 >
-                  Report Road Hazards in Brampton
+                  {t('home.title')}
                 </Typography>
                 <Typography
                   variant="h5"
@@ -102,7 +104,7 @@ export const Home = () => {
                     fontWeight: 400,
                   }}
                 >
-                  Help make our roads safer. Report potholes and get real-time updates on repairs.
+                  {t('home.subtitle')}
                 </Typography>
 
                 {/* Animated Submit Button */}
@@ -129,7 +131,7 @@ export const Home = () => {
                     transition: 'all 0.3s ease',
                   }}
                 >
-                  Report a Pothole Now
+                  {t('home.reportButton')}
                 </Button>
               </Box>
             </Grid>
@@ -185,7 +187,7 @@ export const Home = () => {
           gutterBottom
           sx={{ fontWeight: 700, mb: 6 }}
         >
-          How It Works
+          {t('home.howItWorks')}
         </Typography>
 
         <Grid container spacing={4}>
@@ -242,7 +244,7 @@ export const Home = () => {
             gutterBottom
             sx={{ fontWeight: 700, mb: 6 }}
           >
-            Why Report with Us?
+            {t('home.benefits')}
           </Typography>
 
           <Grid container spacing={4}>
@@ -297,10 +299,10 @@ export const Home = () => {
       >
         <Container maxWidth="md">
           <Typography variant="h3" gutterBottom sx={{ fontWeight: 700 }}>
-            Ready to Make a Difference?
+            {t('home.cta')}
           </Typography>
           <Typography variant="h6" sx={{ mb: 4, opacity: 0.95 }}>
-            Join thousands of citizens helping improve Brampton's roads
+            {t('home.ctaDescription')}
           </Typography>
           <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
             <Button
@@ -321,7 +323,7 @@ export const Home = () => {
                 },
               }}
             >
-              Submit Pothole
+              {t('home.submitButton')}
             </Button>
             <Button
               component={RouterLink}
@@ -342,7 +344,7 @@ export const Home = () => {
                 },
               }}
             >
-              View Map
+              {t('home.viewMapButton')}
             </Button>
           </Box>
         </Container>
