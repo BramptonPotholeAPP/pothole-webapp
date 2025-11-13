@@ -263,14 +263,34 @@ export const Dashboard = () => {
             <Typography variant="h6" gutterBottom>
               Detection Trend
             </Typography>
+            <Typography variant="caption" color="text.secondary" display="block" mb={1}>
+              Click on a data point to filter by date
+            </Typography>
             <ResponsiveContainer width="100%" height={300}>
-              <LineChart data={trendData}>
+              <LineChart 
+                data={trendData}
+                onClick={(data: any) => {
+                  if (data && data.activePayload && data.activePayload[0]) {
+                    const date = data.activePayload[0].payload.date;
+                    setFilters({ ...filters, since: date, until: date });
+                    showNotification(`Filtered by date: ${date}`, 'info');
+                  }
+                }}
+                style={{ cursor: 'pointer' }}
+              >
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="date" />
                 <YAxis />
                 <Tooltip />
                 <Legend />
-                <Line type="monotone" dataKey="count" stroke="#1976d2" strokeWidth={2} name="Detections" />
+                <Line 
+                  type="monotone" 
+                  dataKey="count" 
+                  stroke="#1976d2" 
+                  strokeWidth={2} 
+                  name="Detections"
+                  activeDot={{ r: 8, style: { cursor: 'pointer' } }}
+                />
               </LineChart>
             </ResponsiveContainer>
           </CardContent>
@@ -295,11 +315,15 @@ export const Dashboard = () => {
                   outerRadius={100}
                   fill="#8884d8"
                   dataKey="value"
-                  onClick={handlePieChartClick}
+                  onClick={(data) => handlePieChartClick(data)}
                   style={{ cursor: 'pointer' }}
                 >
                   {statusData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.color} />
+                    <Cell 
+                      key={`cell-${index}`} 
+                      fill={entry.color}
+                      style={{ cursor: 'pointer' }}
+                    />
                   ))}
                 </Pie>
                 <Tooltip />
@@ -312,9 +336,14 @@ export const Dashboard = () => {
       {/* Data Table */}
       <Paper sx={{ mb: 4 }}>
         <Box p={2} display="flex" justifyContent="space-between" alignItems="center">
-          <Typography variant="h6">
-            Pothole Detections
-          </Typography>
+          <Box>
+            <Typography variant="h6">
+              Pothole Detections
+            </Typography>
+            <Typography variant="caption" color="text.secondary">
+              Click on any row to view location on map
+            </Typography>
+          </Box>
           <Typography variant="body2" color="text.secondary">
             {sortedPotholes.length} result{sortedPotholes.length !== 1 ? 's' : ''} found
           </Typography>
@@ -393,7 +422,17 @@ export const Dashboard = () => {
                 </TableRow>
               ) : (
                 paginatedPotholes.map((pothole) => (
-                  <TableRow key={pothole.id} hover>
+                  <TableRow 
+                    key={pothole.id} 
+                    hover
+                    onClick={() => handleViewOnMap(pothole)}
+                    sx={{ 
+                      cursor: 'pointer',
+                      '&:hover': { 
+                        backgroundColor: 'action.hover',
+                      }
+                    }}
+                  >
                     <TableCell>{pothole.id}</TableCell>
                     <TableCell>{formatDate(pothole.detected_at)}</TableCell>
                     <TableCell>
@@ -425,7 +464,7 @@ export const Dashboard = () => {
                       )}
                     </TableCell>
                     <TableCell>{pothole.ward || '-'}</TableCell>
-                    <TableCell align="center">
+                    <TableCell align="center" onClick={(e) => e.stopPropagation()}>
                       <MuiTooltip title="View on Map">
                         <IconButton 
                           size="small" 

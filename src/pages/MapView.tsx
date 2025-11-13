@@ -34,11 +34,15 @@ const createCustomIcon = (severity: number) => {
   });
 };
 
-function MapUpdater({ center }: { center: [number, number] }) {
+function MapUpdater({ center, zoom }: { center: [number, number]; zoom?: number }) {
   const map = useMap();
   useEffect(() => {
-    map.setView(center, map.getZoom());
-  }, [center, map]);
+    if (zoom !== undefined) {
+      map.setView(center, zoom);
+    } else {
+      map.setView(center, map.getZoom());
+    }
+  }, [center, zoom, map]);
   return null;
 }
 
@@ -46,6 +50,8 @@ export const MapView = () => {
   const location = useLocation();
   const { filteredPotholes, filters, setPotholes, setStats, setLoading, setFilters } = usePotholeStore();
   const [mapCenter, setMapCenter] = useState<[number, number]>([43.7314, -79.7624]);
+  const [mapZoom, setMapZoom] = useState<number | undefined>(undefined);
+  const [selectedPotholeId, setSelectedPotholeId] = useState<string | null>(null);
   const [loading, setLocalLoading] = useState(true);
 
   useEffect(() => {
@@ -76,6 +82,8 @@ export const MapView = () => {
     if (location.state?.selectedPothole) {
       const pothole = location.state.selectedPothole as Pothole;
       setMapCenter([pothole.lat, pothole.lng]);
+      setMapZoom(16); // Zoom in closer when navigating from dashboard
+      setSelectedPotholeId(pothole.id);
       // Clear the state after using it
       window.history.replaceState({}, document.title);
     }
@@ -83,6 +91,8 @@ export const MapView = () => {
 
   const handlePotholeClick = (pothole: Pothole) => {
     setMapCenter([pothole.lat, pothole.lng]);
+    setMapZoom(16); // Zoom in closer when clicking a pothole
+    setSelectedPotholeId(pothole.id);
   };
 
   if (loading) {
@@ -140,10 +150,20 @@ export const MapView = () => {
             <Typography variant="h6" gutterBottom>
               Detections ({filteredPotholes.length})
             </Typography>
+            <Typography variant="caption" color="text.secondary" display="block" mb={2}>
+              Click on a pothole to view on map
+            </Typography>
             {filteredPotholes.map((pothole) => (
               <Card
                 key={pothole.id}
-                sx={{ mb: 2, cursor: 'pointer', '&:hover': { boxShadow: 4 } }}
+                sx={{ 
+                  mb: 2, 
+                  cursor: 'pointer', 
+                  '&:hover': { boxShadow: 4 },
+                  border: selectedPotholeId === pothole.id ? '2px solid' : 'none',
+                  borderColor: selectedPotholeId === pothole.id ? 'primary.main' : 'transparent',
+                  backgroundColor: selectedPotholeId === pothole.id ? 'action.selected' : 'background.paper'
+                }}
                 onClick={() => handlePotholeClick(pothole)}
               >
                 <CardContent>
@@ -183,7 +203,7 @@ export const MapView = () => {
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
-            <MapUpdater center={mapCenter} />
+            <MapUpdater center={mapCenter} zoom={mapZoom} />
             {filteredPotholes.map((pothole) => (
               <Marker
                 key={pothole.id}
