@@ -33,6 +33,7 @@ import { usePotholeStore } from '../store/potholeStore';
 import { potholeService } from '../services/api';
 import { useNotification } from '../components/NotificationProvider';
 import { formatDate, formatCurrency, getSeverityColor, getStatusColor, exportToCSV } from '../utils/helpers';
+import { DashboardAlerts } from '../components/DashboardAlerts';
 
 export const Dashboard = () => {
   const navigate = useNavigate();
@@ -153,6 +154,9 @@ export const Dashboard = () => {
       </Typography>
 
       {error && <Alert severity="error" sx={{ mb: 3 }}>{error}</Alert>}
+
+      {/* Priority Alerts */}
+      <DashboardAlerts />
 
       {/* Filters */}
       <Paper sx={{ p: 3, mb: 4 }}>
