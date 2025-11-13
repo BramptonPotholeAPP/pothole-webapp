@@ -25,7 +25,6 @@ import {
 import Grid from '@mui/material/Grid';
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
 import GroupIcon from '@mui/icons-material/Group';
 import { useWorkOrderStore } from '../store/workOrderStore';
 import type { Crew } from '../types/workOrder';
@@ -169,7 +168,7 @@ export const CrewManagement = () => {
               return (
                 <TableRow key={crew.id}>
                   <TableCell>{crew.id}</TableCell>
-                  <TableCell fontWeight="600">{crew.name}</TableCell>
+                  <TableCell sx={{ fontWeight: 600 }}>{crew.name}</TableCell>
                   <TableCell>{crew.supervisor}</TableCell>
                   <TableCell>{crew.members.length} members</TableCell>
                   <TableCell>
