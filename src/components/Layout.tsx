@@ -5,7 +5,6 @@ import HomeIcon from '@mui/icons-material/Home';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import MapIcon from '@mui/icons-material/Map';
 import AnalyticsIcon from '@mui/icons-material/Analytics';
-import GroupIcon from '@mui/icons-material/Group';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
@@ -36,7 +35,6 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
     { path: '/map', label: t('nav.map'), icon: <MapIcon /> },
     { path: '/analytics', label: t('nav.analytics'), icon: <AnalyticsIcon /> },
     { path: '/work-orders', label: t('nav.operations'), icon: <AssignmentIcon /> },
-    { path: '/submit-pothole', label: t('nav.submit'), icon: <GroupIcon /> },
   ];
 
   const drawer = (
