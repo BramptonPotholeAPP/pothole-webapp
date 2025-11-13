@@ -6,6 +6,9 @@ import { Home } from './pages/Home';
 import { Dashboard } from './pages/Dashboard';
 import { MapView } from './pages/MapView';
 import { Analytics } from './pages/Analytics';
+import { Reports } from './pages/Reports';
+import { CitizenPortal } from './pages/CitizenPortal';
+import { About } from './pages/About';
 
 const theme = createTheme({
   palette: {
@@ -174,6 +177,9 @@ function App() {
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/map" element={<MapView />} />
               <Route path="/analytics" element={<Analytics />} />
+              <Route path="/reports" element={<Reports />} />
+              <Route path="/citizen-portal" element={<CitizenPortal />} />
+              <Route path="/about" element={<About />} />
             </Routes>
           </Layout>
         </NotificationProvider>
