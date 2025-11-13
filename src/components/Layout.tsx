@@ -211,12 +211,14 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
             color: 'text.secondary',
             '&:hover': {
               color: 'primary.main',
-              textDecoration: 'underline',
             },
             cursor: 'pointer',
           }}
         >
           © 2025 Eyad Gad
+        </Typography>
+        <Typography variant="caption" color="text.secondary" display="block" mt={0.5}>
+          Pothole Detection Demo for City of Brampton
         </Typography>
       </Box>
     </Box>
