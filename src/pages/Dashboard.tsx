@@ -2,8 +2,6 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Box,
-  Card,
-  CardContent,
   Typography,
   Paper,
   Table,
@@ -31,12 +29,11 @@ import DownloadIcon from '@mui/icons-material/Download';
 import SearchIcon from '@mui/icons-material/Search';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import type { Pothole } from '../types/pothole';
-import { LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { usePotholeStore } from '../store/potholeStore';
 import { potholeService } from '../services/api';
 import { StatsCards } from '../components/StatsCards';
 import { useNotification } from '../components/NotificationProvider';
-import { formatDate, formatCurrency, getSeverityColor, getStatusColor, exportToCSV, calculateTrendData } from '../utils/helpers';
+import { formatDate, formatCurrency, getSeverityColor, getStatusColor, exportToCSV } from '../utils/helpers';
 
 export const Dashboard = () => {
   const navigate = useNavigate();
@@ -86,15 +83,6 @@ export const Dashboard = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const trendData = calculateTrendData(filteredPotholes);
-
-  const statusData = [
-    { name: 'New', value: filteredPotholes.filter(p => p.status === 'new').length, color: '#1976d2' },
-    { name: 'In Progress', value: filteredPotholes.filter(p => p.status === 'in_progress').length, color: '#f57c00' },
-    { name: 'Scheduled', value: filteredPotholes.filter(p => p.status === 'scheduled').length, color: '#9c27b0' },
-    { name: 'Completed', value: filteredPotholes.filter(p => p.status === 'completed').length, color: '#2e7d32' },
-  ];
-
   const handleRequestSort = (property: keyof Pothole) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
@@ -110,26 +98,10 @@ export const Dashboard = () => {
     setPage(0);
   };
 
-  // Handle chart click - filter by status
-  const handlePieChartClick = (data: any) => {
-    const statusMap: Record<string, string> = {
-      'New': 'new',
-      'In Progress': 'in_progress',
-      'Scheduled': 'scheduled',
-      'Completed': 'completed',
-    };
-    const status = statusMap[data.name];
-    if (status) {
-      setFilters({ ...filters, status });
-      showNotification(`Filtered by status: ${data.name}`, 'info');
-    }
-  };
-
   // Navigate to map with specific pothole
   const handleViewOnMap = (pothole: Pothole) => {
     navigate('/map', { state: { selectedPothole: pothole } });
   };
-
 
   // Filter by search query
   const searchFilteredPotholes = filteredPotholes.filter((pothole) => {
@@ -255,69 +227,6 @@ export const Dashboard = () => {
           }}
         />
       </Paper>
-
-      {/* Charts */}
-      <Box display="grid" gridTemplateColumns={{ xs: '1fr', md: '1fr 1fr' }} gap={3} mb={4}>
-        <Card>
-          <CardContent>
-            <Typography variant="h6" gutterBottom>
-              Detection Trend (This Month)
-            </Typography>
-            <ResponsiveContainer width="100%" height={300}>
-              <LineChart data={trendData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="date" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Line 
-                  type="monotone" 
-                  dataKey="count" 
-                  stroke="#1976d2" 
-                  strokeWidth={2} 
-                  name="Detections"
-                />
-              </LineChart>
-            </ResponsiveContainer>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardContent>
-            <Typography variant="h6" gutterBottom>
-              Status Distribution
-            </Typography>
-            <Typography variant="caption" color="text.secondary" display="block" mb={1}>
-              Click on a segment to filter by status
-            </Typography>
-            <ResponsiveContainer width="100%" height={300}>
-              <PieChart>
-                <Pie
-                  data={statusData}
-                  cx="50%"
-                  cy="50%"
-                  labelLine={false}
-                  label={(entry) => `${entry.name}: ${entry.value}`}
-                  outerRadius={100}
-                  fill="#8884d8"
-                  dataKey="value"
-                  onClick={(data) => handlePieChartClick(data)}
-                  style={{ cursor: 'pointer' }}
-                >
-                  {statusData.map((entry, index) => (
-                    <Cell 
-                      key={`cell-${index}`} 
-                      fill={entry.color}
-                      style={{ cursor: 'pointer' }}
-                    />
-                  ))}
-                </Pie>
-                <Tooltip />
-              </PieChart>
-            </ResponsiveContainer>
-          </CardContent>
-        </Card>
-      </Box>
 
       {/* Data Table */}
       <Paper sx={{ mb: 4 }}>
