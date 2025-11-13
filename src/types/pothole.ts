@@ -33,4 +33,5 @@ export interface FilterOptions {
   until?: string;
   ward?: string;
   priority?: string;
+  overdue?: boolean;
 }

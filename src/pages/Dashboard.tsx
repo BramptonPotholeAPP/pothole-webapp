@@ -33,7 +33,6 @@ import { usePotholeStore } from '../store/potholeStore';
 import { potholeService } from '../services/api';
 import { useNotification } from '../components/NotificationProvider';
 import { formatDate, formatCurrency, getSeverityColor, getStatusColor, exportToCSV } from '../utils/helpers';
-import { DashboardAlerts } from '../components/DashboardAlerts';
 
 export const Dashboard = () => {
   const navigate = useNavigate();
@@ -155,9 +154,6 @@ export const Dashboard = () => {
 
       {error && <Alert severity="error" sx={{ mb: 3 }}>{error}</Alert>}
 
-      {/* Priority Alerts */}
-      <DashboardAlerts />
-
       {/* Filters */}
       <Paper sx={{ p: 3, mb: 4 }}>
         <Typography variant="h6" gutterBottom>
@@ -192,6 +188,32 @@ export const Dashboard = () => {
               <MenuItem value="in_progress">In Progress</MenuItem>
               <MenuItem value="scheduled">Scheduled</MenuItem>
               <MenuItem value="completed">Completed</MenuItem>
+            </Select>
+          </FormControl>
+          <FormControl sx={{ minWidth: 150 }}>
+            <InputLabel>Priority</InputLabel>
+            <Select
+              value={filters.priority || ''}
+              label="Priority"
+              onChange={(e) => setFilters({ ...filters, priority: e.target.value })}
+            >
+              <MenuItem value="">All</MenuItem>
+              <MenuItem value="low">Low</MenuItem>
+              <MenuItem value="medium">Medium</MenuItem>
+              <MenuItem value="high">High</MenuItem>
+              <MenuItem value="critical">Critical</MenuItem>
+            </Select>
+          </FormControl>
+          <FormControl sx={{ minWidth: 150 }}>
+            <InputLabel>Overdue</InputLabel>
+            <Select
+              value={filters.overdue === true ? 'yes' : filters.overdue === false ? 'no' : ''}
+              label="Overdue"
+              onChange={(e) => setFilters({ ...filters, overdue: e.target.value === 'yes' ? true : e.target.value === 'no' ? false : undefined })}
+            >
+              <MenuItem value="">All</MenuItem>
+              <MenuItem value="yes">Overdue Only</MenuItem>
+              <MenuItem value="no">Not Overdue</MenuItem>
             </Select>
           </FormControl>
           <TextField

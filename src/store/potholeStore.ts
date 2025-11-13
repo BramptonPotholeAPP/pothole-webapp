@@ -69,6 +69,25 @@ export const usePotholeStore = create<PotholeStore>((set, get) => ({
       filtered = filtered.filter((p) => p.priority === filters.priority);
     }
 
+    if (filters.overdue) {
+      // Filter for overdue items (not completed and past deadline)
+      const now = new Date();
+      filtered = filtered.filter((p) => {
+        if (p.status === 'completed') return false;
+        
+        const detectedDate = new Date(p.detected_at);
+        const daysElapsed = Math.floor((now.getTime() - detectedDate.getTime()) / (1000 * 60 * 60 * 24));
+        
+        // Deadline days based on priority
+        const deadlineDays = 
+          p.priority === 'critical' ? 1 :
+          p.priority === 'high' ? 3 :
+          p.priority === 'medium' ? 7 : 14;
+        
+        return daysElapsed > deadlineDays;
+      });
+    }
+
     set({ filteredPotholes: filtered });
   },
 
