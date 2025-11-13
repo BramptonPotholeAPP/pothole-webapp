@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ThemeProvider, createTheme, CssBaseline } from '@mui/material';
 import { Layout } from './components/Layout';
 import { NotificationProvider } from './components/NotificationProvider';
+import { EscalationMonitor } from './components/EscalationMonitor';
 import { Home } from './pages/Home';
 import { Dashboard } from './pages/Dashboard';
 import { MapView } from './pages/MapView';
@@ -169,6 +170,7 @@ function App() {
       <CssBaseline />
       <Router>
         <NotificationProvider>
+          <EscalationMonitor />
           <Layout>
             <Routes>
               <Route path="/" element={<Home />} />
