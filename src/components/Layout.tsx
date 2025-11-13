@@ -9,7 +9,6 @@ import GroupIcon from '@mui/icons-material/Group';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
-import BrightnessAutoIcon from '@mui/icons-material/BrightnessAuto';
 import { useState } from 'react';
 import { NotificationBell } from './NotificationBell';
 import { useTranslation } from '../i18n/useTranslation';
@@ -23,16 +22,12 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
   const { t } = useTranslation();
   const { themeMode, setThemeMode } = useSettingsStore();
 
-  const cycleTheme = () => {
-    if (themeMode === 'light') setThemeMode('dark');
-    else if (themeMode === 'dark') setThemeMode('auto');
-    else setThemeMode('light');
+  const toggleTheme = () => {
+    setThemeMode(themeMode === 'light' ? 'dark' : 'light');
   };
 
   const getThemeIcon = () => {
-    if (themeMode === 'light') return <Brightness7Icon />;
-    if (themeMode === 'dark') return <Brightness4Icon />;
-    return <BrightnessAutoIcon />;
+    return themeMode === 'light' ? <Brightness7Icon /> : <Brightness4Icon />;
   };
 
   const navItems = [
@@ -148,10 +143,10 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
           )}
           <IconButton
             color="inherit"
-            onClick={cycleTheme}
+            onClick={toggleTheme}
             sx={{ mr: 1 }}
             aria-label={`Theme mode: ${themeMode}`}
-            title={`Current: ${themeMode}. Click to change.`}
+            title={`Switch to ${themeMode === 'light' ? 'dark' : 'light'} mode`}
           >
             {getThemeIcon()}
           </IconButton>

@@ -51,7 +51,7 @@ export const useSettingsStore = create<SettingsState>()(
   persist(
     (set) => ({
       // Default values
-      themeMode: 'auto',
+      themeMode: 'light',
       contrastMode: 'normal',
       language: 'en',
       widgets: defaultWidgets,
@@ -80,7 +80,7 @@ export const useSettingsStore = create<SettingsState>()(
       
       resetSettings: () =>
         set({
-          themeMode: 'auto',
+          themeMode: 'light',
           contrastMode: 'normal',
           language: 'en',
           widgets: defaultWidgets,
