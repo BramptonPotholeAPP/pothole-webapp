@@ -360,7 +360,7 @@ export const SubmitPothole = () => {
                 fullWidth
                 sx={{ mt: 4 }}
               >
-                Submit Pothole
+                Report Pothole
               </Button>
             </form>
           </Paper>

@@ -111,14 +111,14 @@ export const Home = () => {
                     px: 4,
                     fontSize: '1.2rem',
                     fontWeight: 600,
-                    bgcolor: '#f59e0b',
+                    bgcolor: '#ef4444',
                     color: 'white',
                     animation: `${pulse} 2s ease-in-out infinite`,
-                    boxShadow: '0 8px 32px rgba(245, 158, 11, 0.5), 0 0 20px rgba(245, 158, 11, 0.3)',
+                    boxShadow: '0 8px 32px rgba(239, 68, 68, 0.5), 0 0 20px rgba(239, 68, 68, 0.3)',
                     '&:hover': {
-                      bgcolor: '#d97706',
+                      bgcolor: '#dc2626',
                       transform: 'scale(1.05)',
-                      boxShadow: '0 12px 40px rgba(245, 158, 11, 0.6), 0 0 30px rgba(245, 158, 11, 0.4)',
+                      boxShadow: '0 12px 40px rgba(239, 68, 68, 0.6), 0 0 30px rgba(239, 68, 68, 0.4)',
                     },
                     transition: 'all 0.3s ease',
                   }}

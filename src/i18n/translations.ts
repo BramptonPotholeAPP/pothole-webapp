@@ -19,7 +19,7 @@ export const translations = {
       benefits: 'Why Report with Us?',
       cta: 'Ready to Make a Difference?',
       ctaDescription: 'Join thousands of citizens helping improve Brampton\'s roads',
-      submitButton: 'Submit Pothole',
+      submitButton: 'Report Pothole',
       viewMapButton: 'View Map',
     },
     // Common
