@@ -9,7 +9,6 @@ import { MapView } from './pages/MapView';
 import { Analytics } from './pages/Analytics';
 import { SubmitPothole } from './pages/SubmitPothole';
 import { Operations } from './pages/Operations';
-import { Settings } from './pages/Settings';
 
 function App() {
   return (
@@ -29,7 +28,6 @@ function App() {
               <Route path="/work-orders" element={<Operations />} />
               <Route path="/crews" element={<Operations />} />
               <Route path="/scheduling" element={<Operations />} />
-              <Route path="/settings" element={<Settings />} />
             </Routes>
           </Layout>
         </NotificationProvider>

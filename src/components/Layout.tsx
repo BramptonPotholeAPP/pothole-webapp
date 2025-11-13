@@ -7,10 +7,13 @@ import MapIcon from '@mui/icons-material/Map';
 import AnalyticsIcon from '@mui/icons-material/Analytics';
 import GroupIcon from '@mui/icons-material/Group';
 import AssignmentIcon from '@mui/icons-material/Assignment';
-import SettingsIcon from '@mui/icons-material/Settings';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
+import BrightnessAutoIcon from '@mui/icons-material/BrightnessAuto';
 import { useState } from 'react';
 import { NotificationBell } from './NotificationBell';
 import { useTranslation } from '../i18n/useTranslation';
+import { useSettingsStore } from '../store/settingsStore';
 
 export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const location = useLocation();
@@ -18,6 +21,19 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [drawerOpen, setDrawerOpen] = useState(false);
   const { t } = useTranslation();
+  const { themeMode, setThemeMode } = useSettingsStore();
+
+  const cycleTheme = () => {
+    if (themeMode === 'light') setThemeMode('dark');
+    else if (themeMode === 'dark') setThemeMode('auto');
+    else setThemeMode('light');
+  };
+
+  const getThemeIcon = () => {
+    if (themeMode === 'light') return <Brightness7Icon />;
+    if (themeMode === 'dark') return <Brightness4Icon />;
+    return <BrightnessAutoIcon />;
+  };
 
   const navItems = [
     { path: '/', label: t('nav.home'), icon: <HomeIcon /> },
@@ -26,7 +42,6 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
     { path: '/analytics', label: t('nav.analytics'), icon: <AnalyticsIcon /> },
     { path: '/work-orders', label: t('nav.operations'), icon: <AssignmentIcon /> },
     { path: '/submit-pothole', label: t('nav.submit'), icon: <GroupIcon /> },
-    { path: '/settings', label: t('nav.settings'), icon: <SettingsIcon /> },
   ];
 
   const drawer = (
@@ -131,6 +146,15 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
               ))}
             </Box>
           )}
+          <IconButton
+            color="inherit"
+            onClick={cycleTheme}
+            sx={{ mr: 1 }}
+            aria-label={`Theme mode: ${themeMode}`}
+            title={`Current: ${themeMode}. Click to change.`}
+          >
+            {getThemeIcon()}
+          </IconButton>
           <NotificationBell />
         </Toolbar>
       </AppBar>
