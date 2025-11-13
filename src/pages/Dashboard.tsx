@@ -24,15 +24,29 @@ import {
   InputAdornment,
   IconButton,
   Tooltip as MuiTooltip,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Menu,
 } from '@mui/material';
+import Grid from '@mui/material/Grid';
 import DownloadIcon from '@mui/icons-material/Download';
 import SearchIcon from '@mui/icons-material/Search';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import AssignmentIcon from '@mui/icons-material/Assignment';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import EditIcon from '@mui/icons-material/Edit';
 import type { Pothole } from '../types/pothole';
 import { usePotholeStore } from '../store/potholeStore';
+import { useWorkOrderStore } from '../store/workOrderStore';
+import { useSchedulingStore } from '../store/schedulingStore';
 import { potholeService } from '../services/api';
 import { useNotification } from '../components/NotificationProvider';
 import { formatDate, formatCurrency, getSeverityColor, getStatusColor, exportToCSV } from '../utils/helpers';
+import type { WorkOrder } from '../types/workOrder';
+import type { ScheduleEntry } from '../types/scheduling';
 
 export const Dashboard = () => {
   const navigate = useNavigate();
@@ -49,6 +63,9 @@ export const Dashboard = () => {
     clearFilters,
   } = usePotholeStore();
 
+  const { addWorkOrder } = useWorkOrderStore();
+  const { crews } = useWorkOrderStore();
+  const { addSchedule } = useSchedulingStore();
   const { showNotification } = useNotification();
 
   const [searchQuery, setSearchQuery] = useState('');
@@ -56,6 +73,28 @@ export const Dashboard = () => {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [orderBy, setOrderBy] = useState<keyof Pothole>('detected_at');
   const [order, setOrder] = useState<'asc' | 'desc'>('desc');
+  
+  // Action dialogs
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [selectedPothole, setSelectedPothole] = useState<Pothole | null>(null);
+  const [workOrderDialog, setWorkOrderDialog] = useState(false);
+  const [scheduleDialog, setScheduleDialog] = useState(false);
+  const [statusDialog, setStatusDialog] = useState(false);
+  const [newStatus, setNewStatus] = useState<Pothole['status']>('new');
+  const [workOrderForm, setWorkOrderForm] = useState({
+    title: '',
+    description: '',
+    priority: 'medium' as WorkOrder['priority'],
+    estimatedCost: 500,
+    estimatedHours: 4,
+  });
+  const [scheduleForm, setScheduleForm] = useState({
+    crewId: '',
+    scheduledDate: '',
+    startTime: '08:00',
+    endTime: '16:00',
+    estimatedDuration: 4,
+  });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -99,6 +138,86 @@ export const Dashboard = () => {
   // Navigate to map with specific pothole
   const handleViewOnMap = (pothole: Pothole) => {
     navigate('/map', { state: { selectedPothole: pothole } });
+  };
+
+  // Action menu handlers
+  const handleOpenMenu = (event: React.MouseEvent<HTMLElement>, pothole: Pothole) => {
+    event.stopPropagation();
+    setAnchorEl(event.currentTarget);
+    setSelectedPothole(pothole);
+  };
+
+  const handleCloseMenu = () => {
+    setAnchorEl(null);
+  };
+
+  const handleCreateWorkOrder = () => {
+    if (!selectedPothole) return;
+    setWorkOrderForm({
+      title: `Repair pothole at ${selectedPothole.road_name || 'Unknown Location'}`,
+      description: `Pothole repair for ${selectedPothole.id}`,
+      priority: selectedPothole.priority || 'medium',
+      estimatedCost: selectedPothole.estimated_repair_cost_cad || 500,
+      estimatedHours: 4,
+    });
+    setWorkOrderDialog(true);
+    handleCloseMenu();
+  };
+
+  const handleScheduleRepair = () => {
+    setScheduleDialog(true);
+    handleCloseMenu();
+  };
+
+  const handleChangeStatus = () => {
+    if (selectedPothole) {
+      setNewStatus(selectedPothole.status);
+      setStatusDialog(true);
+    }
+    handleCloseMenu();
+  };
+
+  const submitWorkOrder = () => {
+    if (!selectedPothole) return;
+    
+    const newWorkOrder: WorkOrder = {
+      id: `WO-${Date.now()}`,
+      potholeId: selectedPothole.id,
+      ...workOrderForm,
+      status: 'draft',
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+    
+    addWorkOrder(newWorkOrder);
+    showNotification('Work order created successfully', 'success');
+    setWorkOrderDialog(false);
+  };
+
+  const submitSchedule = () => {
+    if (!selectedPothole) return;
+    
+    const newSchedule: ScheduleEntry = {
+      id: `SCH-${Date.now()}`,
+      workOrderId: selectedPothole.id,
+      ...scheduleForm,
+      status: 'scheduled',
+      location: {
+        lat: selectedPothole.lat,
+        lng: selectedPothole.lng,
+        address: selectedPothole.road_name || 'Unknown',
+      },
+    };
+    
+    addSchedule(newSchedule);
+    showNotification('Repair scheduled successfully', 'success');
+    setScheduleDialog(false);
+  };
+
+  const submitStatusChange = () => {
+    // In a real app, this would update the pothole status via API
+    showNotification(`Status updated to ${newStatus}`, 'success');
+    setStatusDialog(false);
   };
 
   // Filter by search query
@@ -391,6 +510,14 @@ export const Dashboard = () => {
                           <LocationOnIcon fontSize="small" />
                         </IconButton>
                       </MuiTooltip>
+                      <MuiTooltip title="Actions">
+                        <IconButton 
+                          size="small"
+                          onClick={(e) => handleOpenMenu(e, pothole)}
+                        >
+                          <MoreVertIcon fontSize="small" />
+                        </IconButton>
+                      </MuiTooltip>
                     </TableCell>
                   </TableRow>
                 ))
@@ -408,6 +535,164 @@ export const Dashboard = () => {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
+
+      {/* Action Menu */}
+      <Menu
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={handleCloseMenu}
+      >
+        <MenuItem onClick={handleCreateWorkOrder}>
+          <AssignmentIcon fontSize="small" sx={{ mr: 1 }} />
+          Create Work Order
+        </MenuItem>
+        <MenuItem onClick={handleScheduleRepair}>
+          <CalendarMonthIcon fontSize="small" sx={{ mr: 1 }} />
+          Schedule Repair
+        </MenuItem>
+        <MenuItem onClick={handleChangeStatus}>
+          <EditIcon fontSize="small" sx={{ mr: 1 }} />
+          Change Status
+        </MenuItem>
+      </Menu>
+
+      {/* Create Work Order Dialog */}
+      <Dialog open={workOrderDialog} onClose={() => setWorkOrderDialog(false)} maxWidth="md" fullWidth>
+        <DialogTitle>Create Work Order</DialogTitle>
+        <DialogContent>
+          <Grid container spacing={2} sx={{ mt: 1 }}>
+            <Grid size={{ xs: 12 }}>
+              <TextField
+                fullWidth
+                label="Title"
+                value={workOrderForm.title}
+                onChange={(e) => setWorkOrderForm({ ...workOrderForm, title: e.target.value })}
+              />
+            </Grid>
+            <Grid size={{ xs: 12 }}>
+              <TextField
+                fullWidth
+                label="Description"
+                multiline
+                rows={3}
+                value={workOrderForm.description}
+                onChange={(e) => setWorkOrderForm({ ...workOrderForm, description: e.target.value })}
+              />
+            </Grid>
+            <Grid size={{ xs: 12, md: 6 }}>
+              <FormControl fullWidth>
+                <InputLabel>Priority</InputLabel>
+                <Select
+                  value={workOrderForm.priority}
+                  label="Priority"
+                  onChange={(e) => setWorkOrderForm({ ...workOrderForm, priority: e.target.value as any })}
+                >
+                  <MenuItem value="low">Low</MenuItem>
+                  <MenuItem value="medium">Medium</MenuItem>
+                  <MenuItem value="high">High</MenuItem>
+                  <MenuItem value="critical">Critical</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid size={{ xs: 12, md: 6 }}>
+              <TextField
+                fullWidth
+                label="Estimated Cost ($)"
+                type="number"
+                value={workOrderForm.estimatedCost}
+                onChange={(e) => setWorkOrderForm({ ...workOrderForm, estimatedCost: parseFloat(e.target.value) })}
+              />
+            </Grid>
+          </Grid>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setWorkOrderDialog(false)}>Cancel</Button>
+          <Button onClick={submitWorkOrder} variant="contained">Create</Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* Schedule Repair Dialog */}
+      <Dialog open={scheduleDialog} onClose={() => setScheduleDialog(false)} maxWidth="md" fullWidth>
+        <DialogTitle>Schedule Repair</DialogTitle>
+        <DialogContent>
+          <Grid container spacing={2} sx={{ mt: 1 }}>
+            <Grid size={{ xs: 12 }}>
+              <FormControl fullWidth>
+                <InputLabel>Crew</InputLabel>
+                <Select
+                  value={scheduleForm.crewId}
+                  label="Crew"
+                  onChange={(e) => setScheduleForm({ ...scheduleForm, crewId: e.target.value })}
+                >
+                  {crews.filter((c) => c.status === 'available').map((crew) => (
+                    <MenuItem key={crew.id} value={crew.id}>
+                      {crew.name} - {crew.supervisor}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid size={{ xs: 12 }}>
+              <TextField
+                fullWidth
+                label="Scheduled Date"
+                type="date"
+                InputLabelProps={{ shrink: true }}
+                value={scheduleForm.scheduledDate}
+                onChange={(e) => setScheduleForm({ ...scheduleForm, scheduledDate: e.target.value })}
+              />
+            </Grid>
+            <Grid size={{ xs: 12, md: 6 }}>
+              <TextField
+                fullWidth
+                label="Start Time"
+                type="time"
+                InputLabelProps={{ shrink: true }}
+                value={scheduleForm.startTime}
+                onChange={(e) => setScheduleForm({ ...scheduleForm, startTime: e.target.value })}
+              />
+            </Grid>
+            <Grid size={{ xs: 12, md: 6 }}>
+              <TextField
+                fullWidth
+                label="End Time"
+                type="time"
+                InputLabelProps={{ shrink: true }}
+                value={scheduleForm.endTime}
+                onChange={(e) => setScheduleForm({ ...scheduleForm, endTime: e.target.value })}
+              />
+            </Grid>
+          </Grid>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setScheduleDialog(false)}>Cancel</Button>
+          <Button onClick={submitSchedule} variant="contained">Schedule</Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* Change Status Dialog */}
+      <Dialog open={statusDialog} onClose={() => setStatusDialog(false)} maxWidth="sm" fullWidth>
+        <DialogTitle>Change Status</DialogTitle>
+        <DialogContent>
+          <FormControl fullWidth sx={{ mt: 2 }}>
+            <InputLabel>Status</InputLabel>
+            <Select
+              value={newStatus}
+              label="Status"
+              onChange={(e) => setNewStatus(e.target.value as any)}
+            >
+              <MenuItem value="new">New</MenuItem>
+              <MenuItem value="in_progress">In Progress</MenuItem>
+              <MenuItem value="scheduled">Scheduled</MenuItem>
+              <MenuItem value="completed">Completed</MenuItem>
+            </Select>
+          </FormControl>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setStatusDialog(false)}>Cancel</Button>
+          <Button onClick={submitStatusChange} variant="contained">Update</Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 };
