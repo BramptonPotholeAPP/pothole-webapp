@@ -25,30 +25,7 @@ https://bramptonpotholeapp.github.io/
 - Recharts for data visualization
 - Leaflet for maps
 
-## Quick Start
-
-```bash
-npm install
-npm run dev      # Development server
-npm run build    # Production build
-```
-
-Visit http://localhost:5173 to view the app.
-
-## Configuration
-
-Create .env file:
-
-```env
-VITE_API_BASE_URL=https://your-api-endpoint.com
-```
-
-Without an API URL, the app uses built-in demo data.
-
 ## Deployment
+Visit http://BramptonPotholeAPP.github.io to view the app.
 
-Automatically deploys to GitHub Pages on push to main branch via GitHub Actions.
 
-## License
-
-Built for the City of Brampton - AI-Powered Road Infrastructure Monitoring
