@@ -61,10 +61,10 @@ export const DashCams = () => {
         status: 'offline',
         lastSeen: new Date(Date.now() - 30 * 60000).toISOString(),
         location: 'Queen St & Main St',
-        detectedPotholes: 12,
+        detectedPotholes: 18,
         feedType: 'live',
         signalStrength: 0,
-        detectedPotholeIds: ['PH-2025-0001', 'PH-2025-0012', 'PH-2025-0021', 'PH-2025-0032', 'PH-2025-0041', 'PH-2025-0052', 'PH-2025-0061', 'PH-2025-0081', 'PH-2025-0092', 'PH-2025-0101', 'PH-2025-0112', 'PH-2025-0121'],
+        detectedPotholeIds: ['PH-2025-0001', 'PH-2025-0012', 'PH-2025-0021', 'PH-2025-0032', 'PH-2025-0041', 'PH-2025-0052', 'PH-2025-0061', 'PH-2025-0081', 'PH-2025-0092', 'PH-2025-0101', 'PH-2025-0112', 'PH-2025-0121', 'PH-2025-0132', 'PH-2025-0141', 'PH-2025-0022', 'PH-2025-0042', 'PH-2025-0062', 'PH-2025-0082'],
       },
       {
         id: 'CAM-002',
@@ -74,10 +74,10 @@ export const DashCams = () => {
         status: 'offline',
         lastSeen: new Date(Date.now() - 25 * 60000).toISOString(),
         location: 'Steeles Ave & Bramalea Rd',
-        detectedPotholes: 8,
+        detectedPotholes: 12,
         feedType: 'snapshot',
         signalStrength: 0,
-        detectedPotholeIds: ['PH-2025-0008', 'PH-2025-0028', 'PH-2025-0048', 'PH-2025-0068', 'PH-2025-0088', 'PH-2025-0108', 'PH-2025-0128', 'PH-2025-0148'],
+        detectedPotholeIds: ['PH-2025-0008', 'PH-2025-0028', 'PH-2025-0048', 'PH-2025-0068', 'PH-2025-0088', 'PH-2025-0108', 'PH-2025-0128', 'PH-2025-0148', 'PH-2025-0002', 'PH-2025-0024', 'PH-2025-0064', 'PH-2025-0084'],
       },
       {
         id: 'CAM-003',
@@ -87,10 +87,10 @@ export const DashCams = () => {
         status: 'offline',
         lastSeen: new Date(Date.now() - 40 * 60000).toISOString(),
         location: 'Airport Rd & Countryside Dr',
-        detectedPotholes: 15,
+        detectedPotholes: 20,
         feedType: 'live',
         signalStrength: 0,
-        detectedPotholeIds: ['PH-2025-0011', 'PH-2025-0031', 'PH-2025-0051', 'PH-2025-0071', 'PH-2025-0091', 'PH-2025-0111', 'PH-2025-0131', 'PH-2025-0151', 'PH-2025-0035', 'PH-2025-0055', 'PH-2025-0075', 'PH-2025-0095', 'PH-2025-0115', 'PH-2025-0135', 'PH-2025-0155'],
+        detectedPotholeIds: ['PH-2025-0011', 'PH-2025-0031', 'PH-2025-0051', 'PH-2025-0071', 'PH-2025-0091', 'PH-2025-0111', 'PH-2025-0131', 'PH-2025-0151', 'PH-2025-0035', 'PH-2025-0055', 'PH-2025-0075', 'PH-2025-0095', 'PH-2025-0115', 'PH-2025-0135', 'PH-2025-0155', 'PH-2025-0018', 'PH-2025-0038', 'PH-2025-0058', 'PH-2025-0078', 'PH-2025-0098'],
       },
       {
         id: 'CAM-004',
@@ -100,10 +100,10 @@ export const DashCams = () => {
         status: 'offline',
         lastSeen: new Date(Date.now() - 45 * 60000).toISOString(),
         location: 'Bovaird Dr & Chinguacousy Rd',
-        detectedPotholes: 5,
+        detectedPotholes: 10,
         feedType: 'snapshot',
         signalStrength: 0,
-        detectedPotholeIds: ['PH-2025-0003', 'PH-2025-0023', 'PH-2025-0043', 'PH-2025-0063', 'PH-2025-0123'],
+        detectedPotholeIds: ['PH-2025-0003', 'PH-2025-0023', 'PH-2025-0043', 'PH-2025-0063', 'PH-2025-0123', 'PH-2025-0083', 'PH-2025-0103', 'PH-2025-0143', 'PH-2025-0033', 'PH-2025-0073'],
       },
       {
         id: 'CAM-005',
@@ -113,10 +113,10 @@ export const DashCams = () => {
         status: 'offline',
         lastSeen: new Date(Date.now() - 60 * 60000).toISOString(),
         location: 'Sandalwood Pkwy & Torbram Rd',
-        detectedPotholes: 20,
+        detectedPotholes: 25,
         feedType: 'live',
         signalStrength: 0,
-        detectedPotholeIds: ['PH-2025-0009', 'PH-2025-0029', 'PH-2025-0049', 'PH-2025-0069', 'PH-2025-0089', 'PH-2025-0109', 'PH-2025-0129', 'PH-2025-0149', 'PH-2025-0015', 'PH-2025-0035', 'PH-2025-0055', 'PH-2025-0075', 'PH-2025-0095', 'PH-2025-0115', 'PH-2025-0135', 'PH-2025-0155', 'PH-2025-0037', 'PH-2025-0057', 'PH-2025-0077', 'PH-2025-0097'],
+        detectedPotholeIds: ['PH-2025-0009', 'PH-2025-0029', 'PH-2025-0049', 'PH-2025-0069', 'PH-2025-0089', 'PH-2025-0109', 'PH-2025-0129', 'PH-2025-0149', 'PH-2025-0015', 'PH-2025-0035', 'PH-2025-0055', 'PH-2025-0075', 'PH-2025-0095', 'PH-2025-0115', 'PH-2025-0135', 'PH-2025-0155', 'PH-2025-0037', 'PH-2025-0057', 'PH-2025-0077', 'PH-2025-0097', 'PH-2025-0027', 'PH-2025-0047', 'PH-2025-0067', 'PH-2025-0087', 'PH-2025-0107'],
       },
       {
         id: 'CAM-006',
@@ -126,10 +126,10 @@ export const DashCams = () => {
         status: 'offline',
         lastSeen: new Date(Date.now() - 120 * 60000).toISOString(),
         location: 'McLaughlin Rd & Williams Pkwy',
-        detectedPotholes: 3,
+        detectedPotholes: 8,
         feedType: 'snapshot',
         signalStrength: 0,
-        detectedPotholeIds: ['PH-2025-0019', 'PH-2025-0039', 'PH-2025-0059'],
+        detectedPotholeIds: ['PH-2025-0019', 'PH-2025-0039', 'PH-2025-0059', 'PH-2025-0079', 'PH-2025-0099', 'PH-2025-0119', 'PH-2025-0139', 'PH-2025-0007'],
       },
       {
         id: 'CAM-007',
@@ -139,10 +139,10 @@ export const DashCams = () => {
         status: 'offline',
         lastSeen: new Date(Date.now() - 50 * 60000).toISOString(),
         location: 'Clark Blvd & Hansen Rd',
-        detectedPotholes: 11,
+        detectedPotholes: 15,
         feedType: 'live',
         signalStrength: 0,
-        detectedPotholeIds: ['PH-2025-0016', 'PH-2025-0036', 'PH-2025-0056', 'PH-2025-0076', 'PH-2025-0096', 'PH-2025-0116', 'PH-2025-0136', 'PH-2025-0017', 'PH-2025-0037', 'PH-2025-0057', 'PH-2025-0137'],
+        detectedPotholeIds: ['PH-2025-0016', 'PH-2025-0036', 'PH-2025-0056', 'PH-2025-0076', 'PH-2025-0096', 'PH-2025-0116', 'PH-2025-0136', 'PH-2025-0017', 'PH-2025-0037', 'PH-2025-0057', 'PH-2025-0137', 'PH-2025-0077', 'PH-2025-0097', 'PH-2025-0117', 'PH-2025-0127'],
       },
       {
         id: 'CAM-008',
@@ -152,10 +152,10 @@ export const DashCams = () => {
         status: 'offline',
         lastSeen: new Date(Date.now() - 90 * 60000).toISOString(),
         location: 'Creditview Rd & Wanless Dr',
-        detectedPotholes: 6,
+        detectedPotholes: 7,
         feedType: 'snapshot',
         signalStrength: 0,
-        detectedPotholeIds: ['PH-2025-0013', 'PH-2025-0033', 'PH-2025-0053', 'PH-2025-0073', 'PH-2025-0093', 'PH-2025-0113'],
+        detectedPotholeIds: ['PH-2025-0013', 'PH-2025-0033', 'PH-2025-0053', 'PH-2025-0073', 'PH-2025-0093', 'PH-2025-0113', 'PH-2025-0133'],
       },
     ];
     setDashCams(mockData);
@@ -235,7 +235,7 @@ export const DashCams = () => {
 
       <Alert severity="info" sx={{ mb: 3 }}>
         City vehicles equipped with dash-cams automatically detect potholes using AI models. Live feeds and periodic snapshots are analyzed in real-time. 
-        <strong>80 of 150 total potholes (53.3%)</strong> have been detected by these dash-cam systems.
+        <strong>115 of 150 total potholes (76.7%)</strong> have been detected by these dash-cam systems.
       </Alert>
 
       {/* Stats Cards */}
@@ -269,7 +269,7 @@ export const DashCams = () => {
               Dash-Cam Detections
             </Typography>
             <Typography variant="caption" color="text.secondary" display="block">
-              (53% of 150 total)
+              (77% of 150 total)
             </Typography>
           </Paper>
         </Grid>
