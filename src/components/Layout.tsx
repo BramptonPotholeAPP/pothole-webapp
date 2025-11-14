@@ -6,6 +6,7 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import MapIcon from '@mui/icons-material/Map';
 import AnalyticsIcon from '@mui/icons-material/Analytics';
 import AssignmentIcon from '@mui/icons-material/Assignment';
+import VideocamIcon from '@mui/icons-material/Videocam';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import { useState } from 'react';
@@ -35,6 +36,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
     { path: '/map', label: t('nav.map'), icon: <MapIcon /> },
     { path: '/analytics', label: t('nav.analytics'), icon: <AnalyticsIcon /> },
     { path: '/work-orders', label: t('nav.operations'), icon: <AssignmentIcon /> },
+    { path: '/dashcams', label: t('nav.dashcams'), icon: <VideocamIcon /> },
   ];
 
   const drawer = (

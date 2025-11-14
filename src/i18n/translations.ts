@@ -8,6 +8,7 @@ export const translations = {
       analytics: 'Analytics',
       submit: 'Submit Report',
       operations: 'Operations',
+      dashcams: 'Dash-Cams',
       settings: 'Settings',
     },
     // Home page
@@ -103,6 +104,7 @@ export const translations = {
       analytics: 'Analytique',
       submit: 'Soumettre un rapport',
       operations: 'Opérations',
+      dashcams: 'Caméras embarquées',
       settings: 'Paramètres',
     },
     // Home page
@@ -212,6 +214,7 @@ export const translations = {
       analytics: 'ਵਿਸ਼ਲੇਸ਼ਣ',
       submit: 'ਰਿਪੋਰਟ ਜਮ੍ਹਾਂ ਕਰੋ',
       operations: 'ਸੰਚਾਲਨ',
+      dashcams: 'ਡੈਸ਼-ਕੈਮ',
       settings: 'ਸੈਟਿੰਗਾਂ',
     },
     // Home page
@@ -321,6 +324,7 @@ export const translations = {
       analytics: 'विश्लेषण',
       submit: 'रिपोर्ट जमा करें',
       operations: 'संचालन',
+      dashcams: 'डैश-कैम',
       settings: 'सेटिंग्स',
     },
     // Home page
