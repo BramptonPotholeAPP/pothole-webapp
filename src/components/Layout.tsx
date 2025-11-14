@@ -11,6 +11,7 @@ import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import { useState } from 'react';
 import { NotificationBell } from './NotificationBell';
+import { LanguageSelector } from './LanguageSelector';
 import { useTranslation } from '../i18n/useTranslation';
 import { useSettingsStore } from '../store/settingsStore';
 
@@ -35,7 +36,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
     { path: '/dashboard', label: t('nav.dashboard'), icon: <DashboardIcon /> },
     { path: '/map', label: t('nav.map'), icon: <MapIcon /> },
     { path: '/analytics', label: t('nav.analytics'), icon: <AnalyticsIcon /> },
-    { path: '/work-orders', label: t('nav.operations'), icon: <AssignmentIcon /> },
+    { path: '/operations', label: t('nav.operations'), icon: <AssignmentIcon /> },
     { path: '/dashcams', label: t('nav.dashcams'), icon: <VideocamIcon /> },
   ];
 
@@ -152,6 +153,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
           >
             {getThemeIcon()}
           </IconButton>
+          <LanguageSelector />
           <NotificationBell />
         </Toolbar>
       </AppBar>

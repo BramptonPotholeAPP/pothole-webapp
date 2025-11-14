@@ -69,7 +69,7 @@ export const NotificationBell = () => {
 
   return (
     <>
-      <IconButton color="inherit" onClick={handleClick} data-tour="language-menu">
+      <IconButton color="inherit" onClick={handleClick}>
         <Badge badgeContent={unreadCount} color="error">
           <NotificationsIcon />
         </Badge>
