@@ -12,6 +12,11 @@ export const Home = () => {
   const theme = useTheme();
   const { t } = useTranslation();
 
+  const startTour = () => {
+    localStorage.removeItem('hasSeenTour');
+    window.location.reload();
+  };
+
   // Animations
   const pulse = keyframes`
     0% { transform: scale(1); }
@@ -100,31 +105,52 @@ export const Home = () => {
                 </Typography>
 
                 {/* Animated Submit Button */}
-                <Button
-                  component={RouterLink}
-                  to="/submit-pothole"
-                  variant="contained"
-                  size="large"
-                  startIcon={<ReportProblemIcon />}
-                  sx={{
-                    py: 2,
-                    px: 4,
-                    fontSize: '1.2rem',
-                    fontWeight: 600,
-                    bgcolor: '#ef4444',
-                    color: 'white',
-                    animation: `${pulse} 2s ease-in-out infinite`,
-                    boxShadow: '0 8px 32px rgba(239, 68, 68, 0.5), 0 0 20px rgba(239, 68, 68, 0.3)',
-                    '&:hover': {
-                      bgcolor: '#dc2626',
-                      transform: 'scale(1.05)',
-                      boxShadow: '0 12px 40px rgba(239, 68, 68, 0.6), 0 0 30px rgba(239, 68, 68, 0.4)',
-                    },
-                    transition: 'all 0.3s ease',
-                  }}
-                >
-                  {t('home.reportButton')}
-                </Button>
+                <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
+                  <Button
+                    component={RouterLink}
+                    to="/submit-pothole"
+                    variant="contained"
+                    size="large"
+                    startIcon={<ReportProblemIcon />}
+                    sx={{
+                      py: 2,
+                      px: 4,
+                      fontSize: '1.2rem',
+                      fontWeight: 600,
+                      bgcolor: '#ef4444',
+                      color: 'white',
+                      animation: `${pulse} 2s ease-in-out infinite`,
+                      boxShadow: '0 8px 32px rgba(239, 68, 68, 0.5), 0 0 20px rgba(239, 68, 68, 0.3)',
+                      '&:hover': {
+                        bgcolor: '#dc2626',
+                        transform: 'scale(1.05)',
+                        boxShadow: '0 12px 40px rgba(239, 68, 68, 0.6), 0 0 30px rgba(239, 68, 68, 0.4)',
+                      },
+                      transition: 'all 0.3s ease',
+                    }}
+                  >
+                    {t('home.reportButton')}
+                  </Button>
+                  <Button
+                    onClick={startTour}
+                    variant="outlined"
+                    size="large"
+                    sx={{
+                      py: 2,
+                      px: 4,
+                      fontSize: '1rem',
+                      fontWeight: 600,
+                      color: 'white',
+                      borderColor: 'white',
+                      '&:hover': {
+                        borderColor: 'white',
+                        bgcolor: 'rgba(255, 255, 255, 0.1)',
+                      },
+                    }}
+                  >
+                    Take a Tour
+                  </Button>
+                </Box>
               </Box>
             </Grid>
           </Grid>
