@@ -41,6 +41,7 @@ interface DashCam {
   detectedPotholes: number;
   feedType: 'live' | 'snapshot';
   signalStrength: number;
+  detectedPotholeIds: string[]; // IDs of potholes detected by this camera
 }
 
 export const DashCams = () => {
@@ -63,6 +64,7 @@ export const DashCams = () => {
         detectedPotholes: 12,
         feedType: 'live',
         signalStrength: 0,
+        detectedPotholeIds: ['PH-2025-0001', 'PH-2025-0012', 'PH-2025-0021', 'PH-2025-0032', 'PH-2025-0041', 'PH-2025-0052', 'PH-2025-0061', 'PH-2025-0081', 'PH-2025-0092', 'PH-2025-0101', 'PH-2025-0112', 'PH-2025-0121'],
       },
       {
         id: 'CAM-002',
@@ -75,6 +77,7 @@ export const DashCams = () => {
         detectedPotholes: 8,
         feedType: 'snapshot',
         signalStrength: 0,
+        detectedPotholeIds: ['PH-2025-0008', 'PH-2025-0028', 'PH-2025-0048', 'PH-2025-0068', 'PH-2025-0088', 'PH-2025-0108', 'PH-2025-0128', 'PH-2025-0148'],
       },
       {
         id: 'CAM-003',
@@ -87,6 +90,7 @@ export const DashCams = () => {
         detectedPotholes: 15,
         feedType: 'live',
         signalStrength: 0,
+        detectedPotholeIds: ['PH-2025-0011', 'PH-2025-0031', 'PH-2025-0051', 'PH-2025-0071', 'PH-2025-0091', 'PH-2025-0111', 'PH-2025-0131', 'PH-2025-0151', 'PH-2025-0035', 'PH-2025-0055', 'PH-2025-0075', 'PH-2025-0095', 'PH-2025-0115', 'PH-2025-0135', 'PH-2025-0155'],
       },
       {
         id: 'CAM-004',
@@ -99,6 +103,7 @@ export const DashCams = () => {
         detectedPotholes: 5,
         feedType: 'snapshot',
         signalStrength: 0,
+        detectedPotholeIds: ['PH-2025-0003', 'PH-2025-0023', 'PH-2025-0043', 'PH-2025-0063', 'PH-2025-0123'],
       },
       {
         id: 'CAM-005',
@@ -111,6 +116,7 @@ export const DashCams = () => {
         detectedPotholes: 20,
         feedType: 'live',
         signalStrength: 0,
+        detectedPotholeIds: ['PH-2025-0009', 'PH-2025-0029', 'PH-2025-0049', 'PH-2025-0069', 'PH-2025-0089', 'PH-2025-0109', 'PH-2025-0129', 'PH-2025-0149', 'PH-2025-0015', 'PH-2025-0035', 'PH-2025-0055', 'PH-2025-0075', 'PH-2025-0095', 'PH-2025-0115', 'PH-2025-0135', 'PH-2025-0155', 'PH-2025-0037', 'PH-2025-0057', 'PH-2025-0077', 'PH-2025-0097'],
       },
       {
         id: 'CAM-006',
@@ -123,6 +129,7 @@ export const DashCams = () => {
         detectedPotholes: 3,
         feedType: 'snapshot',
         signalStrength: 0,
+        detectedPotholeIds: ['PH-2025-0019', 'PH-2025-0039', 'PH-2025-0059'],
       },
       {
         id: 'CAM-007',
@@ -135,6 +142,7 @@ export const DashCams = () => {
         detectedPotholes: 11,
         feedType: 'live',
         signalStrength: 0,
+        detectedPotholeIds: ['PH-2025-0016', 'PH-2025-0036', 'PH-2025-0056', 'PH-2025-0076', 'PH-2025-0096', 'PH-2025-0116', 'PH-2025-0136', 'PH-2025-0017', 'PH-2025-0037', 'PH-2025-0057', 'PH-2025-0137'],
       },
       {
         id: 'CAM-008',
@@ -147,6 +155,7 @@ export const DashCams = () => {
         detectedPotholes: 6,
         feedType: 'snapshot',
         signalStrength: 0,
+        detectedPotholeIds: ['PH-2025-0013', 'PH-2025-0033', 'PH-2025-0053', 'PH-2025-0073', 'PH-2025-0093', 'PH-2025-0113'],
       },
     ];
     setDashCams(mockData);
@@ -397,12 +406,29 @@ export const DashCams = () => {
                     )}
                   </TableCell>
                   <TableCell>
-                    <Chip
-                      label={cam.detectedPotholes}
-                      size="small"
-                      color="warning"
-                      variant="outlined"
-                    />
+                    <Tooltip
+                      title={
+                        <Box>
+                          <Typography variant="caption" fontWeight="bold">
+                            Detected Potholes:
+                          </Typography>
+                          {cam.detectedPotholeIds.map((id) => (
+                            <Typography key={id} variant="caption" display="block">
+                              • {id}
+                            </Typography>
+                          ))}
+                        </Box>
+                      }
+                      arrow
+                    >
+                      <Chip
+                        label={cam.detectedPotholes}
+                        size="small"
+                        color="warning"
+                        variant="outlined"
+                        sx={{ cursor: 'pointer' }}
+                      />
+                    </Tooltip>
                   </TableCell>
                 </TableRow>
               ))

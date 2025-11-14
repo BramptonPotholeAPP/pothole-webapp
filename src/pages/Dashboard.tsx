@@ -435,6 +435,7 @@ export const Dashboard = () => {
                   </TableSortLabel>
                 </TableCell>
                 <TableCell><strong>Priority</strong></TableCell>
+                <TableCell><strong>Source</strong></TableCell>
                 <TableCell>
                   <TableSortLabel
                     active={orderBy === 'ward'}
@@ -450,7 +451,7 @@ export const Dashboard = () => {
             <TableBody>
               {paginatedPotholes.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={9} align="center" sx={{ py: 4 }}>
+                  <TableCell colSpan={10} align="center" sx={{ py: 4 }}>
                     <Typography variant="body2" color="text.secondary">
                       No potholes found matching your criteria
                     </Typography>
@@ -498,6 +499,15 @@ export const Dashboard = () => {
                           variant="outlined"
                         />
                       )}
+                    </TableCell>
+                    <TableCell>
+                      <Typography variant="caption" color="text.secondary">
+                        {pothole.source?.includes('dashcam') || pothole.source?.includes('fleet') 
+                          ? `Dash-Cam ${pothole.source.split('-')[2] || ''}` 
+                          : pothole.source?.includes('iot-camera') 
+                            ? `IoT Camera` 
+                            : pothole.source || 'Unknown'}
+                      </Typography>
                     </TableCell>
                     <TableCell>{pothole.ward || '-'}</TableCell>
                     <TableCell align="center" onClick={(e) => e.stopPropagation()}>
