@@ -6,33 +6,44 @@ import { useLocation } from 'react-router-dom';
 const tourSteps: Step[] = [
   {
     target: 'body',
-    content: 'Welcome to the Brampton Pothole Detection System! Let me show you around.',
+    content: '👋 Welcome to Brampton Pothole Detection! I\'m here to show you how this system helps keep our roads safe.',
     placement: 'center',
     disableBeacon: true,
   },
   {
     target: '[data-tour="nav-dashboard"]',
-    content: 'View all detected potholes with filters, search, and export options.',
+    content: '📊 This is your Dashboard - view all detected potholes, filter by status or severity, and export data with one click.',
+    disableBeacon: true,
   },
   {
     target: '[data-tour="nav-map"]',
-    content: 'See potholes on an interactive map with severity markers.',
+    content: '🗺️ The Map shows every pothole location. Color-coded markers indicate severity - red means critical!',
+    disableBeacon: true,
   },
   {
     target: '[data-tour="nav-analytics"]',
-    content: 'Check trends, costs, and statistics over time.',
+    content: '📈 Analytics reveals trends and insights. See which areas need the most attention.',
+    disableBeacon: true,
   },
   {
     target: '[data-tour="nav-dashcams"]',
-    content: 'Monitor city vehicles with dash-cams that detect potholes automatically.',
+    content: '🚗 Dash-Cams page monitors city vehicles that automatically detect potholes while driving. Pretty cool, right?',
+    disableBeacon: true,
   },
   {
     target: '[data-tour="theme-toggle"]',
-    content: 'Switch between light and dark mode.',
+    content: '🌙 Prefer dark mode? Click here to switch themes anytime.',
+    disableBeacon: true,
   },
   {
     target: '[data-tour="language-menu"]',
-    content: 'Change language to English, French, Punjabi, or Hindi.',
+    content: '🌍 Choose your preferred language - we support English, French, Punjabi, and Hindi.',
+    disableBeacon: true,
+  },
+  {
+    target: 'body',
+    content: '✨ That\'s it! You\'re ready to explore. Click "Report Pothole Now" to get started, or browse around at your own pace.',
+    placement: 'center',
   },
 ];
 
@@ -64,12 +75,46 @@ export const GuidedTour = () => {
       continuous
       showProgress
       showSkipButton
+      scrollToFirstStep
+      disableOverlayClose
+      spotlightClicks
       callback={handleJoyrideCallback}
       styles={{
         options: {
           primaryColor: '#1976d2',
           zIndex: 10000,
+          arrowColor: '#fff',
+          backgroundColor: '#fff',
+          textColor: '#333',
         },
+        buttonNext: {
+          backgroundColor: '#1976d2',
+          fontSize: 14,
+          padding: '8px 16px',
+          borderRadius: 4,
+        },
+        buttonBack: {
+          color: '#666',
+          marginRight: 10,
+        },
+        buttonSkip: {
+          color: '#999',
+        },
+        tooltip: {
+          borderRadius: 8,
+          fontSize: 15,
+          padding: 20,
+        },
+        tooltipContent: {
+          padding: '10px 0',
+        },
+      }}
+      locale={{
+        back: 'Back',
+        close: 'Close',
+        last: 'Got it!',
+        next: 'Next',
+        skip: 'Skip tour',
       }}
     />
   );
