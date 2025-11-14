@@ -11,8 +11,6 @@ import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import { useState } from 'react';
 import { NotificationBell } from './NotificationBell';
-import { LanguageSelector } from './LanguageSelector';
-import { useTranslation } from '../i18n/useTranslation';
 import { useSettingsStore } from '../store/settingsStore';
 
 export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -20,7 +18,6 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const { t } = useTranslation();
   const { themeMode, setThemeMode } = useSettingsStore();
 
   const toggleTheme = () => {
@@ -32,12 +29,12 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
   };
 
   const navItems = [
-    { path: '/', label: t('nav.home'), icon: <HomeIcon /> },
-    { path: '/dashboard', label: t('nav.dashboard'), icon: <DashboardIcon /> },
-    { path: '/map', label: t('nav.map'), icon: <MapIcon /> },
-    { path: '/analytics', label: t('nav.analytics'), icon: <AnalyticsIcon /> },
-    { path: '/operations', label: t('nav.operations'), icon: <AssignmentIcon /> },
-    { path: '/dashcams', label: t('nav.dashcams'), icon: <VideocamIcon /> },
+    { path: '/', label: 'Home', icon: <HomeIcon /> },
+    { path: '/dashboard', label: 'Dashboard', icon: <DashboardIcon /> },
+    { path: '/map', label: 'Map', icon: <MapIcon /> },
+    { path: '/analytics', label: 'Analytics', icon: <AnalyticsIcon /> },
+    { path: '/operations', label: 'Operations', icon: <AssignmentIcon /> },
+    { path: '/dashcams', label: 'Dash-Cams', icon: <VideocamIcon /> },
   ];
 
   const drawer = (
@@ -153,7 +150,6 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
           >
             {getThemeIcon()}
           </IconButton>
-          <LanguageSelector />
           <NotificationBell />
         </Toolbar>
       </AppBar>

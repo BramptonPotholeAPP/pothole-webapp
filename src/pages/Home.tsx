@@ -6,11 +6,9 @@ import MapIcon from '@mui/icons-material/Map';
 import GroupsIcon from '@mui/icons-material/Groups';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import { keyframes } from '@mui/system';
-import { useTranslation } from '../i18n/useTranslation';
 
 export const Home = () => {
   const theme = useTheme();
-  const { t } = useTranslation();
 
   const startTour = () => {
     localStorage.removeItem('hasSeenTour');
@@ -91,7 +89,7 @@ export const Home = () => {
                     fontSize: { xs: '2.5rem', md: '3.5rem' },
                   }}
                 >
-                  {t('home.title')}
+                  Report Road Hazards in Brampton
                 </Typography>
                 <Typography
                   variant="h5"
@@ -101,7 +99,7 @@ export const Home = () => {
                     fontWeight: 400,
                   }}
                 >
-                  {t('home.subtitle')}
+                  Help make our roads safer. Report potholes and get real-time updates on repairs.
                 </Typography>
 
                 {/* Animated Submit Button */}
@@ -129,7 +127,7 @@ export const Home = () => {
                       transition: 'all 0.3s ease',
                     }}
                   >
-                    {t('home.reportButton')}
+                    Report Pothole Now
                   </Button>
                   <Button
                     onClick={startTour}
@@ -165,7 +163,7 @@ export const Home = () => {
           gutterBottom
           sx={{ fontWeight: 700, mb: 6 }}
         >
-          {t('home.howItWorks')}
+          How It Works
         </Typography>
 
         <Grid container spacing={4}>
@@ -222,7 +220,7 @@ export const Home = () => {
             gutterBottom
             sx={{ fontWeight: 700, mb: 6 }}
           >
-            {t('home.benefits')}
+            Why Report with Us?
           </Typography>
 
           <Grid container spacing={4}>
@@ -277,10 +275,10 @@ export const Home = () => {
       >
         <Container maxWidth="md">
           <Typography variant="h3" gutterBottom sx={{ fontWeight: 700 }}>
-            {t('home.cta')}
+            Ready to Make a Difference?
           </Typography>
           <Typography variant="h6" sx={{ mb: 4, opacity: 0.95 }}>
-            {t('home.ctaDescription')}
+            Join thousands of citizens helping improve Brampton's roads
           </Typography>
           <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
             <Button
@@ -301,7 +299,7 @@ export const Home = () => {
                 },
               }}
             >
-              {t('home.submitButton')}
+              Report Pothole
             </Button>
             <Button
               component={RouterLink}
@@ -322,7 +320,7 @@ export const Home = () => {
                 },
               }}
             >
-              {t('home.viewMapButton')}
+              View Map
             </Button>
           </Box>
         </Container>

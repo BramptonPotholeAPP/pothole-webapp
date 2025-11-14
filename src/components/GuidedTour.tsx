@@ -36,11 +36,6 @@ const tourSteps: Step[] = [
     disableBeacon: true,
   },
   {
-    target: '[data-tour="language-menu"]',
-    content: '🌍 Choose your preferred language - we support English, French, Punjabi, and Hindi.',
-    disableBeacon: true,
-  },
-  {
     target: 'body',
     content: '✨ That\'s it! You\'re ready to explore. Click "Report Pothole Now" to get started, or browse around at your own pace.',
     placement: 'center',
