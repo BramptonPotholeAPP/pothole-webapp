@@ -25,7 +25,3 @@ https://bramptonpotholeapp.github.io/
 - Recharts for data visualization
 - Leaflet for maps
 
-## Deployment
-Visit http://BramptonPotholeAPP.github.io to view the app.
-
-
