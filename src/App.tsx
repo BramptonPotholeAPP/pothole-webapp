@@ -3,6 +3,7 @@ import { ThemeProvider } from './theme/ThemeProvider';
 import { Layout } from './components/Layout';
 import { NotificationProvider } from './components/NotificationProvider';
 import { EscalationMonitor } from './components/EscalationMonitor';
+import { GuidedTour } from './components/GuidedTour';
 import { Home } from './pages/Home';
 import { Dashboard } from './pages/Dashboard';
 import { MapView } from './pages/MapView';
@@ -17,6 +18,7 @@ function App() {
       <Router>
         <NotificationProvider>
           <EscalationMonitor />
+          <GuidedTour />
           <Layout>
             <Routes>
               <Route path="/" element={<Home />} />
