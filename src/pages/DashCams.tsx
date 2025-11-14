@@ -234,7 +234,8 @@ export const DashCams = () => {
       </Typography>
 
       <Alert severity="info" sx={{ mb: 3 }}>
-        City vehicles equipped with dash-cams automatically detect potholes using AI models. Live feeds and periodic snapshots are analyzed in real-time.
+        City vehicles equipped with dash-cams automatically detect potholes using AI models. Live feeds and periodic snapshots are analyzed in real-time. 
+        <strong>80 of 150 total potholes (53.3%)</strong> have been detected by these dash-cam systems.
       </Alert>
 
       {/* Stats Cards */}
@@ -265,7 +266,10 @@ export const DashCams = () => {
               {dashCams.reduce((sum, cam) => sum + cam.detectedPotholes, 0)}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              Total Detections
+              Dash-Cam Detections
+            </Typography>
+            <Typography variant="caption" color="text.secondary" display="block">
+              (53% of 150 total)
             </Typography>
           </Paper>
         </Grid>
