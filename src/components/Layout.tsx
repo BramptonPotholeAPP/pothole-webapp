@@ -127,6 +127,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
                   component={RouterLink}
                   to={item.path}
                   startIcon={item.icon}
+                  data-tour={`nav-${item.path.slice(1) || 'home'}`}
                   sx={{
                     borderRadius: 2,
                     px: 2,
@@ -144,6 +145,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
           <IconButton
             color="inherit"
             onClick={toggleTheme}
+            data-tour="theme-toggle"
             sx={{ mr: 1 }}
             aria-label={`Theme mode: ${themeMode}`}
             title={`Switch to ${themeMode === 'light' ? 'dark' : 'light'} mode`}
