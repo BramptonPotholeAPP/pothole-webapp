@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-export type Language = 'en' | 'fr' | 'pa' | 'hi';
+export type Language = 'en' | 'fr' | 'pa' | 'hi' | 'ar';
 export type ThemeMode = 'light' | 'dark' | 'auto';
 export type ContrastMode = 'normal' | 'high';
 

@@ -15,6 +15,7 @@ const languages = [
   { code: 'fr', name: 'Français', flag: '🇫🇷' },
   { code: 'pa', name: 'ਪੰਜਾਬੀ', flag: '🇮🇳' },
   { code: 'hi', name: 'हिन्दी', flag: '🇮🇳' },
+  { code: 'ar', name: 'العربية', flag: '🇸🇦' },
 ];
 
 export const LanguageSelector = () => {
@@ -30,7 +31,7 @@ export const LanguageSelector = () => {
   };
 
   const handleLanguageChange = (langCode: string) => {
-    setLanguage(langCode as 'en' | 'fr' | 'pa' | 'hi');
+    setLanguage(langCode as 'en' | 'fr' | 'pa' | 'hi' | 'ar');
     handleClose();
   };
 
