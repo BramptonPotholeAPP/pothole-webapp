@@ -217,7 +217,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
             cursor: 'pointer',
           }}
         >
-          © 2025 Eyad Gad
+          © 2025 NORDIK Institute
         </Typography>
         <Typography variant="caption" color="text.secondary" display="block" mt={0.5}>
           Pothole Detection Demo for City of Brampton
