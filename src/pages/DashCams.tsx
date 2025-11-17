@@ -343,16 +343,16 @@ export const DashCams = () => {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell><strong>Camera ID</strong></TableCell>
-              <TableCell><strong>Vehicle</strong></TableCell>
-              <TableCell><strong>Type</strong></TableCell>
-              <TableCell><strong>Plate</strong></TableCell>
-              <TableCell><strong>Status</strong></TableCell>
-              <TableCell><strong>Last Seen</strong></TableCell>
-              <TableCell><strong>Location</strong></TableCell>
-              <TableCell><strong>Feed Type</strong></TableCell>
-              <TableCell><strong>Signal</strong></TableCell>
-              <TableCell><strong>Detections</strong></TableCell>
+              <TableCell sx={{ fontWeight: 600 }}>Camera ID</TableCell>
+              <TableCell sx={{ fontWeight: 600 }}>Vehicle</TableCell>
+              <TableCell sx={{ fontWeight: 600 }}>Type</TableCell>
+              <TableCell sx={{ fontWeight: 600 }}>Plate</TableCell>
+              <TableCell sx={{ fontWeight: 600 }}>Status</TableCell>
+              <TableCell sx={{ fontWeight: 600 }}>Last Seen</TableCell>
+              <TableCell sx={{ fontWeight: 600 }}>Location</TableCell>
+              <TableCell sx={{ fontWeight: 600 }}>Feed Type</TableCell>
+              <TableCell sx={{ fontWeight: 600 }}>Signal</TableCell>
+              <TableCell sx={{ fontWeight: 600 }}>Detections</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

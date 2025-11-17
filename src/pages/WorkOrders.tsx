@@ -156,15 +156,15 @@ export const WorkOrders = () => {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>ID</TableCell>
-              <TableCell>Title</TableCell>
-              <TableCell>Priority</TableCell>
-              <TableCell>Status</TableCell>
-              <TableCell>Assigned Crew</TableCell>
-              <TableCell>Est. Cost</TableCell>
-              <TableCell>Est. Hours</TableCell>
-              <TableCell>Created</TableCell>
-              <TableCell>Actions</TableCell>
+              <TableCell sx={{ fontWeight: 600 }}>ID</TableCell>
+              <TableCell sx={{ fontWeight: 600 }}>Title</TableCell>
+              <TableCell sx={{ fontWeight: 600 }}>Priority</TableCell>
+              <TableCell sx={{ fontWeight: 600 }}>Status</TableCell>
+              <TableCell sx={{ fontWeight: 600 }}>Assigned Crew</TableCell>
+              <TableCell sx={{ fontWeight: 600 }}>Est. Cost</TableCell>
+              <TableCell sx={{ fontWeight: 600 }}>Est. Hours</TableCell>
+              <TableCell sx={{ fontWeight: 600 }}>Created</TableCell>
+              <TableCell sx={{ fontWeight: 600 }}>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

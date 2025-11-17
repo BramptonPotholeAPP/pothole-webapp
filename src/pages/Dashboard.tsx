@@ -387,7 +387,7 @@ export const Dashboard = () => {
         <TableContainer>
           <Table>
             <TableHead>
-              <TableRow sx={{ backgroundColor: 'grey.100' }}>
+              <TableRow sx={{ backgroundColor: (theme) => theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.05)' : 'grey.100' }}>
                 <TableCell>
                   <TableSortLabel
                     active={orderBy === 'id'}
