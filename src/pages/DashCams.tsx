@@ -233,11 +233,6 @@ export const DashCams = () => {
         Connected Dash-Cams
       </Typography>
 
-      <Alert severity="info" sx={{ mb: 3 }}>
-        City vehicles equipped with dash-cams automatically detect potholes using AI models. Live feeds and periodic snapshots are analyzed in real-time. 
-        <strong>115 of 150 total potholes (76.7%)</strong> have been detected by these dash-cam systems.
-      </Alert>
-
       {/* Stats Cards */}
       <Grid container spacing={3} sx={{ mb: 4 }}>
         <Grid size={{ xs: 12, sm: 6, md: 3 }}>
