@@ -268,9 +268,6 @@ export const DashCams = () => {
             <Typography variant="body2" color="text.secondary">
               Dash-Cam Detections
             </Typography>
-            <Typography variant="caption" color="text.secondary" display="block">
-              (77% of 150 total)
-            </Typography>
           </Paper>
         </Grid>
         <Grid size={{ xs: 12, sm: 6, md: 3 }}>
