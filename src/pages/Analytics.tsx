@@ -7,7 +7,6 @@ import DescriptionIcon from '@mui/icons-material/Description';
 import { usePotholeStore } from '../store/potholeStore';
 import { potholeService } from '../services/api';
 import { StatsCards } from '../components/StatsCards';
-import { calculateTrendData } from '../utils/helpers';
 import { generatePDFReport, generateExcelReport, generateCSVReport } from '../utils/reportGenerator';
 
 export const Analytics = () => {
