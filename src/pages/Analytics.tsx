@@ -104,16 +104,6 @@ export const Analytics = () => {
     );
   }
 
-  const trendData = calculateTrendData(filteredPotholes);
-
-  const wardData = Object.entries(
-    filteredPotholes.reduce((acc, p) => {
-      const ward = p.ward || 'Unknown';
-      acc[ward] = (acc[ward] || 0) + 1;
-      return acc;
-    }, {} as Record<string, number>)
-  ).map(([name, value]) => ({ name, value }));
-
   const severityDistribution = [
     { name: 'Low (0-0.4)', value: filteredPotholes.filter(p => p.severity < 0.4).length, color: '#689f38' },
     { name: 'Medium (0.4-0.6)', value: filteredPotholes.filter(p => p.severity >= 0.4 && p.severity < 0.6).length, color: '#fbc02d' },
