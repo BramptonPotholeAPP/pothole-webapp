@@ -114,33 +114,6 @@ export const Analytics = () => {
     }, {} as Record<string, number>)
   ).map(([name, value]) => ({ name, value }));
 
-  const costByStatus = [
-    {
-      name: 'New',
-      cost: filteredPotholes
-        .filter(p => p.status === 'new')
-        .reduce((sum, p) => sum + p.estimated_repair_cost_cad, 0),
-    },
-    {
-      name: 'In Progress',
-      cost: filteredPotholes
-        .filter(p => p.status === 'in_progress')
-        .reduce((sum, p) => sum + p.estimated_repair_cost_cad, 0),
-    },
-    {
-      name: 'Scheduled',
-      cost: filteredPotholes
-        .filter(p => p.status === 'scheduled')
-        .reduce((sum, p) => sum + p.estimated_repair_cost_cad, 0),
-    },
-    {
-      name: 'Completed',
-      cost: filteredPotholes
-        .filter(p => p.status === 'completed')
-        .reduce((sum, p) => sum + p.estimated_repair_cost_cad, 0),
-    },
-  ];
-
   const severityDistribution = [
     { name: 'Low (0-0.4)', value: filteredPotholes.filter(p => p.severity < 0.4).length, color: '#689f38' },
     { name: 'Medium (0.4-0.6)', value: filteredPotholes.filter(p => p.severity >= 0.4 && p.severity < 0.6).length, color: '#fbc02d' },
@@ -641,70 +614,7 @@ export const Analytics = () => {
           </Card>
         </Grid>
 
-        {/* Detection Trend */}
-        <Grid size={{ xs: 12, md: 6 }}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6" gutterBottom>
-                Detection Trend Over Time
-              </Typography>
-              <ResponsiveContainer width="100%" height={300}>
-                <LineChart data={trendData}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="date" />
-                  <YAxis />
-                  <Tooltip />
-                  <Legend />
-                  <Line type="monotone" dataKey="count" stroke="#1976d2" strokeWidth={2} name="Detections" />
-                </LineChart>
-              </ResponsiveContainer>
-            </CardContent>
-          </Card>
-        </Grid>
-
-        {/* Cost Trend */}
-        <Grid size={{ xs: 12, md: 6 }}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6" gutterBottom>
-                Repair Cost Trend
-              </Typography>
-              <ResponsiveContainer width="100%" height={300}>
-                <LineChart data={trendData}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="date" />
-                  <YAxis />
-                  <Tooltip formatter={(value) => `$${value}`} />
-                  <Legend />
-                  <Line type="monotone" dataKey="cost" stroke="#d32f2f" strokeWidth={2} name="Cost (CAD)" />
-                </LineChart>
-              </ResponsiveContainer>
-            </CardContent>
-          </Card>
-        </Grid>
-
-        {/* Ward Distribution */}
-        <Grid size={{ xs: 12, md: 6 }}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6" gutterBottom>
-                Detections by Ward
-              </Typography>
-              <ResponsiveContainer width="100%" height={300}>
-                <BarChart data={wardData}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="name" />
-                  <YAxis />
-                  <Tooltip />
-                  <Legend />
-                  <Bar dataKey="value" fill="#1976d2" name="Detections" />
-                </BarChart>
-              </ResponsiveContainer>
-            </CardContent>
-          </Card>
-        </Grid>
-
-        {/* Ward Comparison - Multi-metric */}
+        {/* Ward Performance Comparison */}
         <Grid size={{ xs: 12 }}>
           <Card>
             <CardContent>
@@ -731,79 +641,17 @@ export const Analytics = () => {
           </Card>
         </Grid>
 
-        {/* Ward Severity and Cost Analysis */}
-        <Grid size={{ xs: 12, md: 6 }}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6" gutterBottom>
-                Average Severity by Ward
-              </Typography>
-              <ResponsiveContainer width="100%" height={300}>
-                <BarChart data={wardComparison} layout="vertical">
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis type="number" domain={[0, 1]} />
-                  <YAxis type="category" dataKey="ward" width={80} />
-                  <Tooltip />
-                  <Bar dataKey="avgSeverity" fill="#d32f2f" name="Avg Severity" />
-                </BarChart>
-              </ResponsiveContainer>
-            </CardContent>
-          </Card>
-        </Grid>
-
-        {/* Ward Total Cost */}
-        <Grid size={{ xs: 12, md: 6 }}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6" gutterBottom>
-                Estimated Cost by Ward
-              </Typography>
-              <ResponsiveContainer width="100%" height={300}>
-                <BarChart data={wardComparison} layout="vertical">
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis type="number" />
-                  <YAxis type="category" dataKey="ward" width={80} />
-                  <Tooltip formatter={(value) => `$${value}`} />
-                  <Bar dataKey="totalCost" fill="#f57c00" name="Total Cost (CAD)" />
-                </BarChart>
-              </ResponsiveContainer>
-            </CardContent>
-          </Card>
-        </Grid>
-
-
-        {/* Cost by Status */}
-        <Grid size={{ xs: 12, md: 6 }}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6" gutterBottom>
-                Estimated Cost by Status
-              </Typography>
-              <ResponsiveContainer width="100%" height={300}>
-                <BarChart data={costByStatus}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="name" />
-                  <YAxis />
-                  <Tooltip formatter={(value) => `$${value}`} />
-                  <Legend />
-                  <Bar dataKey="cost" fill="#f57c00" name="Cost (CAD)" />
-                </BarChart>
-              </ResponsiveContainer>
-            </CardContent>
-          </Card>
-        </Grid>
-
         {/* Cost vs Completion Analysis */}
-        <Grid size={{ xs: 12 }}>
+        <Grid size={{ xs: 12, md: 6 }}>
           <Card>
             <CardContent>
               <Typography variant="h6" gutterBottom>
-                Cost vs. Completion Efficiency Analysis
+                Cost vs. Completion Analysis
               </Typography>
               <Typography variant="body2" color="text.secondary" gutterBottom>
-                Relationship between repair costs and completion status
+                Repair costs and efficiency by status
               </Typography>
-              <ResponsiveContainer width="100%" height={400}>
+              <ResponsiveContainer width="100%" height={300}>
                 <BarChart data={costCompletionAnalysis}>
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="status" />
@@ -830,40 +678,8 @@ export const Analytics = () => {
           </Card>
         </Grid>
 
-        {/* Total Cost Distribution */}
+        {/* Road Condition Score by Area */}
         <Grid size={{ xs: 12, md: 6 }}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6" gutterBottom>
-                Total Cost Distribution by Status
-              </Typography>
-              <ResponsiveContainer width="100%" height={300}>
-                <PieChart>
-                  <Pie
-                    data={costCompletionAnalysis}
-                    cx="50%"
-                    cy="50%"
-                    labelLine={false}
-                    label={(entry: any) => `${entry.status}: $${entry.totalCost.toLocaleString()}`}
-                    outerRadius={100}
-                    fill="#8884d8"
-                    dataKey="totalCost"
-                  >
-                    {costCompletionAnalysis.map((_, index) => (
-                      <Cell key={`cell-${index}`} fill={['#2e7d32', '#f57c00', '#fbc02d', '#d32f2f'][index]} />
-                    ))}
-                  </Pie>
-                  <Tooltip formatter={(value) => `$${value}`} />
-                  <Legend />
-                </PieChart>
-              </ResponsiveContainer>
-            </CardContent>
-          </Card>
-        </Grid>
-
-
-        {/* Severity Distribution */}
-        <Grid size={{ xs: 12 }}>
           <Card>
             <CardContent>
               <Typography variant="h6" gutterBottom>
