@@ -263,6 +263,53 @@ export const Analytics = () => {
     }));
   }, [filteredPotholes]);
 
+  // Road Condition Score by Area
+  const roadConditionScore = useMemo(() => {
+    const areaData: Record<string, {
+      area: string;
+      potholeCount: number;
+      avgSeverity: number;
+      completed: number;
+      conditionScore: number;
+    }> = {};
+
+    filteredPotholes.forEach(pothole => {
+      const area = pothole.ward || 'Unknown';
+      if (!areaData[area]) {
+        areaData[area] = {
+          area,
+          potholeCount: 0,
+          avgSeverity: 0,
+          completed: 0,
+          conditionScore: 100,
+        };
+      }
+      areaData[area].potholeCount += 1;
+      areaData[area].avgSeverity += pothole.severity;
+      if (pothole.status === 'completed') {
+        areaData[area].completed += 1;
+      }
+    });
+
+    return Object.values(areaData).map(area => {
+      const avgSev = area.avgSeverity / area.potholeCount;
+      const completionRate = area.completed / area.potholeCount;
+      // Score: 100 - (pothole density penalty + severity penalty - completion bonus)
+      const densityPenalty = Math.min(area.potholeCount * 2, 40);
+      const severityPenalty = avgSev * 30;
+      const completionBonus = completionRate * 20;
+      const score = Math.max(0, Math.min(100, 100 - densityPenalty - severityPenalty + completionBonus));
+
+      return {
+        area: area.area,
+        potholeCount: area.potholeCount,
+        avgSeverity: parseFloat(avgSev.toFixed(2)),
+        completionRate: parseFloat((completionRate * 100).toFixed(1)),
+        conditionScore: parseFloat(score.toFixed(1)),
+      };
+    }).sort((a, b) => b.conditionScore - a.conditionScore);
+  }, [filteredPotholes]);
+
   return (
     <Box>
       <Typography variant="h4" gutterBottom fontWeight="bold">
@@ -671,6 +718,61 @@ export const Analytics = () => {
 
         {/* Severity Distribution */}
         <Grid size={{ xs: 12 }}>
+          <Card>
+            <CardContent>
+              <Typography variant="h6" gutterBottom>
+                Road Condition Score by Area
+              </Typography>
+              <Typography variant="body2" color="text.secondary" gutterBottom>
+                Composite score based on pothole density, severity, and completion rate (0-100)
+              </Typography>
+              <ResponsiveContainer width="100%" height={400}>
+                <BarChart data={roadConditionScore} layout="vertical">
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis type="number" domain={[0, 100]} />
+                  <YAxis type="category" dataKey="area" width={100} />
+                  <Tooltip 
+                    content={({ payload }) => {
+                      if (payload && payload[0]) {
+                        const data = payload[0].payload;
+                        return (
+                          <Paper sx={{ p: 1.5 }}>
+                            <Typography variant="subtitle2" fontWeight="bold">{data.area}</Typography>
+                            <Typography variant="body2">Condition Score: {data.conditionScore}/100</Typography>
+                            <Typography variant="body2">Potholes: {data.potholeCount}</Typography>
+                            <Typography variant="body2">Avg Severity: {data.avgSeverity}</Typography>
+                            <Typography variant="body2">Completion: {data.completionRate}%</Typography>
+                          </Paper>
+                        );
+                      }
+                      return null;
+                    }}
+                  />
+                  <Bar 
+                    dataKey="conditionScore" 
+                    name="Condition Score"
+                    fill="#2e7d32"
+                    label={{ position: 'right', formatter: (value: number) => `${value}/100` }}
+                  >
+                    {roadConditionScore.map((entry, index) => (
+                      <Cell 
+                        key={`cell-${index}`} 
+                        fill={
+                          entry.conditionScore >= 75 ? '#2e7d32' :
+                          entry.conditionScore >= 50 ? '#fbc02d' :
+                          entry.conditionScore >= 25 ? '#f57c00' : '#d32f2f'
+                        }
+                      />
+                    ))}
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
+            </CardContent>
+          </Card>
+        </Grid>
+
+        {/* Severity Distribution */}
+        <Grid size={{ xs: 12, md: 6 }}>
           <Card>
             <CardContent>
               <Typography variant="h6" gutterBottom>
