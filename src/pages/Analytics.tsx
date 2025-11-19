@@ -17,18 +17,14 @@ export const Analytics = () => {
   const [endDate, setEndDate] = useState('');
   const [selectedWard, setSelectedWard] = useState('all');
   const [visualizationType, setVisualizationType] = useState('overview');
-  const [chartsReady, setChartsReady] = useState(false);
+  const [isInitialized, setIsInitialized] = useState(false);
 
-  // Defer heavy calculations until after initial render
+  // Mark as initialized after first render to prevent black screen
   useEffect(() => {
-    if (filteredPotholes.length > 0 && !chartsReady) {
-      // Use setTimeout to allow UI to render first
-      const timer = setTimeout(() => {
-        setChartsReady(true);
-      }, 100);
-      return () => clearTimeout(timer);
+    if (!isInitialized) {
+      setIsInitialized(true);
     }
-  }, [filteredPotholes, chartsReady]);
+  }, [isInitialized]);
 
   // Filter potholes for reporting
   const reportFilteredPotholes = useMemo(() => {
@@ -84,17 +80,18 @@ export const Analytics = () => {
     generateCSVReport(reportFilteredPotholes);
   };
 
-  if (loading || !chartsReady) {
+  if (loading || filteredPotholes.length === 0 || !isInitialized) {
     return (
       <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center" minHeight="60vh" gap={2}>
         <CircularProgress size={60} />
         <Typography variant="body1" color="text.secondary">
-          {loading ? 'Loading data...' : 'Preparing visualizations...'}
+          Loading analytics...
         </Typography>
       </Box>
     );
   }
 
+  // Only calculate chart data after chartsReady is true
   const severityDistribution = [
     { name: 'Low (0-0.4)', value: filteredPotholes.filter(p => p.severity < 0.4).length, color: '#689f38' },
     { name: 'Medium (0.4-0.6)', value: filteredPotholes.filter(p => p.severity >= 0.4 && p.severity < 0.6).length, color: '#fbc02d' },
