@@ -1,5 +1,5 @@
-import { useEffect, useState, useMemo } from 'react';
-import { Box, Typography, Card, CardContent, Grid, CircularProgress, Paper, Button, TextField, FormControl, InputLabel, Select, MenuItem, Divider } from '@mui/material';
+import { useState, useMemo } from 'react';
+import { Box, Typography, Card, CardContent, Grid, Paper, Button, TextField, FormControl, InputLabel, Select, MenuItem, Divider } from '@mui/material';
 import { BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ScatterChart, Scatter, ZAxis } from 'recharts';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import TableViewIcon from '@mui/icons-material/TableView';
@@ -17,14 +17,6 @@ export const Analytics = () => {
   const [endDate, setEndDate] = useState('');
   const [selectedWard, setSelectedWard] = useState('all');
   const [visualizationType, setVisualizationType] = useState('overview');
-  const [isInitialized, setIsInitialized] = useState(false);
-
-  // Mark as initialized after first render to prevent black screen
-  useEffect(() => {
-    if (!isInitialized) {
-      setIsInitialized(true);
-    }
-  }, [isInitialized]);
 
   // Filter potholes for reporting
   const reportFilteredPotholes = useMemo(() => {
@@ -79,17 +71,6 @@ export const Analytics = () => {
   const handleGenerateCSV = () => {
     generateCSVReport(reportFilteredPotholes);
   };
-
-  if (loading || filteredPotholes.length === 0 || !isInitialized) {
-    return (
-      <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center" minHeight="60vh" gap={2}>
-        <CircularProgress size={60} />
-        <Typography variant="body1" color="text.secondary">
-          Loading analytics...
-        </Typography>
-      </Box>
-    );
-  }
 
   // Only calculate chart data after chartsReady is true
   const severityDistribution = [
