@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from './theme/ThemeProvider';
 import { Layout } from './components/Layout';
@@ -11,8 +12,33 @@ import { Analytics } from './pages/Analytics';
 import { SubmitPothole } from './pages/SubmitPothole';
 import { Operations } from './pages/Operations';
 import { DashCams } from './pages/DashCams';
+import { usePotholeStore } from './store/potholeStore';
+import { potholeService } from './services/api';
 
 function App() {
+  const { setPotholes, setStats, setLoading } = usePotholeStore();
+
+  // Fetch data once on app startup
+  useEffect(() => {
+    const fetchInitialData = async () => {
+      setLoading(true);
+      try {
+        const [potholesData, statsData] = await Promise.all([
+          potholeService.getPotholes(),
+          potholeService.getStats(),
+        ]);
+        setPotholes(potholesData);
+        setStats(statsData);
+      } catch (err) {
+        console.error('Failed to load initial data:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchInitialData();
+  }, [setPotholes, setStats, setLoading]);
+
   return (
     <ThemeProvider>
       <Router>

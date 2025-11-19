@@ -42,7 +42,6 @@ import type { Pothole } from '../types/pothole';
 import { usePotholeStore } from '../store/potholeStore';
 import { useWorkOrderStore } from '../store/workOrderStore';
 import { useSchedulingStore } from '../store/schedulingStore';
-import { potholeService } from '../services/api';
 import { useNotification } from '../components/NotificationProvider';
 import { formatDate, formatCurrency, getSeverityColor, getStatusColor, exportToCSV } from '../utils/helpers';
 import type { WorkOrder } from '../types/workOrder';
@@ -55,9 +54,6 @@ export const Dashboard = () => {
     loading,
     error,
     filters,
-    setPotholes,
-    setStats,
-    setLoading,
     setError,
     setFilters,
     clearFilters,
@@ -96,29 +92,13 @@ export const Dashboard = () => {
     estimatedDuration: 4,
   });
 
+  // Data is already loaded in App.tsx, no need to fetch again
+  // Just show notification if there's an error in the store
   useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const [potholesData, statsData] = await Promise.all([
-          potholeService.getPotholes(),
-          potholeService.getStats(),
-        ]);
-        setPotholes(potholesData);
-        setStats(statsData);
-        setError(null);
-        showNotification('Data loaded successfully', 'success');
-      } catch (err) {
-        setError('Failed to load data');
-        showNotification('Failed to load data', 'error');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    if (filteredPotholes.length > 0) {
+      setError(null);
+    }
+  }, [filteredPotholes]);
 
   const handleRequestSort = (property: keyof Pothole) => {
     const isAsc = orderBy === property && order === 'asc';

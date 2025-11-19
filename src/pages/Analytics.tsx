@@ -5,12 +5,11 @@ import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import TableViewIcon from '@mui/icons-material/TableView';
 import DescriptionIcon from '@mui/icons-material/Description';
 import { usePotholeStore } from '../store/potholeStore';
-import { potholeService } from '../services/api';
 import { StatsCards } from '../components/StatsCards';
 import { generatePDFReport, generateExcelReport, generateCSVReport } from '../utils/reportGenerator';
 
 export const Analytics = () => {
-  const { filteredPotholes, stats, setPotholes, setStats, setLoading, loading } = usePotholeStore();
+  const { filteredPotholes, stats, loading } = usePotholeStore();
   
   const [reportType, setReportType] = useState('executive');
   const [timeRange, setTimeRange] = useState('monthly');
@@ -18,27 +17,18 @@ export const Analytics = () => {
   const [endDate, setEndDate] = useState('');
   const [selectedWard, setSelectedWard] = useState('all');
   const [visualizationType, setVisualizationType] = useState('overview');
+  const [chartsReady, setChartsReady] = useState(false);
 
+  // Defer heavy calculations until after initial render
   useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const [potholesData, statsData] = await Promise.all([
-          potholeService.getPotholes(),
-          potholeService.getStats(),
-        ]);
-        setPotholes(potholesData);
-        setStats(statsData);
-      } catch (err) {
-        console.error('Failed to load data');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    if (filteredPotholes.length > 0 && !chartsReady) {
+      // Use setTimeout to allow UI to render first
+      const timer = setTimeout(() => {
+        setChartsReady(true);
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+  }, [filteredPotholes, chartsReady]);
 
   // Filter potholes for reporting
   const reportFilteredPotholes = useMemo(() => {
@@ -94,10 +84,13 @@ export const Analytics = () => {
     generateCSVReport(reportFilteredPotholes);
   };
 
-  if (loading && filteredPotholes.length === 0) {
+  if (loading || !chartsReady) {
     return (
-      <Box display="flex" justifyContent="center" alignItems="center" minHeight="60vh">
+      <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center" minHeight="60vh" gap={2}>
         <CircularProgress size={60} />
+        <Typography variant="body1" color="text.secondary">
+          {loading ? 'Loading data...' : 'Preparing visualizations...'}
+        </Typography>
       </Box>
     );
   }
