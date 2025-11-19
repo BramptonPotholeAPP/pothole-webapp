@@ -9,7 +9,7 @@ import { StatsCards } from '../components/StatsCards';
 import { generatePDFReport, generateExcelReport, generateCSVReport } from '../utils/reportGenerator';
 
 export const Analytics = () => {
-  const { filteredPotholes, stats, loading } = usePotholeStore();
+  const { filteredPotholes = [], stats, loading } = usePotholeStore();
   
   const [reportType, setReportType] = useState('executive');
   const [timeRange, setTimeRange] = useState('monthly');
@@ -71,6 +71,8 @@ export const Analytics = () => {
   const handleGenerateCSV = () => {
     generateCSVReport(reportFilteredPotholes);
   };
+
+  console.log('Analytics render - filteredPotholes:', filteredPotholes.length, 'loading:', loading);
 
   // Only calculate chart data after chartsReady is true
   const severityDistribution = [
