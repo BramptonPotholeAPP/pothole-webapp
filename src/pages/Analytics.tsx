@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { Box, Typography, Card, CardContent, Grid, Paper, Button, TextField, FormControl, InputLabel, Select, MenuItem, Divider } from '@mui/material';
-import { BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ScatterChart, Scatter, ZAxis } from 'recharts';
+import { BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import TableViewIcon from '@mui/icons-material/TableView';
 import DescriptionIcon from '@mui/icons-material/Description';
@@ -81,31 +81,6 @@ export const Analytics = () => {
     { name: 'High (0.6-0.8)', value: filteredPotholes.filter(p => p.severity >= 0.6 && p.severity < 0.8).length, color: '#f57c00' },
     { name: 'Critical (0.8-1.0)', value: filteredPotholes.filter(p => p.severity >= 0.8).length, color: '#d32f2f' },
   ];
-
-  // Heat map data - density calculation
-  const heatMapData = useMemo(() => {
-    const gridSize = 0.005; // ~0.5km grid
-    const densityMap: Record<string, { x: number; y: number; density: number; severity: number }> = {};
-
-    filteredPotholes.forEach(pothole => {
-      const gridX = Math.floor(pothole.lng / gridSize) * gridSize;
-      const gridY = Math.floor(pothole.lat / gridSize) * gridSize;
-      const key = `${gridX},${gridY}`;
-
-      if (!densityMap[key]) {
-        densityMap[key] = { x: gridX, y: gridY, density: 0, severity: 0 };
-      }
-      densityMap[key].density += 1;
-      densityMap[key].severity += pothole.severity;
-    });
-
-    return Object.values(densityMap).map(cell => ({
-      ...cell,
-      severity: cell.severity / cell.density, // Average severity
-      x: parseFloat(cell.x.toFixed(4)),
-      y: parseFloat(cell.y.toFixed(4)),
-    }));
-  }, [filteredPotholes]);
 
   // Ward comparison data
   const wardComparison = useMemo(() => {
@@ -383,71 +358,6 @@ export const Analytics = () => {
       </Typography>
 
       <Grid container spacing={3}>
-        {/* Heat Map - Pothole Density */}
-        {(visualizationType === 'overview' || visualizationType === 'geographic') && (
-        <Grid size={{ xs: 12 }}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6" gutterBottom>
-                Pothole Density Heat Map
-              </Typography>
-              <Typography variant="body2" color="text.secondary" gutterBottom>
-                Geographic distribution showing hotspots of pothole concentration
-              </Typography>
-              <ResponsiveContainer width="100%" height={400}>
-                <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis 
-                    type="number" 
-                    dataKey="x" 
-                    name="Longitude" 
-                    domain={['auto', 'auto']}
-                    tickFormatter={(value) => value.toFixed(3)}
-                  />
-                  <YAxis 
-                    type="number" 
-                    dataKey="y" 
-                    name="Latitude" 
-                    domain={['auto', 'auto']}
-                    tickFormatter={(value) => value.toFixed(3)}
-                  />
-                  <ZAxis 
-                    type="number" 
-                    dataKey="density" 
-                    range={[50, 500]} 
-                    name="Density"
-                  />
-                  <Tooltip 
-                    cursor={{ strokeDasharray: '3 3' }}
-                    content={({ payload }) => {
-                      if (payload && payload[0]) {
-                        const data = payload[0].payload;
-                        return (
-                          <Paper sx={{ p: 1.5 }}>
-                            <Typography variant="body2">Density: {data.density} potholes</Typography>
-                            <Typography variant="body2">Avg Severity: {data.severity.toFixed(2)}</Typography>
-                            <Typography variant="caption" color="text.secondary">
-                              {data.y.toFixed(4)}, {data.x.toFixed(4)}
-                            </Typography>
-                          </Paper>
-                        );
-                      }
-                      return null;
-                    }}
-                  />
-                  <Scatter 
-                    name="Pothole Hotspots" 
-                    data={heatMapData} 
-                    fill="#d32f2f"
-                    fillOpacity={0.6}
-                  />
-                </ScatterChart>
-              </ResponsiveContainer>
-            </CardContent>
-          </Card>
-        </Grid>
-        )}
-
         {/* Ward Performance Comparison */}
         {(visualizationType === 'overview' || visualizationType === 'performance') && (
         <Grid size={{ xs: 12 }}>
