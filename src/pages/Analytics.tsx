@@ -346,9 +346,9 @@ export const Analytics = () => {
 
   // Animation effect
   useEffect(() => {
-    let interval: NodeJS.Timeout;
+    let interval: number;
     if (isAnimating && animationIndex < timeSeriesData.length - 1) {
-      interval = setInterval(() => {
+      interval = window.setInterval(() => {
         setAnimationIndex(prev => prev + 1);
       }, 200);
     } else if (animationIndex >= timeSeriesData.length - 1) {
