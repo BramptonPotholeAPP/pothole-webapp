@@ -1,6 +1,6 @@
 import { useEffect, useState, useMemo } from 'react';
 import { Box, Typography, Card, CardContent, Grid, CircularProgress, Paper, Button, TextField, FormControl, InputLabel, Select, MenuItem, Divider } from '@mui/material';
-import { BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ScatterChart, Scatter, ZAxis } from 'recharts';
+import { BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ScatterChart, Scatter, ZAxis } from 'recharts';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import TableViewIcon from '@mui/icons-material/TableView';
 import DescriptionIcon from '@mui/icons-material/Description';
@@ -17,8 +17,7 @@ export const Analytics = () => {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [selectedWard, setSelectedWard] = useState('all');
-  const [animationIndex, setAnimationIndex] = useState(0);
-  const [isAnimating, setIsAnimating] = useState(false);
+  const [visualizationType, setVisualizationType] = useState('overview');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -274,65 +273,6 @@ export const Analytics = () => {
     }).sort((a, b) => b.conditionScore - a.conditionScore);
   }, [filteredPotholes]);
 
-  // Time-series animation data
-  const timeSeriesData = useMemo(() => {
-    const sortedByDate = [...filteredPotholes].sort((a, b) => 
-      new Date(a.detected_at).getTime() - new Date(b.detected_at).getTime()
-    );
-
-    const frames: Array<{ date: string; cumulative: number; newCount: number; avgSeverity: number }> = [];
-    const dateMap: Record<string, { count: number; severity: number }> = {};
-
-    sortedByDate.forEach(pothole => {
-      const date = new Date(pothole.detected_at).toLocaleDateString();
-      if (!dateMap[date]) {
-        dateMap[date] = { count: 0, severity: 0 };
-      }
-      dateMap[date].count += 1;
-      dateMap[date].severity += pothole.severity;
-    });
-
-    let cumulative = 0;
-    Object.entries(dateMap).forEach(([date, data]) => {
-      cumulative += data.count;
-      frames.push({
-        date,
-        cumulative,
-        newCount: data.count,
-        avgSeverity: parseFloat((data.severity / data.count).toFixed(2)),
-      });
-    });
-
-    return frames;
-  }, [filteredPotholes]);
-
-  // Animation effect
-  useEffect(() => {
-    let interval: number;
-    if (isAnimating && animationIndex < timeSeriesData.length - 1) {
-      interval = window.setInterval(() => {
-        setAnimationIndex(prev => prev + 1);
-      }, 200);
-    } else if (animationIndex >= timeSeriesData.length - 1) {
-      setIsAnimating(false);
-    }
-    return () => clearInterval(interval);
-  }, [isAnimating, animationIndex, timeSeriesData.length]);
-
-  const handleStartAnimation = () => {
-    setAnimationIndex(0);
-    setIsAnimating(true);
-  };
-
-  const handleStopAnimation = () => {
-    setIsAnimating(false);
-  };
-
-  const handleResetAnimation = () => {
-    setAnimationIndex(timeSeriesData.length - 1);
-    setIsAnimating(false);
-  };
-
   return (
     <Box>
       <Typography variant="h4" gutterBottom fontWeight="bold">
@@ -382,7 +322,22 @@ export const Analytics = () => {
               </Select>
             </FormControl>
           </Grid>
-          <Grid size={{ xs: 12, md: 2 }}>
+          <Grid size={{ xs: 12, md: 3 }}>
+            <FormControl fullWidth>
+              <InputLabel>Visualization Type</InputLabel>
+              <Select
+                value={visualizationType}
+                label="Visualization Type"
+                onChange={(e) => setVisualizationType(e.target.value)}
+              >
+                <MenuItem value="overview">Overview</MenuItem>
+                <MenuItem value="geographic">Geographic Analysis</MenuItem>
+                <MenuItem value="performance">Ward Performance</MenuItem>
+                <MenuItem value="cost">Cost Analysis</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
+          <Grid size={{ xs: 12, md: 3 }}>
             <TextField
               fullWidth
               label="Start Date"
@@ -455,92 +410,8 @@ export const Analytics = () => {
       </Typography>
 
       <Grid container spacing={3}>
-        {/* Time-Series Animation */}
-        <Grid size={{ xs: 12 }}>
-          <Card>
-            <CardContent>
-              <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
-                <Box>
-                  <Typography variant="h6" gutterBottom>
-                    Time-Series Animation: Pothole Accumulation
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    Watch how potholes accumulate over time
-                  </Typography>
-                </Box>
-                <Box display="flex" gap={1}>
-                  <Button 
-                    variant="contained" 
-                    size="small" 
-                    onClick={handleStartAnimation}
-                    disabled={isAnimating}
-                  >
-                    Play
-                  </Button>
-                  <Button 
-                    variant="outlined" 
-                    size="small" 
-                    onClick={handleStopAnimation}
-                    disabled={!isAnimating}
-                  >
-                    Pause
-                  </Button>
-                  <Button 
-                    variant="outlined" 
-                    size="small" 
-                    onClick={handleResetAnimation}
-                  >
-                    Reset
-                  </Button>
-                </Box>
-              </Box>
-              <Box mb={2}>
-                <Typography variant="body2" color="text.secondary">
-                  Frame: {animationIndex + 1} / {timeSeriesData.length} 
-                  {timeSeriesData[animationIndex] && ` - Date: ${timeSeriesData[animationIndex].date} - Total: ${timeSeriesData[animationIndex].cumulative}`}
-                </Typography>
-              </Box>
-              <ResponsiveContainer width="100%" height={400}>
-                <LineChart data={timeSeriesData.slice(0, animationIndex + 1)}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis 
-                    dataKey="date" 
-                    angle={-45}
-                    textAnchor="end"
-                    height={100}
-                    interval={Math.floor(timeSeriesData.length / 10)}
-                  />
-                  <YAxis yAxisId="left" />
-                  <YAxis yAxisId="right" orientation="right" />
-                  <Tooltip />
-                  <Legend />
-                  <Line 
-                    yAxisId="left"
-                    type="monotone" 
-                    dataKey="cumulative" 
-                    stroke="#1976d2" 
-                    strokeWidth={3}
-                    name="Cumulative Potholes"
-                    dot={{ r: 3 }}
-                    animationDuration={300}
-                  />
-                  <Line 
-                    yAxisId="right"
-                    type="monotone" 
-                    dataKey="newCount" 
-                    stroke="#f57c00" 
-                    strokeWidth={2}
-                    name="New Detections"
-                    dot={{ r: 2 }}
-                    animationDuration={300}
-                  />
-                </LineChart>
-              </ResponsiveContainer>
-            </CardContent>
-          </Card>
-        </Grid>
-
         {/* Heat Map - Pothole Density */}
+        {(visualizationType === 'overview' || visualizationType === 'geographic') && (
         <Grid size={{ xs: 12 }}>
           <Card>
             <CardContent>
@@ -602,8 +473,10 @@ export const Analytics = () => {
             </CardContent>
           </Card>
         </Grid>
+        )}
 
         {/* Ward Performance Comparison */}
+        {(visualizationType === 'overview' || visualizationType === 'performance') && (
         <Grid size={{ xs: 12 }}>
           <Card>
             <CardContent>
@@ -629,8 +502,10 @@ export const Analytics = () => {
             </CardContent>
           </Card>
         </Grid>
+        )}
 
         {/* Cost vs Completion Analysis */}
+        {(visualizationType === 'overview' || visualizationType === 'cost') && (
         <Grid size={{ xs: 12, md: 6 }}>
           <Card>
             <CardContent>
@@ -666,8 +541,10 @@ export const Analytics = () => {
             </CardContent>
           </Card>
         </Grid>
+        )}
 
         {/* Road Condition Score by Area */}
+        {(visualizationType === 'overview' || visualizationType === 'performance') && (
         <Grid size={{ xs: 12, md: 6 }}>
           <Card>
             <CardContent>
@@ -721,8 +598,10 @@ export const Analytics = () => {
             </CardContent>
           </Card>
         </Grid>
+        )}
 
         {/* Severity Distribution */}
+        {(visualizationType === 'overview' || visualizationType === 'geographic') && (
         <Grid size={{ xs: 12, md: 6 }}>
           <Card>
             <CardContent>
@@ -752,6 +631,7 @@ export const Analytics = () => {
             </CardContent>
           </Card>
         </Grid>
+        )}
       </Grid>
     </Box>
   );
