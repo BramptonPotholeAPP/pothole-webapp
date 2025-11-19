@@ -171,6 +171,45 @@ export const Analytics = () => {
     }));
   }, [filteredPotholes]);
 
+  // Ward comparison data
+  const wardComparison = useMemo(() => {
+    const wardStats: Record<string, { 
+      ward: string; 
+      total: number; 
+      completed: number; 
+      avgSeverity: number;
+      totalCost: number;
+      completionRate: number;
+    }> = {};
+
+    filteredPotholes.forEach(pothole => {
+      const ward = pothole.ward || 'Unknown';
+      if (!wardStats[ward]) {
+        wardStats[ward] = { 
+          ward, 
+          total: 0, 
+          completed: 0, 
+          avgSeverity: 0,
+          totalCost: 0,
+          completionRate: 0
+        };
+      }
+      wardStats[ward].total += 1;
+      wardStats[ward].avgSeverity += pothole.severity;
+      wardStats[ward].totalCost += pothole.estimated_repair_cost_cad;
+      if (pothole.status === 'completed') {
+        wardStats[ward].completed += 1;
+      }
+    });
+
+    return Object.values(wardStats).map(ward => ({
+      ...ward,
+      avgSeverity: parseFloat((ward.avgSeverity / ward.total).toFixed(2)),
+      completionRate: parseFloat(((ward.completed / ward.total) * 100).toFixed(1)),
+      totalCost: parseFloat(ward.totalCost.toFixed(2)),
+    })).sort((a, b) => b.total - a.total);
+  }, [filteredPotholes]);
+
   return (
     <Box>
       <Typography variant="h4" gutterBottom fontWeight="bold">
@@ -418,6 +457,74 @@ export const Analytics = () => {
             </CardContent>
           </Card>
         </Grid>
+
+        {/* Ward Comparison - Multi-metric */}
+        <Grid size={{ xs: 12 }}>
+          <Card>
+            <CardContent>
+              <Typography variant="h6" gutterBottom>
+                Ward Performance Comparison
+              </Typography>
+              <Typography variant="body2" color="text.secondary" gutterBottom>
+                Comprehensive comparison across total detections, completion rate, and average severity
+              </Typography>
+              <ResponsiveContainer width="100%" height={400}>
+                <BarChart data={wardComparison}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="ward" />
+                  <YAxis yAxisId="left" />
+                  <YAxis yAxisId="right" orientation="right" />
+                  <Tooltip />
+                  <Legend />
+                  <Bar yAxisId="left" dataKey="total" fill="#1976d2" name="Total Potholes" />
+                  <Bar yAxisId="left" dataKey="completed" fill="#2e7d32" name="Completed" />
+                  <Bar yAxisId="right" dataKey="completionRate" fill="#f57c00" name="Completion Rate (%)" />
+                </BarChart>
+              </ResponsiveContainer>
+            </CardContent>
+          </Card>
+        </Grid>
+
+        {/* Ward Severity and Cost Analysis */}
+        <Grid size={{ xs: 12, md: 6 }}>
+          <Card>
+            <CardContent>
+              <Typography variant="h6" gutterBottom>
+                Average Severity by Ward
+              </Typography>
+              <ResponsiveContainer width="100%" height={300}>
+                <BarChart data={wardComparison} layout="vertical">
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis type="number" domain={[0, 1]} />
+                  <YAxis type="category" dataKey="ward" width={80} />
+                  <Tooltip />
+                  <Bar dataKey="avgSeverity" fill="#d32f2f" name="Avg Severity" />
+                </BarChart>
+              </ResponsiveContainer>
+            </CardContent>
+          </Card>
+        </Grid>
+
+        {/* Ward Total Cost */}
+        <Grid size={{ xs: 12, md: 6 }}>
+          <Card>
+            <CardContent>
+              <Typography variant="h6" gutterBottom>
+                Estimated Cost by Ward
+              </Typography>
+              <ResponsiveContainer width="100%" height={300}>
+                <BarChart data={wardComparison} layout="vertical">
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis type="number" />
+                  <YAxis type="category" dataKey="ward" width={80} />
+                  <Tooltip formatter={(value) => `$${value}`} />
+                  <Bar dataKey="totalCost" fill="#f57c00" name="Total Cost (CAD)" />
+                </BarChart>
+              </ResponsiveContainer>
+            </CardContent>
+          </Card>
+        </Grid>
+
 
         {/* Cost by Status */}
         <Grid size={{ xs: 12, md: 6 }}>
