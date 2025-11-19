@@ -210,6 +210,59 @@ export const Analytics = () => {
     })).sort((a, b) => b.total - a.total);
   }, [filteredPotholes]);
 
+  // Cost vs Completion Analysis
+  const costCompletionAnalysis = useMemo(() => {
+    const statusGroups = {
+      completed: filteredPotholes.filter(p => p.status === 'completed'),
+      in_progress: filteredPotholes.filter(p => p.status === 'in_progress'),
+      scheduled: filteredPotholes.filter(p => p.status === 'scheduled'),
+      new: filteredPotholes.filter(p => p.status === 'new'),
+    };
+
+    return [
+      {
+        status: 'Completed',
+        count: statusGroups.completed.length,
+        totalCost: statusGroups.completed.reduce((sum, p) => sum + p.estimated_repair_cost_cad, 0),
+        avgCost: statusGroups.completed.length > 0 
+          ? statusGroups.completed.reduce((sum, p) => sum + p.estimated_repair_cost_cad, 0) / statusGroups.completed.length 
+          : 0,
+        efficiency: statusGroups.completed.length > 0 ? 100 : 0,
+      },
+      {
+        status: 'In Progress',
+        count: statusGroups.in_progress.length,
+        totalCost: statusGroups.in_progress.reduce((sum, p) => sum + p.estimated_repair_cost_cad, 0),
+        avgCost: statusGroups.in_progress.length > 0 
+          ? statusGroups.in_progress.reduce((sum, p) => sum + p.estimated_repair_cost_cad, 0) / statusGroups.in_progress.length 
+          : 0,
+        efficiency: statusGroups.in_progress.length > 0 ? 65 : 0,
+      },
+      {
+        status: 'Scheduled',
+        count: statusGroups.scheduled.length,
+        totalCost: statusGroups.scheduled.reduce((sum, p) => sum + p.estimated_repair_cost_cad, 0),
+        avgCost: statusGroups.scheduled.length > 0 
+          ? statusGroups.scheduled.reduce((sum, p) => sum + p.estimated_repair_cost_cad, 0) / statusGroups.scheduled.length 
+          : 0,
+        efficiency: statusGroups.scheduled.length > 0 ? 30 : 0,
+      },
+      {
+        status: 'New',
+        count: statusGroups.new.length,
+        totalCost: statusGroups.new.reduce((sum, p) => sum + p.estimated_repair_cost_cad, 0),
+        avgCost: statusGroups.new.length > 0 
+          ? statusGroups.new.reduce((sum, p) => sum + p.estimated_repair_cost_cad, 0) / statusGroups.new.length 
+          : 0,
+        efficiency: 0,
+      },
+    ].map(item => ({
+      ...item,
+      totalCost: parseFloat(item.totalCost.toFixed(2)),
+      avgCost: parseFloat(item.avgCost.toFixed(2)),
+    }));
+  }, [filteredPotholes]);
+
   return (
     <Box>
       <Typography variant="h4" gutterBottom fontWeight="bold">
@@ -546,6 +599,75 @@ export const Analytics = () => {
             </CardContent>
           </Card>
         </Grid>
+
+        {/* Cost vs Completion Analysis */}
+        <Grid size={{ xs: 12 }}>
+          <Card>
+            <CardContent>
+              <Typography variant="h6" gutterBottom>
+                Cost vs. Completion Efficiency Analysis
+              </Typography>
+              <Typography variant="body2" color="text.secondary" gutterBottom>
+                Relationship between repair costs and completion status
+              </Typography>
+              <ResponsiveContainer width="100%" height={400}>
+                <BarChart data={costCompletionAnalysis}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="status" />
+                  <YAxis yAxisId="left" />
+                  <YAxis yAxisId="right" orientation="right" />
+                  <Tooltip 
+                    formatter={(value, name) => {
+                      if (name === 'Average Cost' || name === 'Total Cost') {
+                        return `$${value}`;
+                      }
+                      if (name === 'Efficiency') {
+                        return `${value}%`;
+                      }
+                      return value;
+                    }}
+                  />
+                  <Legend />
+                  <Bar yAxisId="left" dataKey="count" fill="#1976d2" name="Count" />
+                  <Bar yAxisId="left" dataKey="avgCost" fill="#f57c00" name="Average Cost" />
+                  <Bar yAxisId="right" dataKey="efficiency" fill="#2e7d32" name="Efficiency %" />
+                </BarChart>
+              </ResponsiveContainer>
+            </CardContent>
+          </Card>
+        </Grid>
+
+        {/* Total Cost Distribution */}
+        <Grid size={{ xs: 12, md: 6 }}>
+          <Card>
+            <CardContent>
+              <Typography variant="h6" gutterBottom>
+                Total Cost Distribution by Status
+              </Typography>
+              <ResponsiveContainer width="100%" height={300}>
+                <PieChart>
+                  <Pie
+                    data={costCompletionAnalysis}
+                    cx="50%"
+                    cy="50%"
+                    labelLine={false}
+                    label={(entry) => `${entry.status}: $${entry.totalCost.toLocaleString()}`}
+                    outerRadius={100}
+                    fill="#8884d8"
+                    dataKey="totalCost"
+                  >
+                    {costCompletionAnalysis.map((_, index) => (
+                      <Cell key={`cell-${index}`} fill={['#2e7d32', '#f57c00', '#fbc02d', '#d32f2f'][index]} />
+                    ))}
+                  </Pie>
+                  <Tooltip formatter={(value) => `$${value}`} />
+                  <Legend />
+                </PieChart>
+              </ResponsiveContainer>
+            </CardContent>
+          </Card>
+        </Grid>
+
 
         {/* Severity Distribution */}
         <Grid size={{ xs: 12 }}>
