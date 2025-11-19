@@ -752,7 +752,7 @@ export const Analytics = () => {
                     dataKey="conditionScore" 
                     name="Condition Score"
                     fill="#2e7d32"
-                    label={{ position: 'right', formatter: (value: number) => `${value}/100` }}
+                    label={{ position: 'right', formatter: (value: any) => `${value}/100` }}
                   >
                     {roadConditionScore.map((entry, index) => (
                       <Cell 
